@@ -4,7 +4,6 @@ import gsap from 'gsap';
 
 export default function Page() {
   const container = useRef<HTMLDivElement>(null);
-  const diamondRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     // 1. Sürekli kendi etrafında zarif dönüş
