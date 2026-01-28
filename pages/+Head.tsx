@@ -1,7 +1,10 @@
 // https://vike.dev/Head
 
-import logoUrl from "../assets/logo.svg";
-
 export function Head() {
-  return <link rel="icon" href={logoUrl} />;
+  return (
+    <>
+      <title>Time Right Production</title>
+      <meta name="description" content="Time Right Production - Profesyonel Prodüksiyon Hizmetleri" />
+    </>
+  );
 }
