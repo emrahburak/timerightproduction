@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vike(), react(), tailwindcss()],
   // Hatanın çözümü tam olarak burası:
   preview: {
-    allowedHosts: ["timerightproduction.org"],
+    allowedHosts: ["timerightproduction.org", "www.timerightproduction.org"],
     host: true,
     port: 3000,
   },
