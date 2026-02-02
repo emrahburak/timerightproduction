@@ -1,0 +1,29 @@
+{
+  "navbar": {
+    "home": "Anasayfa",
+    "about": "Hakkımızda",
+    "services": "Hizmetler",
+    "team": "Takım",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "title": "Next.js i18n Uygulamasına Hoş Geldiniz",
+    "description": "Next.js App Router ve GSAP animasyonları ile oluşturulmuş çok dilli bir uygulamadır."
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "content": "Bu, Türkçe hakkında bölüm içeriğidir."
+  },
+  "services": {
+    "title": "Hizmetlerimiz",
+    "content": "Sunduğumuz hizmetleri Türkçe olarak keşfedin."
+  },
+  "team": {
+    "title": "Ekibimiz",
+    "content": "Harika ekibimizle tanışın Türkçe."
+  },
+  "contact": {
+    "title": "İletişim",
+    "content": "Bizimle iletişime geçin Türkçe."
+  }
+}

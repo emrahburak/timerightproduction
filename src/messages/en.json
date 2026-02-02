@@ -1,0 +1,29 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "team": "Team",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Welcome to Next.js i18n App",
+    "description": "This is a multi-language application built with Next.js App Router and GSAP animations."
+  },
+  "about": {
+    "title": "About Us",
+    "content": "This is the about section content in English."
+  },
+  "services": {
+    "title": "Our Services",
+    "content": "Explore the services we offer in English."
+  },
+  "team": {
+    "title": "Our Team",
+    "content": "Meet our amazing team in English."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "content": "Get in touch with us in English."
+  }
+}

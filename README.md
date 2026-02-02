@@ -1,46 +1,36 @@
-Generated with [vike.dev/new](https://vike.dev/new) ([version 566](https://www.npmjs.com/package/create-vike/v/0.0.566)) using this command:
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-```sh
-npm create vike@latest --- --react --tailwindcss
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Contents
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- [Vike](#vike)
-  - [Plus files](#plus-files)
-  - [Routing](#routing)
-  - [SSR](#ssr)
-  - [HTML Streaming](#html-streaming)
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Vike
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
+## Learn More
 
-### Plus files
+To learn more about Next.js, take a look at the following resources:
 
-[The + files are the interface](https://vike.dev/config) between Vike and your code.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- [`+config.ts`](https://vike.dev/settings) — Settings (e.g. `<title>`)
-- [`+Page.tsx`](https://vike.dev/Page) — The `<Page>` component
-- [`+data.ts`](https://vike.dev/data) — Fetching data (for your `<Page>` component)
-- [`+Layout.tsx`](https://vike.dev/Layout) — The `<Layout>` component (wraps your `<Page>` components)
-- [`+Head.tsx`](https://vike.dev/Head) - Sets `<head>` tags
-- [`/pages/_error/+Page.tsx`](https://vike.dev/error-page) — The error page (rendered when an error occurs)
-- [`+onPageTransitionStart.ts`](https://vike.dev/onPageTransitionStart) and `+onPageTransitionEnd.ts` — For page transition animations
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-### Routing
+## Deploy on Vercel
 
-[Vike's built-in router](https://vike.dev/routing) lets you choose between:
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- [Filesystem Routing](https://vike.dev/filesystem-routing) (the URL of a page is determined based on where its `+Page.jsx` file is located on the filesystem)
-- [Route Strings](https://vike.dev/route-string)
-- [Route Functions](https://vike.dev/route-function)
-
-### SSR
-
-SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all or specific pages.
-
-### HTML Streaming
-
-You can [enable/disable HTML streaming](https://vike.dev/stream) for all or specific pages.
-
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
