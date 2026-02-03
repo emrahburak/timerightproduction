@@ -1,8 +1,14 @@
 // src/components/sections/Services.tsx
-export default function Services() {
+interface SectionProps {
+  title: string;
+  content: string;
+}
+
+export default function Services({ title, content }: SectionProps) {
   return (
     <section>
-      <h1>Services Section (Placeholder)</h1>
+      <h1>{title}</h1>
+      <p>{content}</p>
     </section>
   );
 }

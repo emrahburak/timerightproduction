@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, Cormorant_Garamond } from "next/font/google"; // Import new fonts
+import { Syne, Cormorant_Garamond, Archivo } from "next/font/google"; // Import Archivo font
 import Header from '@/components/Header'; // Import Header component
 import SmoothScroll from '@/components/SmoothScroll'; // Import SmoothScroll component
 
@@ -13,6 +13,13 @@ const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-cormorant-garamond", // Define CSS variable for Cormorant Garamond
   weight: ["300", "400", "500", "600", "700"], // Specify weights if needed
+  display: "swap",
+});
+
+const archivo = Archivo({ // Define Archivo font
+  subsets: ["latin"],
+  variable: "--font-archivo",
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -36,7 +43,7 @@ export default async function LocaleLayout({
 
   return (
     <div
-      className={`${syne.variable} ${cormorantGaramond.variable}`} // Apply font variables
+      className={`${syne.variable} ${cormorantGaramond.variable} ${archivo.variable}`} // Apply font variables including Archivo
     >
       <Header locale={locale} />
       <SmoothScroll>

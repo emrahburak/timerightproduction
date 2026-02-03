@@ -7,12 +7,15 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Welcome to Next.js i18n App",
-    "description": "This is a multi-language application built with Next.js App Router and GSAP animations."
+    "title": "Time Right Production",
+    "description": ""
+  },
+  "statement": {
+    "text": "When the time comes for everything to be exactly as it should be, and exactly on time."
   },
   "about": {
-    "title": "About Us",
-    "content": "This is the about section content in English."
+    "title": "The time for unforgettable, exciting events has come.",
+    "content": "Life is shaped through communication; however, communication is not limited to words. The projects we develop with our expert partners include special service designs that provide strong support to your company’s internal and external communication channels."
   },
   "services": {
     "title": "Our Services",

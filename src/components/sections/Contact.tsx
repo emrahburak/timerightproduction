@@ -1,8 +1,14 @@
 // src/components/sections/Contact.tsx
-export default function Contact() {
+interface SectionProps {
+  title: string;
+  content: string;
+}
+
+export default function Contact({ title, content }: SectionProps) {
   return (
     <section>
-      <h1>Contact Section (Placeholder)</h1>
+      <h1>{title}</h1>
+      <p>{content}</p>
     </section>
   );
 }

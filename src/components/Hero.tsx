@@ -1,61 +1,44 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Import ScrollTrigger
+import { useGSAP } from '@gsap/react'; // Enabled for animation
+import gsap from 'gsap'; // Enabled for animation
+// import { SplitText } from 'gsap/SplitText'; // Not needed for this animation
 
-gsap.registerPlugin(ScrollTrigger); // Register ScrollTrigger plugin
+// gsap.registerPlugin(SplitText); // Not needed for this animation
 
 interface HeroProps {
   title: string;
-  description: string;
+  description?: string;
 }
 
-export default function Hero({ title, description }: HeroProps) {
-  const container = useRef(null);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
+export default function Hero({ title }: HeroProps) {
+  const container = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null); // Ref for the marquee container
 
   useGSAP(() => {
-    // Initial entrance animations
-    gsap.from(titleRef.current, {
-      y: -50, // Start 50 pixels above
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out',
-    });
+    if (!marqueeRef.current) return;
 
-    gsap.from(descriptionRef.current, {
-      opacity: 0,
-      duration: 1.5,
-      delay: 0.5, // Start fading in after the title animation begins
-      ease: 'power2.out',
+    gsap.to(marqueeRef.current, {
+      xPercent: -50, // Move 50% of its own width to the left (because we duplicated it)
+      repeat: -1, // Infinite repeat
+      duration: 40, // Adjust speed as needed (e.g., 20 or 30)
+      ease: 'none', // Critical for seamless loop
     });
-
-    // ScrollTrigger animation for the title
-    gsap.to(titleRef.current, {
-      x: 200, // Move title 200 pixels to the right
-      opacity: 0, // Make it fade out
-      scrollTrigger: {
-        trigger: container.current, // When this section enters the viewport
-        start: 'top top', // Animation starts when the top of the trigger hits the top of the viewport
-        end: 'bottom top', // Animation ends when the bottom of the trigger hits the top of the viewport
-        scrub: true, // Link animation to scroll position
-        // markers: true, // For debugging purposes
-      },
-    });
-
-  }, { scope: container }); // Apply GSAP animations within the scope of this component
+  }, { scope: container });
 
   return (
-    <section ref={container} className="flex flex-col items-center justify-center min-h-screen text-center p-4">
-      <h1 ref={titleRef} className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
-        {title}
-      </h1>
-      <p ref={descriptionRef} className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl">
-        {description}
-      </p>
+    <section ref={container} className="h-screen bg-black flex items-center justify-center p-4 overflow-hidden">
+      <div className="relative z-10 w-full overflow-hidden whitespace-nowrap">
+        <div ref={marqueeRef} className="flex">
+          <h1 className="font-syne text-white uppercase font-black text-[clamp(4rem,12vw,10rem)] tracking-[-0.02em] inline-block pr-8">
+            {title}
+          </h1>
+          <h1 className="font-syne text-white uppercase font-black text-[clamp(4rem,12vw,10rem)] tracking-[-0.02em] inline-block pr-8">
+            {title}
+          </h1>
+        </div>
+      </div>
     </section>
   );
 }

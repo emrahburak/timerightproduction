@@ -1,5 +1,5 @@
 // src/components/Header.tsx
-import Navbar from './Navbar';
+import ClientHeaderContent from './ClientHeaderContent'; // Import the client component
 
 // Helper function to dynamically load messages
 async function getMessages(locale: string) {
@@ -22,8 +22,6 @@ export default async function Header({ locale }: HeaderProps) {
   const navLinks = messages.navbar;
 
   return (
-    <header>
-      <Navbar navLinks={navLinks} locale={locale} />
-    </header>
+    <ClientHeaderContent navLinks={navLinks} locale={locale} />
   );
 }

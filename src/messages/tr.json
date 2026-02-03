@@ -7,12 +7,15 @@
     "contact": "İletişim"
   },
   "hero": {
-    "title": "Next.js i18n Uygulamasına Hoş Geldiniz",
-    "description": "Next.js App Router ve GSAP animasyonları ile oluşturulmuş çok dilli bir uygulamadır."
+    "title": "Time Right Production",
+    "description": ""
+  },
+  "statement": {
+    "text": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
   },
   "about": {
-    "title": "Hakkımızda",
-    "content": "Bu, Türkçe hakkında bölüm içeriğidir."
+    "title": "Unutulmaz heyecan verici olayların zamanı geldi.",
+    "content": "Hayat iletişim aracılığıyla şekillenir; ancak iletişim sadece sözcüklerle sınırlı değildir. Uzman iş ortaklarımızla geliştirdiğimiz projeler, şirketinizin iç ve dış iletişim kanallarına güçlü destek sağlayan özel hizmet tasarımlarını içermektedir."
   },
   "services": {
     "title": "Hizmetlerimiz",
