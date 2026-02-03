@@ -19,7 +19,36 @@
   },
   "services": {
     "title": "Hizmetlerimiz",
-    "content": "Sunduğumuz hizmetleri Türkçe olarak keşfedin."
+    "items": [
+      {
+        "title": "Firma Tanıtım Filmleri",
+        "description": "Markanızın hikayesini sinematik bir dille dünyaya anlatın."
+      },
+      {
+        "title": "Belgesel Filmleri",
+        "description": "Gerçekliği sanatsal bir derinlikle ölümsüzleştirin."
+      },
+      {
+        "title": "Menajerlik Hizmetleri",
+        "description": "Yeteneklerin kariyer yolculuğunu profesyonelce yönetiyoruz."
+      },
+      {
+        "title": "Festival Şenlik Organizasyon",
+        "description": "Unutulmaz anlar yaratan büyük ölçekli etkinlik tasarımları."
+      },
+      {
+        "title": "Şirket İçi Motivasyon Etkinlikleri",
+        "description": "Takım ruhunu güçlendiren, enerji dolu kurumsal buluşmalar."
+      },
+      {
+        "title": "Ritm Atölyesi",
+        "description": "Birlikte üretmenin ve uyumun ritmini keşfedin."
+      },
+      {
+        "title": "Dijital Sahne Gösterileri",
+        "description": "Teknoloji ve sanatın birleştiği büyüleyici dijital performanslar."
+      }
+    ]
   },
   "team": {
     "title": "Ekibimiz",

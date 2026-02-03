@@ -19,7 +19,36 @@
   },
   "services": {
     "title": "Our Services",
-    "content": "Explore the services we offer in English."
+    "items": [
+      {
+        "title": "Corporate Brand Films",
+        "description": "Tell your brand's story to the world with a cinematic language."
+      },
+      {
+        "title": "Documentary Productions",
+        "description": "Immortalize reality with artistic depth and perspective."
+      },
+      {
+        "title": "Talent Management",
+        "description": "Professionally managing the career journeys of extraordinary talents."
+      },
+      {
+        "title": "Festival & Event Organization",
+        "description": "Designing large-scale events that create unforgettable moments."
+      },
+      {
+        "title": "Corporate Motivation Events",
+        "description": "Energy-filled corporate gatherings that strengthen team spirit."
+      },
+      {
+        "title": "Rhythm Workshops",
+        "description": "Discover the rhythm of harmony and collective production."
+      },
+      {
+        "title": "Digital Stage Performances",
+        "description": "Mesmerizing digital performances where technology meets art."
+      }
+    ]
   },
   "team": {
     "title": "Our Team",
