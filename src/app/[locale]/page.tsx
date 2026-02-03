@@ -28,7 +28,10 @@ interface Messages {
   };
   services: {
     title: string;
-    content: string;
+    items: {
+      title: string;
+      description: string;
+    }[];
   };
   team: {
     title: string;
@@ -70,7 +73,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <Statement content={messages.statement.text} />
       <BrandGallery />
       <About title={messages.about.title} content={messages.about.content} />
-      <Services title={messages.services.title} content={messages.services.content} />
+      <Services title={messages.services.title} items={messages.services.items} />
       <Team title={messages.team.title} content={messages.team.content} />
       <Contact title={messages.contact.title} content={messages.contact.content} />
     </main>

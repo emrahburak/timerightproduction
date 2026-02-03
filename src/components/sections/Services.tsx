@@ -53,10 +53,30 @@ const servicesData = [
   },
 ];
 
-const Services = () => {
+interface ServiceItem {
+  title: string;
+  description: string;
+}
+
+interface ServicesProps {
+  title: string;
+  items: ServiceItem[];
+}
+
+const Services = ({ title, items }: ServicesProps) => {
   const container = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Merge servicesData with passed items to get localized text with icons
+  const mergedServices = servicesData.map((service, index) => {
+    const item = items?.[index];
+    return {
+      ...service,
+      titleEn: item ? item.title : service.titleEn,
+      title: item ? item.description : service.title,
+    };
+  });
 
   useGSAP(
     () => {
@@ -155,7 +175,7 @@ const Services = () => {
       {/* Devasa Arkaplan Yazısı */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none z-0">
         <h1 className="font-syne font-bold text-[15vw] leading-none text-white opacity-[0.03] select-none tracking-widest">
-          SERVICES
+          {title || 'SERVICES'}
         </h1>
       </div>
 
@@ -165,7 +185,7 @@ const Services = () => {
           Sadece container yüksekliğini ve dikey hizalamayı koruyoruz. */}
       <div className="w-full h-full absolute inset-0 flex items-center z-10">
         <div ref={wrapper} className="flex gap-12 md:gap-24 px-10 items-center">
-          {servicesData.map((service, index) => (
+          {mergedServices.map((service, index) => (
             <div
               key={service.id}
               ref={(el) => { cardsRef.current[index] = el; }}
