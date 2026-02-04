@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,6 +25,15 @@ interface ClientHeaderContentProps {
 export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderContentProps) {
   const headerRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLocaleChange = (newLocale: string) => {
+    if (!pathname) return;
+    const segments = pathname.split('/');
+    segments[1] = newLocale;
+    router.push(segments.join('/'));
+  };
 
   // GSAP Scroll-Up Reveal Logic
   useGSAP(() => {
@@ -97,6 +107,25 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
               <Link href={`/${locale}/contact`} className="font-archivo text-sm uppercase tracking-widest font-medium text-white hover:opacity-70 transition-opacity duration-300">
                 {navLinks.contact}
               </Link>
+            </li>
+            <li className="flex items-center gap-2 ml-4">
+              <button
+                onClick={() => handleLocaleChange('tr')}
+                className={`font-archivo text-xs uppercase tracking-widest transition-all duration-300 ${
+                  locale === 'tr' ? 'text-white' : 'text-white/30 hover:text-white/70'
+                }`}
+              >
+                TR
+              </button>
+              <span className="text-white/30">|</span>
+              <button
+                onClick={() => handleLocaleChange('en')}
+                className={`font-archivo text-xs uppercase tracking-widest transition-all duration-300 ${
+                  locale === 'en' ? 'text-white' : 'text-white/30 hover:text-white/70'
+                }`}
+              >
+                EN
+              </button>
             </li>
           </ul>
         </nav>

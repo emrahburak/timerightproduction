@@ -3,7 +3,7 @@
     "home": "Anasayfa",
     "about": "Hakkımızda",
     "services": "Hizmetler",
-    "team": "Takım",
+    "team": "Eğitmenlerimiz",
     "contact": "İletişim"
   },
   "hero": {
@@ -50,12 +50,75 @@
       }
     ]
   },
-  "team": {
-    "title": "Ekibimiz",
-    "content": "Harika ekibimizle tanışın Türkçe."
+  "instructors": {
+    "title": "Eğitmenlerimiz",
+    "description": "Alanında uzman eğitmen kadromuzla tanışın.",
+    "members": [
+      {
+        "name": "Ahmet Yılmaz",
+        "title": "Ritim Eğitmeni",
+        "bio": "20 yılı aşkın süredir dünya ritimlerini harmanlayarak kurumsal eğitimler vermektedir.",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "name": "Ayşe Demir",
+        "title": "Sahne Sanatları",
+        "bio": "Dijital sahne performansları ve görsel sanatlar konusunda uzmanlaşmış bir sanatçıdır.",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "name": "Mehmet Kaya",
+        "title": "Yaratıcı Drama",
+        "bio": "Ekip içi iletişimi güçlendiren drama teknikleri üzerine çalışmaktadır.",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop"
+      }
+    ]
   },
   "contact": {
-    "title": "İletişim",
-    "content": "Bizimle iletişime geçin Türkçe."
+    "mainTitle": "KONUŞALIM",
+    "email": "info@timerightproduction.org",
+    "brandName": "TIME RIGHT PRODUCTION",
+    "phoneLabels": {
+      "gsm": "GSM",
+      "schweiz": "SCHWEIZ"
+    },
+    "phoneNumbers": {
+      "gsm": "+90 532 414 44 48",
+      "schweiz": "+41 79 127 72 26"
+    },
+    "socialHandle": "@timerightproduction",
+    "copyright": "© 2026 TIME RIGHT PRODUCTION. TÜM HAKLARI SAKLIDIR."
+  },
+  "showcaseStack": {
+    "academy": {
+      "title": "Eğitimlerimiz",
+      "subtitle": "Geleceği Şekillendirin",
+      "description": "Profesyonel eğitim programlarımızla yeteneklerinizi bir üst seviyeye taşıyın.",
+      "stat": "50+ Sertifikalı Program"
+    },
+    "workshops": {
+      "title": "Workshops",
+      "subtitle": "Deneyimleyerek Öğrenin",
+      "description": "Uygulamalı atölye çalışmalarımızla yaratıcılığınızın sınırlarını zorlayın.",
+      "stat": "200+ Etkinlik"
+    },
+    "management": {
+      "title": "Management",
+      "subtitle": "Kariyerinizi Yönetin",
+      "description": "Sanatçı ve yetenek yönetiminde profesyonel yaklaşım.",
+      "stat": "100+ Başarı Hikayesi"
+    },
+    "rhythmAtelier": {
+      "title": "Ritim Atölyesi",
+      "subtitle": "Uyumun Sesini Keşfedin",
+      "description": "Takım çalışmasını ve sinerjiyi ritmin gücüyle pekiştirin.",
+      "stat": "500+ Mutlu Katılımcı"
+    },
+    "digitalStage": {
+      "title": "Dijital Sahne",
+      "subtitle": "Geleceğin Gösterileri",
+      "description": "Teknoloji ve sanatı harmanlayan büyüleyici dijital performanslar.",
+      "stat": "300+ Canlı Yayın"
+    }
   }
 }

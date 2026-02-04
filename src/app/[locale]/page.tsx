@@ -3,7 +3,8 @@ import Statement from '@/components/sections/Statement';
 import BrandGallery from '@/components/sections/BrandGallery';
 import About from '@/components/sections/About';
 import Services from '@/components/sections/Services';
-import Team from '@/components/sections/Team';
+import ShowcaseStack from '@/components/sections/showcase/ShowcaseStack';
+import Instructors from '@/components/sections/Instructors';
 import Contact from '@/components/sections/Contact';
 
 // Define a type for the messages object to ensure type safety
@@ -33,13 +34,26 @@ interface Messages {
       description: string;
     }[];
   };
-  team: {
+  showcaseStack: {
+    academy: { title: string; subtitle: string; description: string; stat: string };
+    workshops: { title: string; subtitle: string; description: string; stat: string };
+    management: { title: string; subtitle: string; description: string; stat: string };
+    rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
+    digitalStage: { title: string; subtitle: string; description: string; stat: string };
+  };
+  instructors: {
     title: string;
-    content: string;
+    description: string;
+    members: any[];
   };
   contact: {
-    title: string;
-    content: string;
+    mainTitle: string;
+    email: string;
+    brandName: string;
+    phoneLabels: { gsm: string; schweiz: string };
+    phoneNumbers: { gsm: string; schweiz: string };
+    socialHandle: string;
+    copyright: string;
   };
 }
 
@@ -74,8 +88,9 @@ export default async function HomePage({ params }: HomePageProps) {
       <BrandGallery />
       <About title={messages.about.title} content={messages.about.content} />
       <Services title={messages.services.title} items={messages.services.items} />
-      <Team title={messages.team.title} content={messages.team.content} />
-      <Contact title={messages.contact.title} content={messages.contact.content} />
+      <ShowcaseStack messages={messages.showcaseStack} />
+      <Instructors instructors={messages.instructors} />
+      <Contact contact={messages.contact} />
     </main>
   );
 }

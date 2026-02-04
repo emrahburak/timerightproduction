@@ -3,7 +3,7 @@
     "home": "Home",
     "about": "About",
     "services": "Services",
-    "team": "Team",
+    "team": "Instructors",
     "contact": "Contact"
   },
   "hero": {
@@ -50,12 +50,75 @@
       }
     ]
   },
-  "team": {
-    "title": "Our Team",
-    "content": "Meet our amazing team in English."
+  "instructors": {
+    "title": "Instructors",
+    "description": "Meet our team of expert instructors.",
+    "members": [
+      {
+        "name": "Ahmet Yilmaz",
+        "title": "Rhythm Instructor",
+        "bio": "He has been providing corporate training for over 20 years by blending world rhythms.",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "name": "Ayse Demir",
+        "title": "Performing Arts",
+        "bio": "An artist specialized in digital stage performances and visual arts.",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        "name": "Mehmet Kaya",
+        "title": "Creative Drama",
+        "bio": "He works on drama techniques that strengthen team communication.",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop"
+      }
+    ]
   },
   "contact": {
-    "title": "Contact Us",
-    "content": "Get in touch with us in English."
+    "mainTitle": "LET'S TALK",
+    "email": "info@timerightproduction.org",
+    "brandName": "TIME RIGHT PRODUCTION",
+    "phoneLabels": {
+      "gsm": "GSM",
+      "schweiz": "SCHWEIZ"
+    },
+    "phoneNumbers": {
+      "gsm": "+90 532 414 44 48",
+      "schweiz": "+41 79 127 72 26"
+    },
+    "socialHandle": "@timerightproduction",
+    "copyright": "© 2026 TIME RIGHT PRODUCTION. ALL RIGHTS RESERVED."
+  },
+  "showcaseStack": {
+    "academy": {
+      "title": "Academy",
+      "subtitle": "Shape the Future",
+      "description": "Take your skills to the next level with our professional training programs.",
+      "stat": "50+ Certified Programs"
+    },
+    "workshops": {
+      "title": "Workshops",
+      "subtitle": "Learn by Doing",
+      "description": "Push the boundaries of your creativity with our hands-on workshops.",
+      "stat": "200+ Events"
+    },
+    "management": {
+      "title": "Management",
+      "subtitle": "Manage Your Career",
+      "description": "A professional approach to artist and talent management.",
+      "stat": "100+ Success Stories"
+    },
+    "rhythmAtelier": {
+      "title": "Rhythm Atelier",
+      "subtitle": "Discover the Sound of Harmony",
+      "description": "Strengthen teamwork and synergy through the power of rhythm.",
+      "stat": "500+ Happy Participants"
+    },
+    "digitalStage": {
+      "title": "Digital Stage",
+      "subtitle": "Shows of the Future",
+      "description": "Breathtaking digital performances blending technology and art.",
+      "stat": "300+ Live Streams"
+    }
   }
 }
