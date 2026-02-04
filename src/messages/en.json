@@ -1,10 +1,31 @@
 {
   "navbar": {
-    "home": "Home",
-    "about": "About",
-    "services": "Services",
-    "team": "Instructors",
-    "contact": "Contact"
+    "home": {
+      "label": "Home",
+      "path": "#home"
+    },
+    "about": {
+      "label": "About",
+      "path": "#about"
+    },
+    "services": {
+      "label": "Services",
+      "path": "#services"
+    },
+    "team": {
+      "label": "Instructors",
+      "path": "#instructors"
+    },
+    "contact": {
+      "label": "Contact",
+      "path": "#contact"
+    },
+    "privacy": "PRIVACY POLICY"
+  },
+  "privacy": {
+    "title": "PRIVACY POLICY",
+    "back": "GO BACK",
+    "content": "At Time Right Production ('Company'), we attach maximum importance to the security of your personal data. Your personal data is processed and stored in accordance with the relevant Data Protection Laws.<br/><br/><strong>1. Data Controller</strong><br/>Your personal data may be processed by Time Right Production in the capacity of data controller within the scope explained below.<br/><br/><strong>2. Purpose of Processing Personal Data</strong><br/>Your collected personal data is processed for the purposes of carrying out the necessary work by our business units to benefit you from the products and services offered by our Company, and ensuring the legal and commercial security of persons who are in a business relationship with our Company.<br/><br/><strong>3. Data Security</strong><br/>Your data is protected against unauthorized access, loss, or disclosure using industry-standard security measures."
   },
   "hero": {
     "title": "Time Right Production",
@@ -75,7 +96,7 @@
     ]
   },
   "contact": {
-    "mainTitle": "LET'S TALK",
+    "mainTitle": "THE TIME IS RIGHT",
     "email": "info@timerightproduction.org",
     "brandName": "TIME RIGHT PRODUCTION",
     "phoneLabels": {

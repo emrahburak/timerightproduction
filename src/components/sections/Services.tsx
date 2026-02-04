@@ -166,6 +166,7 @@ const Services = ({ title, items }: ServicesProps) => {
 
   return (
     <section
+      id="services"
       ref={container}
       className="min-h-screen bg-black overflow-hidden relative flex flex-col justify-center"
     >

@@ -1,10 +1,31 @@
 {
   "navbar": {
-    "home": "Anasayfa",
-    "about": "Hakkımızda",
-    "services": "Hizmetler",
-    "team": "Eğitmenlerimiz",
-    "contact": "İletişim"
+    "home": {
+      "label": "Anasayfa",
+      "path": "#home"
+    },
+    "about": {
+      "label": "Hakkımızda",
+      "path": "#about"
+    },
+    "services": {
+      "label": "Hizmetler",
+      "path": "#services"
+    },
+    "team": {
+      "label": "Eğitmenlerimiz",
+      "path": "#instructors"
+    },
+    "contact": {
+      "label": "İletişim",
+      "path": "#contact"
+    },
+    "privacy": "GİZLİLİK POLİTİKASI"
+  },
+  "privacy": {
+    "title": "GİZLİLİK POLİTİKASI",
+    "back": "GERİ DÖN",
+    "content": "Time Right Production ('Şirket') olarak, kişisel verilerinizin güvenliği hususuna azami hassasiyet göstermekteyiz. Kişisel verileriniz 6698 sayılı Kişisel Verilerin Korunması Kanunu ('KVKK') hükümleri doğrultusunda işlenmekte ve muhafaza edilmektedir.<br/><br/><strong>1. Veri Sorumlusu</strong><br/>Kişisel verileriniz; veri sorumlusu sıfatıyla Time Right Production tarafından aşağıda açıklanan kapsamda işlenebilecektir.<br/><br/><strong>2. Kişisel Verilerin İşlenme Amacı</strong><br/>Toplanan kişisel verileriniz; Şirketimiz tarafından sunulan ürün ve hizmetlerden sizleri faydalandırmak için gerekli çalışmaların iş birimlerimiz tarafından yapılması, Şirketimiz ile iş ilişkisi içerisinde olan ilgili kişilerin hukuki ve ticari güvenliğinin temini amaçlarıyla işlenmektedir.<br/><br/><strong>3. Veri Güvenliği</strong><br/>Verileriniz, yetkisiz erişimlere, kaybolmaya veya ifşaya karşı endüstri standardı güvenlik önlemleri ile korunmaktadır."
   },
   "hero": {
     "title": "Time Right Production",
@@ -75,7 +96,7 @@
     ]
   },
   "contact": {
-    "mainTitle": "KONUŞALIM",
+    "mainTitle": "TAM ZAMANI",
     "email": "info@timerightproduction.org",
     "brandName": "TIME RIGHT PRODUCTION",
     "phoneLabels": {

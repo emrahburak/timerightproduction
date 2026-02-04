@@ -69,7 +69,7 @@ export default function About({ title, content }: SectionProps) {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="min-h-[150vh] bg-black relative flex items-center justify-center overflow-hidden p-8">
+    <section id="about" ref={sectionRef} className="min-h-[150vh] bg-black relative flex items-center justify-center overflow-hidden p-8">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center justify-center">
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <h1 ref={titleRef} className="font-syne text-6xl uppercase font-bold text-white mb-4">

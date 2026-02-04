@@ -10,11 +10,17 @@ import Contact from '@/components/sections/Contact';
 // Define a type for the messages object to ensure type safety
 interface Messages {
   navbar: {
-    home: string;
-    about: string;
-    services: string;
-    team: string;
-    contact: string;
+    home: { label: string; path: string };
+    about: { label: string; path: string };
+    services: { label: string; path: string };
+    team: { label: string; path: string };
+    contact: { label: string; path: string };
+    privacy: string;
+  };
+  privacy: {
+    title: string;
+    content: string;
+    back: string;
   };
   hero: {
     title: string;
@@ -83,14 +89,20 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <main className="w-full bg-black"> {/* Cleaned Tailwind classes */}
-      <Hero title={messages.hero.title} description={messages.hero.description} />
-      <Statement content={messages.statement.text} />
-      <BrandGallery />
-      <About title={messages.about.title} content={messages.about.content} />
-      <Services title={messages.services.title} items={messages.services.items} />
-      <ShowcaseStack messages={messages.showcaseStack} />
-      <Instructors instructors={messages.instructors} />
-      <Contact contact={messages.contact} />
+      <div className="relative z-10 bg-black mb-[100vh]">
+        <Hero title={messages.hero.title} description={messages.hero.description} />
+        <Statement content={messages.statement.text} />
+        <BrandGallery />
+        <About title={messages.about.title} content={messages.about.content} />
+        <Services title={messages.services.title} items={messages.services.items} />
+        <ShowcaseStack messages={messages.showcaseStack} />
+        <Instructors instructors={messages.instructors} />
+      </div>
+      <Contact 
+        contact={messages.contact} 
+        privacy={messages.privacy}
+        privacyLabel={messages.navbar.privacy}
+      />
     </main>
   );
 }

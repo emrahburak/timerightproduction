@@ -28,7 +28,7 @@ export default function Hero({ title }: HeroProps) {
   }, { scope: container });
 
   return (
-    <section ref={container} className="h-screen bg-black flex items-center justify-center p-4 overflow-hidden">
+    <section id="home" ref={container} className="h-screen bg-black flex items-center justify-center p-4 overflow-hidden">
       <div className="relative z-10 w-full overflow-hidden whitespace-nowrap">
         <div ref={marqueeRef} className="flex">
           <h1 className="font-syne text-white uppercase font-black text-[clamp(4rem,12vw,10rem)] tracking-[-0.02em] inline-block pr-8">

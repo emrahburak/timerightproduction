@@ -22,17 +22,28 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     ScrollTrigger.refresh();
 
     // 2. Initialize Lenis
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+    });
 
-    function raf(time: DOMHighResTimeStamp) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    // Synchronize Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
 
-    requestAnimationFrame(raf);
+    // Add Lenis's requestAnimationFrame to GSAP's ticker
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000); // GSAP gives time in seconds, Lenis wants milliseconds
+    });
+
+    // Disable GSAP's independent lag smoothing to avoid conflicts
+    gsap.ticker.lagSmoothing(0);
 
     // Cleanup function
     return () => {
+      gsap.ticker.remove(lenis.raf);
       lenis.destroy();
       if ('scrollRestoration' in window.history) {
         window.history.scrollRestoration = 'auto';

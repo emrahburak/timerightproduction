@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useParams } from 'next/navigation';
+import PrivacyContent from '@/components/PrivacyContent';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,121 +19,215 @@ interface ContactProps {
     socialHandle: string;
     copyright: string;
   };
+  privacy: {
+    title: string;
+    content: string;
+    back: string;
+  };
+  privacyLabel: string;
 }
 
-export default function Contact({ contact }: ContactProps) {
+export default function Contact({ contact, privacy, privacyLabel }: ContactProps) {
   const containerRef = useRef<HTMLElement>(null);
-  const bannerRef = useRef<HTMLDivElement>(null);
-  const coreRef = useRef<HTMLDivElement>(null);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const coreContentRef = useRef<HTMLDivElement>(null);
+  const privacyOverlayRef = useRef<HTMLDivElement>(null);
+  
+  const params = useParams();
+  const locale = params.locale as string;
 
   useGSAP(() => {
-    // 1. Banner Reveal: Massive Title movement
-    gsap.fromTo(bannerRef.current,
-      { y: 100, opacity: 0 },
+    // 1. UNVEIL EFFECT (Whole section reveal)
+    gsap.fromTo(contentWrapperRef.current,
+      { scale: 0.8, opacity: 0.5, filter: 'blur(10px)' },
       {
-        y: 0,
+        scale: 1,
         opacity: 1,
-        duration: 1.2,
-        ease: 'power3.out',
+        filter: 'blur(0px)',
+        ease: 'power2.out',
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-          end: 'top 20%',
+          trigger: 'body',
+          start: 'bottom 150%',
+          end: 'bottom bottom',
           scrub: 1,
         }
       }
     );
 
-    // 2. Core Content Reveal: Staggered Fade-in and slide
-    gsap.fromTo('.reveal-item',
-      { y: 60, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power4.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 50%',
-        }
+    // 2. PARALLAX EFFECT for Center Content
+    gsap.to(coreContentRef.current, {
+      y: -50,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: 'body',
+        start: 'bottom 120%',
+        end: 'bottom bottom',
+        scrub: 1,
       }
-    );
+    });
+
+    // 3. INFINITE MARQUEE
+    if (marqueeRef.current) {
+        gsap.to(marqueeRef.current, {
+            xPercent: -50, 
+            ease: "none",
+            duration: 20,
+            repeat: -1
+        });
+    }
+
   }, { scope: containerRef });
 
+  const openPrivacy = () => {
+    if (!privacyOverlayRef.current) return;
+    gsap.to(privacyOverlayRef.current, { y: '0%', duration: 1, ease: 'power4.inOut' });
+    window.history.pushState({ privacy: true }, '', `/${locale}/privacy`);
+  };
+
+  const closePrivacy = () => {
+    // If we have history state, go back (triggering popstate). 
+    // Otherwise just animate down (fallback).
+    if (window.history.state?.privacy) {
+        window.history.back(); 
+    } else {
+        // Manually animate if no history state (e.g. reload or edge case)
+        if (!privacyOverlayRef.current) return;
+        gsap.to(privacyOverlayRef.current, { y: '100%', duration: 1, ease: 'power4.inOut' });
+        // Ensure URL is clean if we manually closed without back
+        if (window.location.pathname.includes('privacy')) {
+             window.history.replaceState(null, '', `/${locale}`);
+        }
+    }
+  };
+
+  // Handle Browser Back Button (PopState)
+  useEffect(() => {
+    const handlePopState = () => {
+       if (!privacyOverlayRef.current) return;
+       const isPrivacy = window.location.pathname.includes('privacy');
+       if (!isPrivacy) {
+          gsap.to(privacyOverlayRef.current, { y: '100%', duration: 1, ease: 'power4.inOut' });
+       } else {
+          // If forward button pressed to privacy?
+          gsap.to(privacyOverlayRef.current, { y: '0%', duration: 1, ease: 'power4.inOut' });
+       }
+    };
+    window.addEventListener('popstate', handlePopState);
+    
+    // Check initial load (if loaded on /privacy, though Next.js Page handles that, 
+    // but if we are in this component, we assume we are at Contact)
+    
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   return (
-    <section 
-      ref={containerRef}
-      id="contact"
-      className="relative min-h-screen bg-black flex flex-col items-center justify-between py-24 overflow-hidden"
-    >
-      {/* 1. TOP LAYER: DEVASA BAŞLIK (The Banner) */}
-      <div 
-        ref={bannerRef}
-        className="w-full text-center px-4"
+    <>
+      <section 
+        ref={containerRef}
+        id="contact"
+        className="fixed bottom-0 left-0 w-full h-screen z-0 bg-black overflow-hidden flex flex-col items-center justify-center"
       >
-        <h2 className="font-syne font-extrabold uppercase text-[12vw] leading-none text-white tracking-tighter">
-          {contact.mainTitle}
-        </h2>
-      </div>
-
-      {/* 2. MERKEZİ ÇEKİRDEK (The Core Content) */}
-      <div ref={coreRef} className="flex flex-col items-center justify-center text-center">
-        <a 
-          href={`mailto:${contact.email}`}
-          className="reveal-item font-cormorant italic text-5xl md:text-7xl text-white hover:text-[#EAB308] transition-colors duration-500 mb-6"
-        >
-          {contact.email}
-        </a>
-        <h3 className="reveal-item font-archivo font-bold text-xl md:text-2xl tracking-tighter text-[#EAB308] uppercase">
-          {contact.brandName}
-        </h3>
-      </div>
-
-      {/* 3. ALT BİLGİLER (Details & Asymmetry) */}
-      <div className="w-full px-10 md:px-20 grid grid-cols-1 md:grid-cols-2 gap-10 items-end">
-        {/* Phone Numbers */}
-        <div className="reveal-item flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EAB308" strokeWidth="3" className="shrink-0">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <span className="font-archivo text-xs font-bold text-[#EAB308] tracking-widest uppercase">{contact.phoneLabels.gsm}</span>
-            <a href={`tel:${contact.phoneNumbers.gsm}`} className="font-archivo text-white/80 hover:text-white transition-colors">
-              {contact.phoneNumbers.gsm}
-            </a>
+        <div ref={contentWrapperRef} className="w-full h-full relative flex flex-col items-center justify-center">
+          
+          {/* 1. SOL ÜST KÖŞE (The Signature) */}
+          <div className="absolute top-10 left-10 z-20 hidden md:block">
+            <p className="text-[10px] uppercase tracking-widest text-white/40 font-archivo">
+              Design Inspired by Michael Aust | Developed with AI by elkasar
+            </p>
           </div>
-          <div className="flex items-center gap-3">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EAB308" strokeWidth="3" className="shrink-0">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <span className="font-archivo text-xs font-bold text-[#EAB308] tracking-widest uppercase">{contact.phoneLabels.schweiz}</span>
-            <a href={`tel:${contact.phoneNumbers.schweiz}`} className="font-archivo text-white/80 hover:text-white transition-colors">
-              {contact.phoneNumbers.schweiz}
-            </a>
-          </div>
-        </div>
 
-        {/* Social and Copyright */}
-        <div className="reveal-item flex flex-col items-end gap-6">
-          <a 
-            href="https://instagram.com/timerightproduction" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 font-syne font-bold text-lg text-white/60 hover:text-white transition-all group"
+          {/* SAĞ ÜST KÖŞE (Privacy Link) */}
+          <button 
+            onClick={openPrivacy}
+            className="absolute top-10 right-10 z-20 text-[10px] uppercase tracking-widest text-white/40 hover:text-[#EAB308] transition-colors font-archivo"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-[#EAB308] transition-colors">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-            {contact.socialHandle}
-          </a>
-          <p className="font-archivo text-[10px] text-white/20 tracking-[0.3em] uppercase">
-            {contact.copyright}
-          </p>
+            {privacyLabel}
+          </button>
+
+          {/* 2. MERKEZİ ALAN (The Core) */}
+          <div ref={coreContentRef} className="flex flex-col items-center justify-center text-center z-10 px-4 relative top-[-5vh]">
+              {/* A) BRAND */}
+              <h2 className="text-white font-syne font-bold text-2xl md:text-4xl tracking-[0.2em] mb-6">
+                  {contact.brandName}
+              </h2>
+
+              {/* B) EMAIL */}
+              <a 
+                href={`mailto:${contact.email}`}
+                className="font-cormorant italic text-4xl md:text-6xl text-white/90 hover:text-[#EAB308] transition-colors mb-10 block"
+              >
+                {contact.email}
+              </a>
+
+              {/* C) NUMBERS */}
+              <div className="flex flex-col md:flex-row gap-8 md:gap-16 mb-12">
+                  <div className="flex flex-col items-center gap-2">
+                      <span className="text-[#EAB308] font-archivo text-xs md:text-sm font-bold tracking-widest">
+                          {contact.phoneLabels.gsm}
+                      </span>
+                      <a href={`tel:${contact.phoneNumbers.gsm}`} className="text-white font-archivo text-lg hover:text-white/80 transition-colors">
+                          {contact.phoneNumbers.gsm}
+                      </a>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                      <span className="text-[#EAB308] font-archivo text-xs md:text-sm font-bold tracking-widest">
+                          {contact.phoneLabels.schweiz}
+                      </span>
+                      <a href={`tel:${contact.phoneNumbers.schweiz}`} className="text-white font-archivo text-lg hover:text-white/80 transition-colors">
+                          {contact.phoneNumbers.schweiz}
+                      </a>
+                  </div>
+              </div>
+
+              {/* D) SOCIAL */}
+              <a 
+                href="https://instagram.com/timerightproduction"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-syne font-bold text-lg text-white hover:text-[#EAB308] transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] hover:drop-shadow-[0_0_15px_rgba(234,179,8,0.6)]"
+              >
+                  {contact.socialHandle}
+              </a>
+          </div>
+
+          {/* 3. EN ALT: AKAN YAZI (Marquee) */}
+          <div className="absolute bottom-10 md:bottom-0 left-0 w-full overflow-hidden z-0 pointer-events-none pb-4 opacity-20">
+              <div ref={marqueeRef} className="flex whitespace-nowrap w-max">
+                  <div className="flex items-center gap-8 px-4">
+                      <span className="font-syne font-black text-[15vw] md:text-[8vw] text-white leading-none">
+                          {contact.mainTitle}
+                      </span>
+                      <span className="font-syne font-black text-[15vw] md:text-[8vw] text-transparent stroke-white stroke-2 leading-none" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
+                          {contact.mainTitle}
+                      </span>
+                  </div>
+                  <div className="flex items-center gap-8 px-4">
+                      <span className="font-syne font-black text-[15vw] md:text-[8vw] text-white leading-none">
+                          {contact.mainTitle}
+                      </span>
+                      <span className="font-syne font-black text-[15vw] md:text-[8vw] text-transparent stroke-white stroke-2 leading-none" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.5)' }}>
+                          {contact.mainTitle}
+                      </span>
+                  </div>
+              </div>
+          </div>
+
         </div>
+      </section>
+
+      {/* PRIVACY OVERLAY - Fixed over EVERYTHING */}
+      <div 
+        ref={privacyOverlayRef}
+        className="fixed inset-0 z-[100] translate-y-full will-change-transform"
+      >
+        <PrivacyContent 
+          title={privacy.title} 
+          content={privacy.content} 
+          backLabel={privacy.back}
+          onBack={closePrivacy}
+        />
       </div>
-    </section>
+    </>
   );
 }

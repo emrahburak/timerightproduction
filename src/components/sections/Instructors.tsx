@@ -170,11 +170,12 @@ export default function Instructors({ instructors }: SectionProps) {
 
   return (
     <section
+      id="instructors"
       ref={containerRef}
       onClick={handleNav}
       onMouseEnter={() => gsap.to(cursorRef.current, { opacity: 1, duration: 0.3 })}
       onMouseLeave={() => gsap.to(cursorRef.current, { opacity: 0, duration: 0.3 })}
-      className="min-h-screen bg-black grid grid-cols-1 md:grid-cols-2 overflow-hidden relative cursor-none select-none"
+      className="min-h-screen bg-black grid grid-cols-1 md:grid-cols-2 overflow-hidden relative z-10 cursor-none select-none shadow-[0_50px_100px_-20px_rgba(0,0,0,1)]"
     >
       {/* 120px Glass Effect Cursor */}
       <div 
