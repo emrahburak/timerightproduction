@@ -34,7 +34,6 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
   const pathname = usePathname();
   const router = useRouter();
 
@@ -84,7 +83,7 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
     });
   };
 
-  // GSAP Scroll-Up Reveal Logic & Active State
+  // GSAP Scroll-Up Reveal Logic
   useGSAP(() => {
     if (!headerRef.current) return;
 
@@ -108,24 +107,7 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
       }
     });
 
-    // Active State Tracking
-    navItems.forEach((item) => {
-      // Defensive check: ensure path exists and is a hash link
-      if (!item.path || !item.path.startsWith('#')) return;
-      
-      ScrollTrigger.create({
-        trigger: item.path,
-        start: "top center",
-        end: "bottom center",
-        onToggle: (self) => {
-          if (self.isActive) {
-            setActiveSection(item.path);
-          }
-        }
-      });
-    });
-
-  }, { scope: headerRef, dependencies: [navItems] });
+  }, { scope: headerRef });
 
   // Mobile Menu Animation
   useGSAP(() => {
@@ -181,12 +163,10 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
                   <a 
                     href={item.path}
                     onClick={(e) => handleSmoothScroll(e, item.path)}
-                    className={`font-archivo text-xs uppercase tracking-[0.15em] font-medium transition-all duration-300 relative py-2 
-                      ${activeSection === item.path ? 'text-[#EAB308]' : 'text-white hover:text-[#EAB308]'}
-                    `}
+                    className="font-archivo text-xs uppercase tracking-[0.15em] font-medium transition-all duration-300 relative py-2 text-white hover:text-[#EAB308]"
                   >
                     {item.label}
-                    <span className={`absolute bottom-0 left-0 h-[1px] bg-[#EAB308] transition-all duration-300 ${activeSection === item.path ? 'w-full' : 'w-0'}`}></span>
+                    <span className="absolute bottom-0 left-0 h-[1px] bg-[#EAB308] transition-all duration-300 w-0 group-hover:w-full"></span>
                   </a>
                 </li>
               ))}

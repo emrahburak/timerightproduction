@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Syne, Cormorant_Garamond, Archivo } from "next/font/google"; // Import Archivo font
 import Header from '@/components/Header'; // Import Header component
 import SmoothScroll from '@/components/SmoothScroll'; // Import SmoothScroll component
+import IntroOverlay from '@/components/IntroOverlay'; // Import IntroOverlay
 
 const syne = Syne({
   subsets: ["latin"],
@@ -58,6 +59,7 @@ export default async function LocaleLayout({
     <div
       className={`${syne.variable} ${cormorantGaramond.variable} ${archivo.variable}`} // Apply font variables including Archivo
     >
+      <IntroOverlay />
       <Header locale={locale} />
       <SmoothScroll>
         {children}
