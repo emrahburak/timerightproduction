@@ -42,6 +42,8 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest?v=2',
 };
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'tr' }];
 }

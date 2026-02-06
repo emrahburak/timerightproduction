@@ -3,11 +3,14 @@ import ClientHeaderContent from './ClientHeaderContent'; // Import the client co
 
 // Helper function to dynamically load messages
 async function getMessages(locale: string) {
+  const supportedLocales = ['en', 'tr'];
+  const targetLocale = supportedLocales.includes(locale) ? locale : 'en';
+
   try {
-    const messages = (await import(`@/messages/${locale}.json`)).default;
+    const messages = (await import(`@/messages/${targetLocale}.json`)).default;
     return messages;
   } catch (error) {
-    console.error(`Could not load messages for locale ${locale}:`, error);
+    console.error(`Could not load messages for locale ${targetLocale}:`, error);
     // Fallback to English messages if the specific locale messages are not found
     return (await import(`@/messages/en.json`)).default;
   }

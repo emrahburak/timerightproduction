@@ -7,8 +7,11 @@ interface PrivacyPageProps {
 }
 
 async function getMessages(locale: string) {
+  const supportedLocales = ['en', 'tr'];
+  const targetLocale = supportedLocales.includes(locale) ? locale : 'en';
+
   try {
-    const messages = (await import(`@/messages/${locale}.json`)).default;
+    const messages = (await import(`@/messages/${targetLocale}.json`)).default;
     return messages;
   } catch (error) {
     return (await import(`@/messages/en.json`)).default;

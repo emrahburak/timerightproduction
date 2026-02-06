@@ -71,12 +71,14 @@ interface HomePageProps {
 
 // Helper function to dynamically load all messages for a given locale
 async function getAllMessages(locale: string): Promise<Messages> {
+  const supportedLocales = ['en', 'tr'];
+  const targetLocale = supportedLocales.includes(locale) ? locale : 'en';
+  
   try {
-    const messages = (await import(`@/messages/${locale}.json`)).default as Messages;
+    const messages = (await import(`@/messages/${targetLocale}.json`)).default as Messages;
     return messages;
   } catch (error) {
-    console.error(`Could not load messages for locale ${locale}:`, error);
-    // Fallback to English messages if the specific locale messages are not found
+    console.error(`Could not load messages for locale ${targetLocale}:`, error);
     return (await import(`@/messages/en.json`)).default as Messages;
   }
 }
