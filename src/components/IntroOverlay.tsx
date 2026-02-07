@@ -17,8 +17,9 @@ export default function IntroOverlay() {
     });
 
     // Initial States
-    gsap.set(logoRef.current, { opacity: 0, scale: 1.5 });
-    // ARCH.md Instruction 2: Beam starts hidden (opacity 0) and off-screen (top 110%)
+    // Logo opacity is handled by CSS (opacity-0) until GSAP takes over
+    gsap.set(logoRef.current, { scale: 1.5 }); 
+    // Beam starts hidden (opacity 0) and off-screen (top 110%)
     gsap.set(beamRef.current, { top: '110%', opacity: 0 }); 
 
     // STEP 1: Logo Pulse (In -> Hold -> Out)
@@ -35,7 +36,7 @@ export default function IntroOverlay() {
 
     // STEP 2: Sharp Beam Scan (Starts AFTER Logo is gone)
     tl.to(beamRef.current, { 
-      opacity: 1,      // ARCH.md Instruction 3: Make visible when movement starts
+      opacity: 1,      // Make visible when movement starts
       top: '-50%', 
       duration: 1.2, 
       ease: 'power4.out', // Faster and sharper movement
@@ -75,7 +76,8 @@ export default function IntroOverlay() {
           src="/timeright.png"
           alt="Time Right Production"
           fill
-          className="object-contain object-center scale-150"
+          // ARCH.md Instruction 1: Added opacity-0 to prevent logo ghosting/flash
+          className="object-contain object-center scale-150 opacity-0"
           priority
         />
       </div>
