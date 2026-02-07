@@ -16,37 +16,34 @@ export default function IntroOverlay() {
       onComplete: () => setIsComplete(true),
     });
 
-    // Initial States
-    gsap.set(logoRef.current, { opacity: 0 });
-    // Beam starts well below the screen
-    gsap.set(beamRef.current, { top: '110%', opacity: 0 }); 
+    // Initial States (ARCH.md Section 4)
+    gsap.set(logoRef.current, { opacity: 0, scale: 1.5 });
+    // Beam ready to go, opacity 1
+    gsap.set(beamRef.current, { top: '110%', opacity: 1 }); 
 
-    // STEP 1: Fade In Logo (Slower: 2s)
+    // STEP 1: Logo Pulse (In -> Hold -> Out) (ARCH.md Section 1)
     tl.to(logoRef.current, { 
       opacity: 1, 
-      duration: 2, 
+      duration: 1.5, 
       ease: 'power2.inOut' 
+    })
+    .to(logoRef.current, { 
+      opacity: 0, 
+      duration: 1.0, 
+      ease: 'power2.inOut' 
+    }, "+=0.2"); // Hold 0.2s
+
+    // STEP 2: Sharp Beam Scan (Starts AFTER Logo is gone) (ARCH.md Section 2)
+    tl.to(beamRef.current, { 
+      top: '-50%', 
+      duration: 1.2, 
+      ease: 'power4.out', // Faster and sharper movement
     });
 
-    // STEP 2: The Shine (Light Beam)
-    // First, make it visible
-    tl.to(beamRef.current, {
-      opacity: 1,
-      duration: 0.1, 
-    }, "-=1"); // Start well before logo fade finishes (overlap)
-
-    // Then move it from bottom to top of the SCREEN
-    tl.to(beamRef.current, { 
-      top: '-50%', // Changed from '-20%' to '-50%' (ARCH.md Instruction 2)
-      duration: 1.5, 
-      ease: 'power2.inOut',
-    }, "<");
-
-    // STEP 3: Exit (0.8s)
+    // STEP 3: Exit Overlay (ARCH.md Section 4)
     tl.to(containerRef.current, { 
       opacity: 0, 
-      duration: 0.8, 
-      ease: 'power2.inOut',
+      duration: 0.5, // Reduced duration
       pointerEvents: 'none' 
     });
 
@@ -59,14 +56,14 @@ export default function IntroOverlay() {
       ref={containerRef} 
       className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
     >
-      {/* Light Beam - Moved OUTSIDE the logo container, direct child of fixed overlay */}
+      {/* Light Beam - Updated styling for sharpness (ARCH.md Section 3 & 5) */}
       <div 
         ref={beamRef}
-        // Changed h-32 to h-[30rem], blur-2xl to blur-3xl, mix-blend-overlay to mix-blend-screen (ARCH.md Instruction 1)
-        className="absolute left-0 w-full h-[30rem] z-20 blur-3xl pointer-events-none mix-blend-screen"
+        // Updated h-[30rem] -> h-[400px], blur-3xl -> blur-md
+        className="absolute left-0 w-full h-[400px] z-20 blur-md pointer-events-none mix-blend-screen"
         style={{
-          // Updated gradient style (ARCH.md Instruction 1)
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0.8) 40%, #ffffff 50%, rgba(236, 72, 153, 0.8) 60%, transparent 100%)' 
+          // Updated gradient style for sharper transitions
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0.9) 20%, #ffffff 50%, rgba(236, 72, 153, 0.9) 80%, transparent 100%)' 
         }}
       />
 
