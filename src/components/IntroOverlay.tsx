@@ -16,12 +16,12 @@ export default function IntroOverlay() {
       onComplete: () => setIsComplete(true),
     });
 
-    // Initial States (ARCH.md Section 4)
+    // Initial States
     gsap.set(logoRef.current, { opacity: 0, scale: 1.5 });
-    // Beam ready to go, opacity 1
-    gsap.set(beamRef.current, { top: '110%', opacity: 1 }); 
+    // ARCH.md Instruction 2: Beam starts hidden (opacity 0) and off-screen (top 110%)
+    gsap.set(beamRef.current, { top: '110%', opacity: 0 }); 
 
-    // STEP 1: Logo Pulse (In -> Hold -> Out) (ARCH.md Section 1)
+    // STEP 1: Logo Pulse (In -> Hold -> Out)
     tl.to(logoRef.current, { 
       opacity: 1, 
       duration: 1.5, 
@@ -33,14 +33,15 @@ export default function IntroOverlay() {
       ease: 'power2.inOut' 
     }, "+=0.2"); // Hold 0.2s
 
-    // STEP 2: Sharp Beam Scan (Starts AFTER Logo is gone) (ARCH.md Section 2)
+    // STEP 2: Sharp Beam Scan (Starts AFTER Logo is gone)
     tl.to(beamRef.current, { 
+      opacity: 1,      // ARCH.md Instruction 3: Make visible when movement starts
       top: '-50%', 
       duration: 1.2, 
       ease: 'power4.out', // Faster and sharper movement
     });
 
-    // STEP 3: Exit Overlay (ARCH.md Section 4)
+    // STEP 3: Exit Overlay
     tl.to(containerRef.current, { 
       opacity: 0, 
       duration: 0.5, // Reduced duration
@@ -56,11 +57,11 @@ export default function IntroOverlay() {
       ref={containerRef} 
       className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
     >
-      {/* Light Beam - Updated styling for sharpness (ARCH.md Section 3 & 5) */}
+      {/* Light Beam - Updated styling for sharpness */}
       <div 
         ref={beamRef}
-        // Updated h-[30rem] -> h-[400px], blur-3xl -> blur-md
-        className="absolute left-0 w-full h-[400px] z-20 blur-md pointer-events-none mix-blend-screen"
+        // ARCH.md Instruction 1: Added opacity-0 to hide beam until GSAP takes over
+        className="absolute left-0 w-full h-[400px] z-20 blur-md pointer-events-none mix-blend-screen opacity-0"
         style={{
           // Updated gradient style for sharper transitions
           background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0.9) 20%, #ffffff 50%, rgba(236, 72, 153, 0.9) 80%, transparent 100%)' 
