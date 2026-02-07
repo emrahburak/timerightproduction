@@ -34,13 +34,13 @@ export default function IntroOverlay() {
       ease: 'power2.inOut' 
     }, "+=0.2"); // Hold 0.2s
 
-    // STEP 2: Sharp Beam Scan (Starts AFTER Logo is gone)
+    // STEP 2: Sharp Beam Scan (Starts overlapping the logo fade out)
     tl.to(beamRef.current, { 
-      opacity: 1,      // Make visible when movement starts
+      opacity: 1,      
       top: '-50%', 
-      duration: 1.2, 
-      ease: 'power4.out', // Faster and sharper movement
-    });
+      duration: 1.5,      // Increased duration for 'expo.in' feel
+      ease: 'expo.in',    // ARCH Instruction 2: Slow start -> Fast end
+    }, "-=0.3");          // ARCH Instruction 1: Overlap logo fade out
 
     // STEP 3: Exit Overlay
     tl.to(containerRef.current, { 
@@ -61,11 +61,11 @@ export default function IntroOverlay() {
       {/* Light Beam - Updated styling for sharpness */}
       <div 
         ref={beamRef}
-        // ARCH.md Instruction 1: Added opacity-0 to hide beam until GSAP takes over
-        className="absolute left-0 w-full h-[400px] z-20 blur-md pointer-events-none mix-blend-screen opacity-0"
+        // ARCH Instruction 3: h-[400px] -> h-[100px], blur-md -> blur-sm
+        className="absolute left-0 w-full h-[100px] z-20 blur-sm pointer-events-none mix-blend-screen opacity-0"
         style={{
-          // Updated gradient style for sharper transitions
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0.9) 20%, #ffffff 50%, rgba(236, 72, 153, 0.9) 80%, transparent 100%)' 
+          // ARCH Instruction 3: Sharp gradient for laser effect
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0) 40%, rgba(236, 72, 153, 1) 48%, #ffffff 50%, rgba(236, 72, 153, 1) 52%, rgba(236, 72, 153, 0) 60%, transparent 100%)' 
         }}
       />
 
