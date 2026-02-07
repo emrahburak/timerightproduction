@@ -37,7 +37,7 @@ export default function IntroOverlay() {
 
     // Then move it from bottom to top of the SCREEN
     tl.to(beamRef.current, { 
-      top: '-20%', // End well above the screen
+      top: '-50%', // Changed from '-20%' to '-50%' (ARCH.md Instruction 2)
       duration: 1.5, 
       ease: 'power2.inOut',
     }, "<");
@@ -62,9 +62,11 @@ export default function IntroOverlay() {
       {/* Light Beam - Moved OUTSIDE the logo container, direct child of fixed overlay */}
       <div 
         ref={beamRef}
-        className="absolute left-0 w-full h-32 z-20 blur-2xl pointer-events-none mix-blend-overlay"
+        // Changed h-32 to h-[30rem], blur-2xl to blur-3xl, mix-blend-overlay to mix-blend-screen (ARCH.md Instruction 1)
+        className="absolute left-0 w-full h-[30rem] z-20 blur-3xl pointer-events-none mix-blend-screen"
         style={{
-          background: 'linear-gradient(to bottom, transparent, rgba(236, 72, 153, 0.4), #ffffff, rgba(236, 72, 153, 0.4), transparent)' 
+          // Updated gradient style (ARCH.md Instruction 1)
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0.8) 40%, #ffffff 50%, rgba(236, 72, 153, 0.8) 60%, transparent 100%)' 
         }}
       />
 
