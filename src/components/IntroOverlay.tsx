@@ -34,18 +34,18 @@ export default function IntroOverlay() {
       ease: 'power2.inOut' 
     }, "+=0.2"); // Hold 0.2s
 
-    // STEP 2: Sharp Beam Scan (Starts overlapping the logo fade out)
+    // STEP 2: Sharp Beam Scan (Starts WHILE Logo is fading out)
     tl.to(beamRef.current, { 
-      opacity: 1,      
+      opacity: 1, 
       top: '-50%', 
-      duration: 1.5,      // Increased duration for 'expo.in' feel
-      ease: 'expo.in',    // ARCH Instruction 2: Slow start -> Fast end
-    }, "-=0.3");          // ARCH Instruction 1: Overlap logo fade out
+      duration: 1.3, 
+      ease: 'expo.in', // Slow start -> Sudden acceleration
+    }, "-=0.5"); // Start 0.5s before logo fade-out finishes
 
     // STEP 3: Exit Overlay
     tl.to(containerRef.current, { 
       opacity: 0, 
-      duration: 0.5, // Reduced duration
+      duration: 0.5, 
       pointerEvents: 'none' 
     });
 
@@ -58,14 +58,12 @@ export default function IntroOverlay() {
       ref={containerRef} 
       className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
     >
-      {/* Light Beam - Updated styling for sharpness */}
+      {/* Light Beam - Bold & Sharp */}
       <div 
         ref={beamRef}
-        // ARCH Instruction 3: h-[400px] -> h-[100px], blur-md -> blur-sm
-        className="absolute left-0 w-full h-[100px] z-20 blur-sm pointer-events-none mix-blend-screen opacity-0"
+        className="absolute left-0 w-full h-[400px] z-20 blur-md pointer-events-none mix-blend-screen opacity-0"
         style={{
-          // ARCH Instruction 3: Sharp gradient for laser effect
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0) 40%, rgba(236, 72, 153, 1) 48%, #ffffff 50%, rgba(236, 72, 153, 1) 52%, rgba(236, 72, 153, 0) 60%, transparent 100%)' 
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0) 30%, rgba(236, 72, 153, 1) 45%, #ffffff 50%, rgba(236, 72, 153, 1) 55%, rgba(236, 72, 153, 0) 70%, transparent 100%)' 
         }}
       />
 
