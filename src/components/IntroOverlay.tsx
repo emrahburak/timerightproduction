@@ -18,52 +18,55 @@ export default function IntroOverlay() {
 
     // Initial States
     // Logo opacity is handled by CSS (opacity-0) until GSAP takes over
-    gsap.set(logoRef.current, { scale: 1.5 }); 
-    // Beam starts hidden (opacity 0) and off-screen (top 110%)
-    gsap.set(beamRef.current, { top: '110%', opacity: 0 }); 
+    gsap.set(logoRef.current, { scale: 1.5 });
+    // Beam starts hidden (opacity 0) and at the bottom edge
+    gsap.set(beamRef.current, { top: '100%', opacity: 0 });
 
-    // STEP 1: Logo Pulse (In -> Hold -> Out)
-    tl.to(logoRef.current, { 
-      opacity: 1, 
-      duration: 1.5, 
-      ease: 'power2.inOut' 
+    // STEP 1: Faster Logo Exit
+    tl.to(logoRef.current, {
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power2.out'
     })
-    .to(logoRef.current, { 
-      opacity: 0, 
-      duration: 1.0, 
-      ease: 'power2.inOut' 
-    }, "+=0.2"); // Hold 0.2s
+    .to(logoRef.current, {
+      opacity: 0,
+      duration: 0.3, // Faster exit
+      ease: 'power2.in'
+    }, "+=0.1");
 
-    // STEP 2: Sharp Beam Scan (Starts WHILE Logo is fading out)
-    tl.to(beamRef.current, { 
-      opacity: 1, 
-      top: '-50%', 
-      duration: 1.3, 
-      ease: 'expo.in', // Slow start -> Sudden acceleration
-    }, "-=0.5"); // Start 0.5s before logo fade-out finishes
-
-    // STEP 3: Exit Overlay
-    tl.to(containerRef.current, { 
-      opacity: 0, 
-      duration: 0.5, 
-      pointerEvents: 'none' 
-    });
+    // STEP 2: Immediate Overlapping Reveal
+    tl.to(beamRef.current, {
+      opacity: 1,
+      top: '-110%',
+      duration: 2.2,
+      ease: 'power4.inOut',
+    }, "-=0.3") // OVERLAP: Start as the logo is fading out
+    .to("#curtain", {
+      clipPath: 'inset(0% 0% 100% 0%)',
+      duration: 2.2,
+      ease: 'power4.inOut',
+    }, "<"); // Stay synced with beam
 
   }, { scope: containerRef });
 
   if (isComplete) return null;
 
   return (
-    <div 
-      ref={containerRef} 
-      className="fixed inset-0 z-[9999] bg-black flex items-center justify-center overflow-hidden"
-    >
-      {/* Light Beam - Bold & Sharp */}
-      <div 
+    <div ref={containerRef} className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden pointer-events-none">
+      {/* Black Background (The Curtain) */}
+      <div
+        id="curtain"
+        className="absolute inset-0 bg-black z-0"
+        style={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+      />
+
+      {/* Light Beam - Positioned above the curtain */}
+      <div
         ref={beamRef}
-        className="absolute left-0 w-full h-[400px] z-20 blur-md pointer-events-none mix-blend-screen opacity-0"
+        className="absolute left-0 w-full h-[600px] z-20 blur-md pointer-events-none mix-blend-screen opacity-0"
         style={{
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0) 30%, rgba(236, 72, 153, 1) 45%, #ffffff 50%, rgba(236, 72, 153, 1) 55%, rgba(236, 72, 153, 0) 70%, transparent 100%)' 
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0) 30%, rgba(236, 72, 153, 1) 45%, #ffffff 50%, rgba(236, 72, 153, 1) 55%, rgba(236, 72, 153, 0) 70%, transparent 100%)',
+          top: '100%'
         }}
       />
 
@@ -74,7 +77,6 @@ export default function IntroOverlay() {
           src="/timeright.png"
           alt="Time Right Production"
           fill
-          // ARCH.md Instruction 1: Added opacity-0 to prevent logo ghosting/flash
           className="object-contain object-center scale-150 opacity-0"
           priority
         />

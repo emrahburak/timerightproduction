@@ -28,7 +28,7 @@
 1. **Type Safety:** Always define interfaces for Messages and SectionProps.
 2. **GSAP Cleanup:** Ensure `useGSAP` or `gsap.context` is used for proper memory management.
 3. **No Placeholders:** Avoid dummy content; use the current language keys from `tr.json/en.json`.
-4. **Build Check:** Before suggesting a push, simulate a local build if major type changes occur.
+5. **Language Constraint:** Instructions in `ARCH.md` must ALWAYS be written in English to ensure compatibility with external tools (Aider/Aider-cli).
 
 ## 📅 Roadmap (Next Steps)
 
