@@ -76,22 +76,52 @@
     "description": "Meet our team of expert instructors.",
     "members": [
       {
-        "name": "Ahmet Yilmaz",
-        "title": "Rhythm Instructor",
-        "bio": "He has been providing corporate training for over 20 years by blending world rhythms.",
-        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+        "name": "Onur TAN",
+        "title": "Yönetmen-Senarist",
+        "bio": "",
+        "image": "timeright-instructor-onur-tan.webp"
       },
       {
-        "name": "Ayse Demir",
-        "title": "Performing Arts",
-        "bio": "An artist specialized in digital stage performances and visual arts.",
-        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop"
+        "name": "Ömer Faruk SORAK",
+        "title": "Yönetmen",
+        "bio": "",
+        "image": "timeright-instructor-omer-faruk-sorak.webp"
       },
       {
-        "name": "Mehmet Kaya",
-        "title": "Creative Drama",
-        "bio": "He works on drama techniques that strengthen team communication.",
-        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop"
+        "name": "İlker AKSUM",
+        "title": "Oyuncu",
+        "bio": "",
+        "image": "timeright-instructor-ilker-aksum.webp"
+      },
+      {
+        "name": "Soydan SOYDAŞ",
+        "title": "Oyuncu",
+        "bio": "",
+        "image": "timeright-instructor-soydan-soydas.webp"
+      },
+      {
+        "name": "Zafer ALTUN",
+        "title": "Oyuncu-Acting Coach",
+        "bio": "",
+        "image": "timeright-instructor-zafer-altun.webp"
+      },
+      {
+        "name": "Fatoş YILMAZ",
+        "title": "Cast Directörü-Menajer",
+        "bio": "",
+        "image": "timeright-instructor-fatos-yilmaz.webp"
+      },
+      {
+        "name": "Hacı Mehmet DURANOĞLU",
+        "title": "Yönetmen-Akademisyen",
+        "bio": "",
+        "image": "timeright-instructor-haci-mehmet-duranoglu.webp"
+      },
+      {
+        "name": "Asef Okan YAĞCI",
+        "title": "Baterist-Perküsyonist",
+        "bio": "",
+        "image": "timeright-instructor-asef-okan-yagci.webp"
       }
     ]
   },

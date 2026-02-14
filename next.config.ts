@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'cdn.timerightproduction.org',
+      },
+      {
+        protocol: 'https',
         hostname: 'timerightproduction.org',
         port: '',
         pathname: '/**',
