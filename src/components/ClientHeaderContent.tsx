@@ -5,7 +5,6 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -22,6 +21,7 @@ interface NavLinks {
   services: NavItem;
   team: NavItem;
   contact: NavItem;
+  privacy?: string;
 }
 
 interface ClientHeaderContentProps {
@@ -31,18 +31,19 @@ interface ClientHeaderContentProps {
 
 export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderContentProps) {
   const headerRef = useRef<HTMLElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuItemsRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
   const navItems = Object.entries(navLinks)
     .map(([key, value]) => {
-       if (typeof value === 'object' && value !== null && 'path' in value) {
-         return { key, ...value } as NavItem & { key: string };
-       }
-       return null;
+      if (typeof value === 'object' && value !== null && 'path' in value) {
+        return { key, ...value } as NavItem & { key: string };
+      }
+      return null;
     })
     .filter((item): item is NavItem & { key: string } => item !== null);
 
@@ -56,9 +57,8 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
     
-    // Close mobile menu if open
-    if (isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
     }
 
     if (path.startsWith('#')) {
@@ -73,8 +73,8 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
   };
 
   const scrollToTop = () => {
-    if (isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
     }
     gsap.to(window, {
       duration: 1.5,
@@ -83,11 +83,22 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
     });
   };
 
+  // Body scroll lock
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   // GSAP Scroll-Up Reveal Logic
   useGSAP(() => {
     if (!headerRef.current) return;
 
-    // Header Reveal
     const showAnim = gsap.from(headerRef.current, { 
       yPercent: -100,
       paused: true,
@@ -99,28 +110,60 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
       start: "top top",
       end: "max",
       onUpdate: (self) => {
-         if (self.direction === -1) {
-           showAnim.play();
-         } else if (self.direction === 1 && self.scroll() > 100) {
-           showAnim.reverse();
-         }
+        if (self.direction === -1) {
+          showAnim.play();
+        } else if (self.direction === 1 && self.scroll() > 100) {
+          showAnim.reverse();
+        }
       }
     });
-
   }, { scope: headerRef });
 
-  // Mobile Menu Animation
+  // Menu Animation
   useGSAP(() => {
-    if (isMobileMenuOpen) {
-      gsap.to(mobileMenuRef.current, { x: '0%', duration: 0.5, ease: 'power3.out' });
-      gsap.fromTo('.mobile-nav-item', 
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, delay: 0.2, ease: 'power3.out' }
+    if (!menuRef.current || !menuItemsRef.current) return;
+
+    if (isMenuOpen) {
+      // Open menu
+      gsap.to(menuRef.current, {
+        opacity: 1,
+        duration: 0.5,
+        ease: 'power3.out'
+      });
+      
+      gsap.to(menuRef.current, {
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+        duration: 0.8,
+        ease: 'power4.inOut'
+      });
+
+      gsap.fromTo(menuItemsRef.current.children, 
+        { y: 80, opacity: 0 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          duration: 0.8, 
+          stagger: 0.1, 
+          delay: 0.3, 
+          ease: 'power3.out' 
+        }
       );
     } else {
-      gsap.to(mobileMenuRef.current, { x: '100%', duration: 0.5, ease: 'power3.in' });
+      // Close menu
+      gsap.to(menuRef.current, {
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+        duration: 0.6,
+        ease: 'power4.inOut'
+      });
+
+      gsap.to(menuRef.current, {
+        opacity: 0,
+        duration: 0.4,
+        delay: 0.3,
+        ease: 'power3.out'
+      });
     }
-  }, [isMobileMenuOpen]);
+  }, [isMenuOpen]);
 
   // Dynamic Background Logic
   useEffect(() => {
@@ -131,6 +174,8 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
     handleScroll(); 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <>
@@ -193,53 +238,108 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
             </div>
           </nav>
 
-          {/* Mobile Menu Toggle */}
+          {/* Hamburger Menu Toggle */}
           <button 
-            className="md:hidden z-[102] relative w-10 h-10 flex flex-col justify-center items-center gap-1.5 group"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden z-[102] relative w-12 h-12 flex flex-col justify-center items-center gap-1.5 group"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
           >
-            <span className={`block w-6 h-[2px] bg-white transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-4 h-[2px] bg-white transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'group-hover:w-6'}`} />
-            <span className={`block w-6 h-[2px] bg-white transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            <span className={`block w-8 h-[2px] bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[5px]' : 'group-hover:w-8'}`} />
+            <span className={`block w-8 h-[2px] bg-white transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'group-hover:w-6'}`} />
+            <span className={`block w-8 h-[2px] bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[5px]' : 'group-hover:w-8'}`} />
+          </button>
+
+          {/* Desktop Hamburger (Hidden on mobile) */}
+          <button 
+            className="hidden md:flex z-[102] relative w-12 h-12 flex-col justify-center items-center gap-1.5 group"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            <span className={`block w-8 h-[2px] bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-[5px]' : 'group-hover:w-8'}`} />
+            <span className={`block w-8 h-[2px] bg-white transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'group-hover:w-6'}`} />
+            <span className={`block w-8 h-[2px] bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-[5px]' : 'group-hover:w-8'}`} />
           </button>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Full-Screen Hamburger Menu Overlay */}
       <div 
-        ref={mobileMenuRef}
-        className="fixed inset-0 bg-black z-[101] flex flex-col justify-center items-center translate-x-full"
+        ref={menuRef}
+        className="fixed inset-0 z-[101] bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center"
+        style={{ 
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+          opacity: 0
+        }}
       >
-        <nav className="flex flex-col items-center gap-8">
-          {navItems.map((item) => (
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#EAB308]/5 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#EAB308]/3 rounded-full blur-[100px]" />
+        </div>
+
+        {/* Menu Content */}
+        <nav ref={menuItemsRef} className="flex flex-col items-center gap-6 md:gap-10 z-10">
+          {navItems.map((item, index) => (
             <a
               key={item.key}
               href={item.path}
               onClick={(e) => handleSmoothScroll(e, item.path)}
-              className="mobile-nav-item font-syne font-bold text-4xl text-white uppercase hover:text-[#EAB308] transition-colors"
+              className="menu-link font-syne font-black text-5xl md:text-7xl lg:text-8xl uppercase text-white hover:text-[#EAB308] transition-colors duration-300 cursor-pointer relative group"
+              style={{ 
+                textShadow: '0 0 40px rgba(234, 179, 8, 0)'
+              }}
             >
-              {item.label}
+              <span className="relative z-10 inline-block">
+                {item.label}
+              </span>
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-[#EAB308]">
+                —
+              </span>
             </a>
           ))}
         </nav>
 
-        <div className="mt-12 flex items-center gap-6 mobile-nav-item">
+        {/* Language Switcher in Menu */}
+        <div className="mt-16 flex items-center gap-6 z-10">
           <button
             onClick={() => handleLocaleChange('tr')}
-            className={`font-archivo text-sm uppercase tracking-widest px-4 py-2 border rounded-full transition-all ${
-              locale === 'tr' ? 'border-[#EAB308] text-[#EAB308]' : 'border-white/20 text-white/40'
+            className={`font-syne text-lg uppercase tracking-widest px-6 py-3 border-2 rounded-full transition-all duration-300 ${
+              locale === 'tr' 
+                ? 'border-[#EAB308] text-[#EAB308] bg-[#EAB308]/10' 
+                : 'border-white/20 text-white/60 hover:border-white/40 hover:text-white'
             }`}
           >
             Türkçe
           </button>
           <button
             onClick={() => handleLocaleChange('en')}
-            className={`font-archivo text-sm uppercase tracking-widest px-4 py-2 border rounded-full transition-all ${
-              locale === 'en' ? 'border-[#EAB308] text-[#EAB308]' : 'border-white/20 text-white/40'
+            className={`font-syne text-lg uppercase tracking-widest px-6 py-3 border-2 rounded-full transition-all duration-300 ${
+              locale === 'en' 
+                ? 'border-[#EAB308] text-[#EAB308] bg-[#EAB308]/10' 
+                : 'border-white/20 text-white/60 hover:border-white/40 hover:text-white'
             }`}
           >
             English
           </button>
+        </div>
+
+        {/* Footer Info */}
+        <div className="absolute bottom-8 left-0 right-0 text-center z-10">
+          <p className="font-archivo text-xs text-white/30 uppercase tracking-widest">
+            TIME RIGHT PRODUCTION © 2026
+          </p>
+        </div>
+
+        {/* Menu Number Indicators */}
+        <div className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-4 z-10">
+          {navItems.map((_, index) => (
+            <span 
+              key={index} 
+              className="font-syne text-xs text-white/20 uppercase tracking-widest"
+            >
+              {String(index + 1).padStart(2, '0')}
+            </span>
+          ))}
         </div>
       </div>
     </>
