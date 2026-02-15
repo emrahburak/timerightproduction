@@ -18,7 +18,7 @@ export default function IntroOverlay() {
 
     // Initial States
     // Logo opacity is handled by CSS (opacity-0) until GSAP takes over
-    gsap.set(logoRef.current, { scale: 1.5 });
+    gsap.set(logoRef.current, { scale: 1 });
     // Beam starts hidden (opacity 0) and at the bottom edge
     gsap.set(beamRef.current, { top: '100%', opacity: 0 });
 
@@ -71,13 +71,13 @@ export default function IntroOverlay() {
       />
 
       {/* Logo Container */}
-      <div className="relative z-10 w-[720px] max-w-[90vw] aspect-square">
+      <div className="relative z-10 w-[200px] sm:w-[280px] md:w-[350px] max-w-[70vw] aspect-square">
         <Image
           ref={logoRef}
           src="/timeright.png"
           alt="Time Right Production"
           fill
-          className="object-contain object-center scale-150 opacity-0"
+          className="object-contain object-center opacity-0"
           priority
         />
       </div>

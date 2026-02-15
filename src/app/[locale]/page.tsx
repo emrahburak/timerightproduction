@@ -93,8 +93,11 @@ export default async function HomePage({ params }: HomePageProps) {
     <main className="w-full bg-black"> {/* Cleaned Tailwind classes */}
       <div className="relative z-10 bg-black mb-[100vh]">
         <Hero title={messages.hero.title} />
-        <Statement content={messages.statement.text} />
-        <BrandGallery />
+        {/* Statement acts as a curtain that scrolls away to reveal BrandGallery */}
+        <div className="relative">
+          <Statement content={messages.statement.text} />
+          <BrandGallery />
+        </div>
         <About title={messages.about.title} content={messages.about.content} />
         <Services title={messages.services.title} items={messages.services.items} />
         <ShowcaseStack messages={messages.showcaseStack} />

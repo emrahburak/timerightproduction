@@ -12,31 +12,47 @@ interface SectionProps {
 }
 
 export default function Statement({ content }: SectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
 
   useGSAP(() => {
-    if (!textRef.current) return;
+    if (!sectionRef.current || !textRef.current) return;
 
-    // Split the text into words and animate each word
-    // We need to target the children (spans) of the paragraph
+    // Text reveal animation
     gsap.from(textRef.current.children, {
       y: 20,
       opacity: 0,
       filter: 'blur(10px)',
-      skewY: 7, // Skew on the Y-axis
-      stagger: 0.05, // Stagger animation for each word
+      skewY: 7,
+      stagger: 0.05,
       duration: 1.2,
       ease: 'power4.out',
       scrollTrigger: {
         trigger: textRef.current,
-        start: 'top 80%', // When top of trigger hits 80% of viewport
-        once: true, // Only animate once
+        start: 'top 80%',
+        once: true,
       },
     });
-  }, { scope: textRef }); // Scope to the text container
+
+    // Curtain scroll away effect - Statement moves up and fades as user scrolls
+    gsap.to(sectionRef.current, {
+      y: -100,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    });
+  }, { scope: sectionRef });
 
   return (
-    <section className="relative flex items-center justify-center min-h-screen bg-black w-full overflow-hidden">
+    <section 
+      ref={sectionRef}
+      className="sticky top-0 z-20 flex items-center justify-center h-screen bg-black w-full overflow-hidden"
+    >
       <p ref={textRef} className="font-cormorant italic text-white/90 max-w-4xl px-6 text-center leading-relaxed text-[clamp(1.5rem,4vw,3rem)]">
         {content.split(' ').map((word, index) => (
           <span key={index} className="inline-block">
