@@ -12,7 +12,7 @@ import DigitalStage from './DigitalStage';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface ShowcaseStackProps {
+export interface ShowcaseStackProps {
   messages: {
     academy: { title: string; subtitle: string; description: string; stat: string };
     workshops: { title: string; subtitle: string; description: string; stat: string };

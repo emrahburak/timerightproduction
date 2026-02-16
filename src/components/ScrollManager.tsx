@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, ReactNode, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { ShowcaseStackProps } from './sections/showcase/ShowcaseStack';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -105,20 +106,20 @@ export default function ScrollManager({ children }: ScrollManagerProps) {
   }, [showcaseCompleted]);
 
   // Function to find the ShowcaseStack child and update it
-  const updateChildrenWithCallback = (children: ReactNode) => {
+  const updateChildrenWithCallback = (children: ReactNode): ReactNode => {
     return React.Children.map(children, child => {
       if (React.isValidElement(child)) {
         // Check if this is the ShowcaseStack component by looking at props
-        const childProps = child.props as Partial<ShowcaseStackProps>;
+        const childProps = child.props as Partial<ShowcaseStackProps> & { children?: ReactNode };
         if (childProps.messages?.academy && childProps.messages?.workshops) {
           // This appears to be ShowcaseStack, add the callback
           console.log('Found ShowcaseStack, adding onCompletion callback');
           return React.cloneElement(child, {
             onCompletion: setShowcaseCompleted
-          });
+          } as Partial<ShowcaseStackProps>);
         } else if (childProps.children) {
           // Recursively check nested children
-          return React.cloneElement(child, {
+          return React.cloneElement<any>(child, {
             children: updateChildrenWithCallback(childProps.children)
           });
         }
