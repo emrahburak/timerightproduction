@@ -3,6 +3,9 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import Image from 'next/image';
+import { getHeroImageUrl } from '@/lib/constants';
+import { heroImage } from '@/data/hero';
 
 interface HeroProps {
   title: string;
@@ -47,8 +50,21 @@ export default function Hero({ title }: HeroProps) {
   }, { scope: container });
 
   return (
-    <section id="home" ref={container} className="h-screen bg-black flex items-center justify-start overflow-hidden">
-      <div className="relative z-10 w-full overflow-hidden">
+    <section id="home" ref={container} className="h-screen bg-black flex items-center justify-start overflow-hidden relative">
+      {/* Hero Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={getHeroImageUrl(heroImage.image)}
+          alt="Hero Background"
+          fill
+          className="object-cover opacity-40"
+          priority
+          sizes="100vw"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 w-full">
         <div ref={marqueeRef} className="flex flex-nowrap min-w-max">
           <ContentSet title={title} />
           <ContentSet title={title} />

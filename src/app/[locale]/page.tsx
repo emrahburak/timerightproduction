@@ -94,27 +94,27 @@ export default async function HomePage({ params }: HomePageProps) {
     <ScrollManager>
       <main className="w-full bg-black">
         {/* Hero Section - Native scroll */}
-        <div className="relative w-full min-h-screen">
+        <div data-section="hero" className="relative w-full min-h-screen">
           <Hero title={messages.hero.title} />
         </div>
 
         {/* Statement Section - Native scroll */}
-        <div className="relative w-full min-h-screen">
+        <div data-section="statement" className="relative w-full min-h-screen">
           <Statement content={messages.statement.text} />
         </div>
 
         {/* BrandGallery Section - Native scroll */}
-        <div className="relative w-full min-h-screen">
+        <div data-section="brandgallery" className="relative w-full min-h-screen">
           <BrandGallery />
         </div>
 
         {/* About Section - Native scroll */}
-        <div className="relative w-full min-h-screen">
+        <div data-section="about" className="relative w-full min-h-screen">
           <About title={messages.about.title} content={messages.about.content} />
         </div>
 
         {/* Services Section - Native scroll */}
-        <div className="relative w-full min-h-screen">
+        <div data-section="services" className="relative w-full min-h-screen">
           <Services title={messages.services.title} items={messages.services.items} />
         </div>
 
