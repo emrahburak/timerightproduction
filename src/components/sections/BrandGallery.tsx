@@ -142,7 +142,7 @@ export default function BrandGallery() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen bg-black w-full overflow-hidden"
+      className="absolute top-0 left-0 w-full h-screen bg-black w-full overflow-hidden"
     >
       <div
         ref={gridRef}

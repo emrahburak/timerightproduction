@@ -20,9 +20,10 @@ interface ShowcaseStackProps {
     rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
     digitalStage: { title: string; subtitle: string; description: string; stat: string };
   };
+  onCompletion?: (completed: boolean) => void;
 }
 
-const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages }) => {
+const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeSegment, setActiveSegment] = useState(0);
 
@@ -30,7 +31,7 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages }) => {
     if (!containerRef.current) return;
 
     const sections = gsap.utils.toArray<HTMLElement>('.showcase-item-wrapper');
-    
+
     // Initial state: hide all sections except the first one below the viewport
     gsap.set(sections.slice(1), { yPercent: 100 });
 
@@ -49,6 +50,37 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages }) => {
             sections.length - 1
           );
           setActiveSegment(segmentIndex);
+
+          // Check if animation is completed
+          if (onCompletion) {
+            const isCompleted = progress >= 0.99;
+            console.log('ShowcaseStack onUpdate - progress:', progress, 'isCompleted:', isCompleted);
+            onCompletion(isCompleted);
+          }
+        },
+        onLeave: () => {
+          console.log('ShowcaseStack onLeave - marking as completed');
+          if (onCompletion) {
+            onCompletion(true);
+          }
+        },
+        onLeaveBack: () => {
+          console.log('ShowcaseStack onLeaveBack - marking as not completed');
+          if (onCompletion) {
+            onCompletion(false);
+          }
+        },
+        onEnter: () => {
+          console.log('ShowcaseStack onEnter - marking as not completed');
+          if (onCompletion) {
+            onCompletion(false);
+          }
+        },
+        onEnterBack: () => {
+          console.log('ShowcaseStack onEnterBack - marking as not completed');
+          if (onCompletion) {
+            onCompletion(false);
+          }
         }
       }
     });
@@ -65,7 +97,7 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages }) => {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef} className="relative h-screen w-full overflow-hidden bg-black">
+    <div ref={containerRef} className="showcase-stack-container relative w-full h-screen overflow-hidden bg-black">
       {/* Local Navigation Line - Only visible when pinned */}
       <div className="absolute left-10 top-1/2 -translate-y-1/2 z-[60] flex flex-col gap-4">
         {[0, 1, 2, 3, 4].map((i) => (

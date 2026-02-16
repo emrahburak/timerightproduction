@@ -123,10 +123,10 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
 
   return (
     <>
-      <section 
+      <section
         ref={containerRef}
         id="contact"
-        className="fixed bottom-0 left-0 w-full h-screen z-0 bg-black overflow-hidden flex flex-col items-center justify-center"
+        className="sticky top-0 z-0 h-screen bg-black overflow-hidden flex flex-col items-center justify-center"
       >
         <div ref={contentWrapperRef} className="w-full h-full relative flex flex-col items-center justify-center">
           

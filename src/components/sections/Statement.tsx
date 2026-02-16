@@ -34,24 +34,13 @@ export default function Statement({ content }: SectionProps) {
       },
     });
 
-    // Curtain scroll away effect - Statement moves up and fades as user scrolls
-    gsap.to(sectionRef.current, {
-      y: -100,
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-      },
-    });
+
   }, { scope: sectionRef });
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className="sticky top-0 z-20 flex items-center justify-center h-screen bg-black w-full overflow-hidden"
+      className="relative flex items-center justify-center h-screen bg-black w-full overflow-hidden"
     >
       <p ref={textRef} className="font-cormorant italic text-white/90 max-w-4xl px-6 text-center leading-relaxed text-[clamp(1.5rem,4vw,3rem)]">
         {content.split(' ').map((word, index) => (

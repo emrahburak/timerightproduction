@@ -13,7 +13,7 @@ async function getMessages(locale: string) {
   try {
     const messages = (await import(`@/messages/${targetLocale}.json`)).default;
     return messages;
-  } catch (error) {
+  } catch {
     return (await import(`@/messages/en.json`)).default;
   }
 }

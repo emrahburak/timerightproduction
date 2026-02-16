@@ -4,8 +4,9 @@ import BrandGallery from '@/components/sections/BrandGallery';
 import About from '@/components/sections/About';
 import Services from '@/components/sections/Services';
 import ShowcaseStack from '@/components/sections/showcase/ShowcaseStack';
-import Instructors from '@/components/sections/Instructors';
+import Instructors, { type Instructor } from '@/components/sections/Instructors';
 import Contact from '@/components/sections/Contact';
+import ScrollManager from '@/components/ScrollManager';
 
 // Define a type for the messages object to ensure type safety
 interface Messages {
@@ -50,7 +51,7 @@ interface Messages {
   instructors: {
     title: string;
     description: string;
-    members: any[];
+    members: Instructor[];
   };
   contact: {
     mainTitle: string;
@@ -90,24 +91,52 @@ export default async function HomePage({ params }: HomePageProps) {
   const messages = await getAllMessages(locale); // Fetch all messages
 
   return (
-    <main className="w-full bg-black"> {/* Cleaned Tailwind classes */}
-      <div className="relative z-10 bg-black mb-[100vh]">
-        <Hero title={messages.hero.title} />
-        {/* Statement acts as a curtain that scrolls away to reveal BrandGallery */}
-        <div className="relative">
+    <ScrollManager>
+      <main className="w-full bg-black">
+        {/* Hero Section - Native scroll */}
+        <div className="relative w-full min-h-screen">
+          <Hero title={messages.hero.title} />
+        </div>
+
+        {/* Statement Section - Native scroll */}
+        <div className="relative w-full min-h-screen">
           <Statement content={messages.statement.text} />
+        </div>
+
+        {/* BrandGallery Section - Native scroll */}
+        <div className="relative w-full min-h-screen">
           <BrandGallery />
         </div>
-        <About title={messages.about.title} content={messages.about.content} />
-        <Services title={messages.services.title} items={messages.services.items} />
-        <ShowcaseStack messages={messages.showcaseStack} />
-        <Instructors instructors={messages.instructors} />
-      </div>
-      <Contact 
-        contact={messages.contact} 
-        privacy={messages.privacy}
-        privacyLabel={messages.navbar.privacy}
-      />
-    </main>
+
+        {/* About Section - Native scroll */}
+        <div className="relative w-full min-h-screen">
+          <About title={messages.about.title} content={messages.about.content} />
+        </div>
+
+        {/* Services Section - Native scroll */}
+        <div className="relative w-full min-h-screen">
+          <Services title={messages.services.title} items={messages.services.items} />
+        </div>
+
+        {/* ShowcaseStack Section - Pinned animation section */}
+        <div data-section="showcase-stack" className="relative w-full">
+          <ShowcaseStack messages={messages.showcaseStack} />
+        </div>
+
+        {/* Instructors Section - Will appear after ShowcaseStack animation completes */}
+        <div data-section="instructors" className="relative w-full min-h-screen">
+          <Instructors instructors={messages.instructors} />
+        </div>
+
+        {/* Contact Section - Native scroll */}
+        <div data-section="contact" className="relative w-full min-h-screen invisible">
+          <Contact
+            contact={messages.contact}
+            privacy={messages.privacy}
+            privacyLabel={messages.navbar.privacy}
+          />
+        </div>
+      </main>
+    </ScrollManager>
   );
 }

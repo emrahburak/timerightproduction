@@ -87,7 +87,13 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
   }, [isMenuOpen]);
 
   useEffect(() => {
-    if (!isMobile && isMenuOpen) setIsMenuOpen(false);
+    if (!isMobile && isMenuOpen) {
+      // Use setTimeout to avoid synchronous state update in effect
+      const timer = setTimeout(() => {
+        setIsMenuOpen(false);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
   }, [isMobile, isMenuOpen]);
 
   useGSAP(() => {

@@ -9,7 +9,7 @@ import { getInstructorImageUrl } from '@/lib/constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Instructor {
+export interface Instructor {
   name: string;
   title: string;
   bio: string;
@@ -188,27 +188,32 @@ export default function Instructors({ instructors }: SectionProps) {
   useEffect(() => {
     if (isAnimating) return;
 
-    setNextBufferIndex((secondaryIndex + 1) % members.length);
-    setPrevBufferIndex((currentIndex - 1 + members.length) % members.length);
+    // Use setTimeout to avoid synchronous state update in effect
+    const timer = setTimeout(() => {
+      setNextBufferIndex((secondaryIndex + 1) % members.length);
+      setPrevBufferIndex((currentIndex - 1 + members.length) % members.length);
+    }, 0);
 
-    gsap.set(slotARef.current, { 
-      left: '5%', width: '30%', height: '60%', x: 0, opacity: 1 
+    gsap.set(slotARef.current, {
+      left: '5%', width: '30%', height: '60%', x: 0, opacity: 1
     });
-    gsap.set(slotBRef.current, { 
-      left: '35%', width: '60%', height: '85%', x: 0, opacity: 1 
+    gsap.set(slotBRef.current, {
+      left: '35%', width: '60%', height: '85%', x: 0, opacity: 1
     });
-    gsap.set(nextBufferRef.current, { 
-      left: '5%', width: '30%', height: '60%', x: 0, opacity: 0 
+    gsap.set(nextBufferRef.current, {
+      left: '5%', width: '30%', height: '60%', x: 0, opacity: 0
     });
-    gsap.set(prevBufferRef.current, { 
-      left: '35%', width: '60%', height: '85%', x: 0, opacity: 0 
+    gsap.set(prevBufferRef.current, {
+      left: '35%', width: '60%', height: '85%', x: 0, opacity: 0
     });
 
-    gsap.fromTo(textRef.current, 
+    gsap.fromTo(textRef.current,
       { opacity: 0, y: cursorSide === 'right' ? 20 : -20 },
       { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.1 }
     );
-  }, [currentIndex, secondaryIndex, isAnimating, members.length]);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, secondaryIndex, isAnimating, members.length, cursorSide]);
 
   if (!members || members.length === 0) return null;
 
@@ -217,7 +222,7 @@ export default function Instructors({ instructors }: SectionProps) {
       id="instructors"
       ref={containerRef}
       onClick={handleNav}
-      className="min-h-[150vh] bg-black relative z-10 cursor-pointer"
+      className="absolute top-0 left-0 w-full h-screen bg-black cursor-pointer"
     >
       {/* 120px Glass Effect Cursor - Fixed position outside sticky */}
       <div 
