@@ -48,6 +48,12 @@ interface Messages {
     rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
     digitalStage: { title: string; subtitle: string; description: string; stat: string };
   };
+  brandGallery: {
+    title: {
+      brand: string;
+      tagline: string;
+    };
+  };
   instructors: {
     title: string;
     description: string;
@@ -93,43 +99,43 @@ export default async function HomePage({ params }: HomePageProps) {
   return (
     <ScrollManager>
       <main className="w-full bg-black">
-        {/* Hero Section - Native scroll */}
-        <div data-section="hero" className="relative w-full min-h-screen">
+        {/* Hero Section - Native scroll (z-10) */}
+        <div data-section="hero" className="relative w-full h-screen overflow-hidden z-10">
           <Hero title={messages.hero.title} />
         </div>
 
-        {/* Statement Section - Native scroll */}
-        <div data-section="statement" className="relative w-full min-h-screen">
+        {/* Statement Section - Slide-Over transition (z-20) */}
+        <div data-section="statement" className="relative w-full h-screen overflow-hidden z-20">
           <Statement content={messages.statement.text} />
         </div>
 
-        {/* BrandGallery Section - Native scroll */}
-        <div data-section="brandgallery" className="relative w-full min-h-screen">
-          <BrandGallery />
+        {/* BrandGallery Section - Slide-Over transition (z-30) */}
+        <div data-section="brandgallery" className="relative w-full h-screen overflow-hidden z-30">
+          <BrandGallery messages={messages.brandGallery} />
         </div>
 
-        {/* About Section - Native scroll */}
-        <div data-section="about" className="relative w-full min-h-screen">
+        {/* About Section - Slide-Over transition (z-40) */}
+        <div data-section="about" className="relative w-full h-screen overflow-hidden z-40">
           <About title={messages.about.title} content={messages.about.content} />
         </div>
 
-        {/* Services Section - Native scroll */}
-        <div data-section="services" className="relative w-full min-h-screen">
+        {/* Services Section - Horizontal scroll (internal pinning) */}
+        <div data-section="services" className="relative w-full min-h-screen overflow-hidden z-50">
           <Services title={messages.services.title} items={messages.services.items} />
         </div>
 
-        {/* ShowcaseStack Section - Pinned animation section */}
-        <div data-section="showcase-stack" className="relative w-full">
+        {/* ShowcaseStack Section - Internal pinning (z-60) */}
+        <div data-section="showcase-stack" className="relative w-full min-h-screen overflow-hidden z-60">
           <ShowcaseStack messages={messages.showcaseStack} />
         </div>
 
-        {/* Instructors Section - Will appear after ShowcaseStack animation completes */}
-        <div data-section="instructors" className="relative w-full min-h-screen">
+        {/* Instructors Section - Revealed after ShowcaseStack (z-70) */}
+        <div data-section="instructors" className="relative w-full h-screen overflow-hidden z-70">
           <Instructors instructors={messages.instructors} />
         </div>
 
-        {/* Contact Section - Native scroll */}
-        <div data-section="contact" className="relative w-full min-h-screen invisible">
+        {/* Contact Section - Slide-Over transition (z-80) */}
+        <div data-section="contact" className="relative w-full h-screen overflow-hidden z-80">
           <Contact
             contact={messages.contact}
             privacy={messages.privacy}

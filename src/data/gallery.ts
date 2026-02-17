@@ -12,4 +12,5 @@ export const galleryItems: GalleryItem[] = [
   { id: 6, image: 'timeright-images-06.webp' },
   { id: 7, image: 'timeright-images-07.webp' },
   { id: 8, image: 'timeright-images-08.webp' },
+  { id: 9, image: 'timeright-images-09.webp' },
 ];

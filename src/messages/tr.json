@@ -171,5 +171,11 @@
       "description": "Teknoloji ve sanatı harmanlayan büyüleyici dijital performanslar.",
       "stat": "300+ Canlı Yayın"
     }
+  },
+  "brandGallery": {
+    "title": {
+      "brand": "Timeright",
+      "tagline": "Tam Zamanı"
+    }
   }
 }

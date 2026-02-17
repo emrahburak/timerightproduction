@@ -171,5 +171,11 @@
       "description": "Breathtaking digital performances blending technology and art.",
       "stat": "300+ Live Streams"
     }
+  },
+  "brandGallery": {
+    "title": {
+      "brand": "Timeright",
+      "tagline": "Just in Time"
+    }
   }
 }
