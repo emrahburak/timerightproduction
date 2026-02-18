@@ -3,9 +3,10 @@
 import React, { useRef, useEffect, ReactNode, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { ShowcaseStackProps } from './sections/showcase/ShowcaseStack';
 
-gsap.registerPlugin();
+gsap.registerPlugin(ScrollTrigger);
 
 interface ScrollManagerProps {
   children: ReactNode;
@@ -51,6 +52,46 @@ export default function ScrollManager({ children }: ScrollManagerProps) {
       // Cleanup if needed
     };
   }, []);
+
+  // ============================================
+  // Statement → BrandGallery "Perde Çekilme" Efekti
+  // Statement yukarı kayarken, BrandGallery aşağıdan yukarı beliriyor
+  // ============================================
+  useGSAP(() => {
+    const statement = document.querySelector('[data-section="statement"]');
+    const brandGallery = document.querySelector('[data-section="brandgallery"]');
+
+    if (!statement || !brandGallery) return;
+
+    // Statement: Yukarı doğru perde gibi çekiliyor
+    gsap.to(statement, {
+      y: -100,
+      opacity: 0,
+      ease: 'power2.inOut',
+      scrollTrigger: {
+        trigger: statement,
+        start: 'bottom top',
+        end: 'top top',
+        scrub: 1,
+      },
+    });
+
+    // BrandGallery: Aşağıdan yukarı scroll ile beliriyor
+    gsap.fromTo(
+      brandGallery,
+      { y: 100 },
+      {
+        y: 0,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: brandGallery,
+          start: 'top bottom',
+          end: 'center center',
+          scrub: 1.5,
+        },
+      }
+    );
+  }, { scope: containerRef });
 
   // ============================================
   // ShowcaseStack Completion Handler

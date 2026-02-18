@@ -40,6 +40,7 @@ export default function Statement({ content }: SectionProps) {
   return (
     <section
       ref={sectionRef}
+      data-section="statement"
       className="relative flex items-center justify-center h-screen bg-black w-full overflow-hidden"
     >
       <p ref={textRef} className="font-cormorant italic text-white/90 max-w-4xl px-6 text-center leading-relaxed text-[clamp(1.5rem,4vw,3rem)]">
