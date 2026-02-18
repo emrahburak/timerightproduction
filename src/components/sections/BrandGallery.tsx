@@ -153,33 +153,33 @@ export default function BrandGallery({ messages }: BrandGalleryProps) {
       data-section="brandgallery"
     >
       {/* Responsive Grid: Mobile 2 cols, Desktop 3 cols */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3 h-full w-full p-4 md:p-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-5 h-full w-full p-4 md:p-8">
         {/* Column 1 - Aşağıdan Yukarı ↑ */}
-        <div ref={column1Ref} className="flex flex-col gap-1.5 md:gap-3 will-change-transform">
+        <div ref={column1Ref} className="flex flex-col gap-2 md:gap-5 will-change-transform">
           {/* Mobile items */}
-          <div className="md:hidden flex flex-col gap-1.5">
+          <div className="md:hidden flex flex-col gap-2">
             {mobileColumns.column1.slice(0, 10).map((item) => renderImage(item, 'mob-c1', '45vw'))}
           </div>
           {/* Desktop items */}
-          <div className="hidden md:flex flex-col gap-3">
+          <div className="hidden md:flex flex-col gap-5">
             {desktopColumns.column1.slice(0, 10).map((item) => renderImage(item, 'desk-c1', '30vw'))}
           </div>
         </div>
 
         {/* Column 2 - Yukarıdan Aşağı ↓ */}
-        <div ref={column2Ref} className="flex flex-col gap-1.5 md:gap-3 will-change-transform">
+        <div ref={column2Ref} className="flex flex-col gap-2 md:gap-5 will-change-transform">
           {/* Mobile items */}
-          <div className="md:hidden flex flex-col gap-1.5">
+          <div className="md:hidden flex flex-col gap-2">
             {mobileColumns.column2.slice(0, 10).map((item) => renderImage(item, 'mob-c2', '45vw'))}
           </div>
           {/* Desktop items */}
-          <div className="hidden md:flex flex-col gap-3">
+          <div className="hidden md:flex flex-col gap-5">
             {desktopColumns.column2.slice(0, 10).map((item) => renderImage(item, 'desk-c2', '30vw'))}
           </div>
         </div>
 
         {/* Column 3 - Aşağıdan Yukarı ↑ (Desktop only) */}
-        <div ref={column3Ref} className="hidden md:flex flex-col gap-3 will-change-transform">
+        <div ref={column3Ref} className="hidden md:flex flex-col gap-5 will-change-transform">
           {desktopColumns.column3.slice(0, 10).map((item) => renderImage(item, 'desk-c3', '30vw'))}
         </div>
       </div>
