@@ -35,3 +35,15 @@ export const getHeroImageUrl = (filename: string): string => {
 
   return `${CDN_BASE_URL}/${normalizedPath}`;
 };
+
+export const getAboutImageUrl = (filename: string): string => {
+  if (!filename || typeof filename !== 'string') {
+    return '/placeholder-about.webp';
+  }
+
+  const normalizedFilename = filename.replace(/^\/+/, '');
+  const path = `/images/about/${normalizedFilename}`;
+  const normalizedPath = path.replace(/^\/+/, '');
+
+  return `${CDN_BASE_URL}/${normalizedPath}`;
+};

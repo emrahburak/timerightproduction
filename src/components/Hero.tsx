@@ -57,7 +57,7 @@ export default function Hero({ title }: HeroProps) {
           src={getHeroImageUrl(heroImage.image)}
           alt="Hero Background"
           fill
-          className="object-cover opacity-40"
+          className="object-cover"
           priority
           sizes="100vw"
         />
