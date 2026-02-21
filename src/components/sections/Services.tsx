@@ -174,9 +174,8 @@ const Services = ({ title, items, scrollToExplore }: ServicesProps) => {
       <Image
         src={imageUrl}
         alt="Services Background"
-        layout="fill"
-        objectFit="cover"
-        className="absolute inset-0 z-0 opacity-20"
+        fill
+        className="absolute inset-0 z-0 opacity-20 object-cover"
       />
       {/* Top Fade-out Overlay */}
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />

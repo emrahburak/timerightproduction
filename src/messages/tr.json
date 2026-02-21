@@ -178,5 +178,26 @@
       "brand": "Timeright",
       "tagline": "Tam Zamanı"
     }
+  },
+  "reelShowcase": {
+    "title": "Videolarımız",
+    "play": "Oynat",
+    "items": [
+      {
+        "title": "TimeRight Media 02"
+      },
+      {
+        "title": "TimeRight Media 03"
+      },
+      {
+        "title": "TimeRight Media 04"
+      },
+      {
+        "title": "TimeRight Media 05"
+      },
+      {
+        "title": "TimeRight Media 08"
+      }
+    ]
   }
 }

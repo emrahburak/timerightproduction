@@ -30,6 +30,7 @@ export default function ScrollManager({ children }: ScrollManagerProps) {
       'brandgallery': 30,
       'about': 40,
       'services': 50,
+      'reelshowcase': 55,
       'showcase-stack': 60,
       'instructors': 70,
       'contact': 80,

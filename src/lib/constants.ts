@@ -59,3 +59,15 @@ export const getServiceImageUrl = (filename: string): string => {
 
   return `${CDN_BASE_URL}/${normalizedPath}`;
 };
+
+export const getVideoUrl = (filename: string): string => {
+  if (!filename || typeof filename !== 'string') {
+    return '';
+  }
+
+  const normalizedFilename = filename.replace(/^\/+/, '');
+  const path = `/videos/${normalizedFilename}`;
+  const normalizedPath = path.replace(/^\/+/, '');
+
+  return `${CDN_BASE_URL}/${normalizedPath}`;
+};

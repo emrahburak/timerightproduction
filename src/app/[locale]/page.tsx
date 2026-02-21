@@ -3,6 +3,7 @@ import Statement from '@/components/sections/Statement';
 import BrandGallery from '@/components/sections/BrandGallery';
 import About from '@/components/sections/About';
 import Services from '@/components/sections/Services';
+import ReelShowcase from '@/components/sections/ReelShowcase';
 import ShowcaseStack from '@/components/sections/showcase/ShowcaseStack';
 import Instructors, { type Instructor } from '@/components/sections/Instructors';
 import Contact from '@/components/sections/Contact';
@@ -41,6 +42,11 @@ interface Messages {
       description: string;
     }[];
     scrollToExplore: string;
+  };
+  reelShowcase: {
+    title: string;
+    play: string;
+    items: { title: string }[];
   };
   showcaseStack: {
     academy: { title: string; subtitle: string; description: string; stat: string };
@@ -123,6 +129,11 @@ export default async function HomePage({ params }: HomePageProps) {
         {/* Services Section - Horizontal scroll (internal pinning) */}
         <div data-section="services" className="relative w-full min-h-screen overflow-hidden z-50">
           <Services title={messages.services.title} items={messages.services.items} scrollToExplore={messages.services.scrollToExplore} />
+        </div>
+
+        {/* ReelShowcase Section - Video Gallery (z-55) */}
+        <div data-section="reelshowcase" className="relative w-full h-screen overflow-hidden z-55">
+          <ReelShowcase messages={messages.reelShowcase} />
         </div>
 
         {/* ShowcaseStack Section - Internal pinning (z-60) */}
