@@ -99,11 +99,11 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion })
   return (
     <div ref={containerRef} className="showcase-stack-container relative w-full h-screen overflow-hidden bg-black">
       {/* Local Navigation Line - Only visible when pinned */}
-      <div className="absolute left-10 top-1/2 -translate-y-1/2 z-[60] flex flex-col gap-4">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 md:bottom-auto md:left-10 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 z-[60] flex flex-row md:flex-col gap-3 md:gap-4">
         {[0, 1, 2, 3, 4].map((i) => (
           <div 
             key={i} 
-            className={`w-[2px] h-12 transition-colors duration-500 ${
+            className={`w-8 h-[2px] md:w-[2px] md:h-12 transition-colors duration-500 ${
               i <= activeSegment ? 'bg-white' : 'bg-white/20'
             }`}
           />

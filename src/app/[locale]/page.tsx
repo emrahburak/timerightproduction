@@ -40,6 +40,7 @@ interface Messages {
       title: string;
       description: string;
     }[];
+    scrollToExplore: string;
   };
   showcaseStack: {
     academy: { title: string; subtitle: string; description: string; stat: string };
