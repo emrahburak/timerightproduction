@@ -47,3 +47,15 @@ export const getAboutImageUrl = (filename: string): string => {
 
   return `${CDN_BASE_URL}/${normalizedPath}`;
 };
+
+export const getServiceImageUrl = (filename: string): string => {
+  if (!filename || typeof filename !== 'string') {
+    return '/placeholder-service.webp';
+  }
+
+  const normalizedFilename = filename.replace(/^\/+/, '');
+  const path = `/images/services/${normalizedFilename}`;
+  const normalizedPath = path.replace(/^\/+/, '');
+
+  return `${CDN_BASE_URL}/${normalizedPath}`;
+};

@@ -40,6 +40,7 @@
   },
   "services": {
     "title": "Hizmetlerimiz",
+    "scrollToExplore": "Keşfetmek için Kaydır",
     "items": [
       {
         "title": "Firma Tanıtım Filmleri",

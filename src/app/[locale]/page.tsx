@@ -121,7 +121,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
         {/* Services Section - Horizontal scroll (internal pinning) */}
         <div data-section="services" className="relative w-full min-h-screen overflow-hidden z-50">
-          <Services title={messages.services.title} items={messages.services.items} />
+          <Services title={messages.services.title} items={messages.services.items} scrollToExplore={messages.services.scrollToExplore} />
         </div>
 
         {/* ShowcaseStack Section - Internal pinning (z-60) */}

@@ -4,7 +4,10 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 import ServiceCard from './ServiceCard';
+import { getServiceImageUrl } from '@/lib/constants';
+import { serviceImage } from '@/data/services';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,12 +65,15 @@ interface ServiceItem {
 interface ServicesProps {
   title: string;
   items: ServiceItem[];
+  scrollToExplore: string;
 }
 
-const Services = ({ title, items }: ServicesProps) => {
+const Services = ({ title, items, scrollToExplore }: ServicesProps) => {
   const container = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const imageUrl = getServiceImageUrl(serviceImage.image);
+
 
   // Merge servicesData with passed items to get localized text with icons
   const mergedServices = servicesData.map((service, index) => {
@@ -83,84 +89,77 @@ const Services = ({ title, items }: ServicesProps) => {
     () => {
       if (!wrapper.current) return;
 
-      // 1. Hesaplamalar
-      // Wrapper'ın toplam genişliği
-      const scrollWidth = wrapper.current.scrollWidth;
-      // Viewport genişliği
-      const viewportWidth = window.innerWidth;
-      
-      // HAREKET MANTIĞI:
-      // Başlangıç: Wrapper ekranın sağına yaslanmış veya biraz dışarıda (bunu CSS veya set ile yaparız).
-      // Bitiş: Wrapper tamamen sola kaymış, son kart ekranı terk etmiş.
-      // Toplam gidilecek yol = Wrapper Genişliği + Ekran Genişliği (tam geçiş için)
-      // Ancak daha kontrollü bir akış için: 
-      // x: - (scrollWidth - viewportWidth) -> Sona kadar git
-      // x: - scrollWidth -> Tamamen ekran dışına çıkar.
-      
-      // Biz "Sağdan Sola" akış istiyoruz. 
-      // Kartlar başlangıçta sağda olmalı.
-      gsap.set(wrapper.current, { x: viewportWidth }); 
+      const mm = gsap.matchMedia();
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container.current,
-          pin: true,
-          scrub: 1,
-          start: 'top top',
-          // Daha uzun bir scroll mesafesi vererek hareketi yavaşlatıyor ve hissi güçlendiriyoruz.
-          end: '+=400%', 
-          invalidateOnRefresh: true,
-        },
-      });
+      mm.add({
+        isMobile: "(max-width: 767px)",
+        isDesktop: "(min-width: 768px)",
+      }, (context) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { isMobile } = context.conditions as any;
 
-      // Animasyon: Wrapper'ı sağdan (x: viewportWidth) sola (x: -scrollWidth) taşıyoruz.
-      // Bu sayede tüm kartlar ekranın önünden geçip gidiyor.
-      tl.to(wrapper.current, {
-        x: -scrollWidth, 
-        ease: 'none',
-      });
+        const scrollWidth = wrapper.current!.scrollWidth;
+        const viewportWidth = window.innerWidth;
 
-      // 2. Kavis (Arc) Efekti Hesaplayıcısı
-      const updateCards = () => {
-        const centerPoint = window.innerWidth / 2;
-        
-        cardsRef.current.forEach((card) => {
-          if (!card) return;
+        gsap.set(wrapper.current, { x: viewportWidth });
 
-          const rect = card.getBoundingClientRect();
-          const cardCenter = rect.left + rect.width / 2;
-          
-          // Kartın merkezden uzaklığı
-          const dist = Math.abs(centerPoint - cardCenter);
-          
-          // Etki alanı: Ekranın yarısı kadar bir alanda efekt başlasın
-          const effectRange = window.innerWidth / 1.5;
-          const normDist = gsap.utils.clamp(0, 1, dist / effectRange);
-
-          // Efekt Değerleri
-          // Merkezde (normDist 0): Scale 1.1, Y 0, Opacity 1
-          // Kenarda (normDist 1): Scale 0.8, Y 150, Opacity 0.3
-          const scale = gsap.utils.interpolate(1.1, 0.75, normDist); 
-          const yPos = gsap.utils.interpolate(0, 200, normDist);
-          const opacity = gsap.utils.interpolate(1, 0.2, normDist); 
-          const rotate = (cardCenter - centerPoint) * 0.03; 
-
-          gsap.set(card, {
-            scale: scale,
-            y: yPos,
-            opacity: opacity,
-            rotation: rotate,
-            zIndex: 100 - Math.round(normDist * 100),
-            filter: `blur(${normDist * 8}px)`, // Kenarda daha flu
-          });
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container.current,
+            pin: true,
+            scrub: 1,
+            start: 'top top',
+            end: () => `+=${wrapper.current!.scrollWidth}`, 
+            invalidateOnRefresh: true,
+          },
         });
-      };
 
-      gsap.ticker.add(updateCards);
+        tl.to(wrapper.current, {
+          x: -scrollWidth, 
+          ease: 'none',
+        });
 
-      return () => {
-        gsap.ticker.remove(updateCards);
-      };
+        const updateCards = () => {
+          const centerPoint = window.innerWidth / 2;
+          
+          cardsRef.current.forEach((card) => {
+            if (!card) return;
+
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            const dist = Math.abs(centerPoint - cardCenter);
+            
+            const effectRange = window.innerWidth / (isMobile ? 1.2 : 1.5);
+            const normDist = gsap.utils.clamp(0, 1, dist / effectRange);
+
+            // Responsive Values
+            const maxVerticalMove = isMobile ? 100 : 200;
+            const edgeScale = isMobile ? 0.7 : 0.75;
+            const rotationFactor = isMobile ? 0.04 : 0.03;
+
+            const scale = gsap.utils.interpolate(1.1, edgeScale, normDist); 
+            const yPos = gsap.utils.interpolate(0, maxVerticalMove, normDist);
+            const rotate = (cardCenter - centerPoint) * rotationFactor; 
+
+            gsap.set(card, {
+              scale: scale,
+              y: yPos,
+              rotation: rotate,
+              zIndex: 100 - Math.round(normDist * 100),
+            });
+          });
+        };
+
+        gsap.ticker.add(updateCards);
+        
+        // Return a cleanup function for the ticker
+        return () => {
+          gsap.ticker.remove(updateCards);
+        };
+      });
+
+      // Return a cleanup function for matchMedia
+      return () => mm.revert();
     },
     { scope: container }
   );
@@ -171,11 +170,22 @@ const Services = ({ title, items }: ServicesProps) => {
       ref={container}
       className="relative h-screen bg-black overflow-hidden flex flex-col justify-center"
     >
+      {/* Background Image */}
+      <Image
+        src={imageUrl}
+        alt="Services Background"
+        layout="fill"
+        objectFit="cover"
+        className="absolute inset-0 z-0 opacity-20"
+      />
+      {/* Top Fade-out Overlay */}
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
+      
       {/* Background Ambience */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black opacity-50" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black opacity-50 z-[1]" />
       
       {/* Devasa Arkaplan Yazısı */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none z-0">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none z-[30]">
         <h1 className="font-syne font-bold text-[15vw] leading-none text-white opacity-[0.03] select-none tracking-widest">
           {title || 'SERVICES'}
         </h1>
@@ -185,7 +195,7 @@ const Services = ({ title, items }: ServicesProps) => {
       {/* 'flex items-center' ile kartları hizalıyoruz. 
           Başlangıç pozisyonunu GSAP 'set' ile yöneteceğiz, bu yüzden CSS ile ötelemeye gerek yok.
           Sadece container yüksekliğini ve dikey hizalamayı koruyoruz. */}
-      <div className="w-full h-full absolute inset-0 flex items-center z-10">
+      <div className="w-full h-full absolute inset-0 flex items-center z-[40]">
         <div ref={wrapper} className="flex gap-12 md:gap-24 px-10 items-center">
           {mergedServices.map((service, index) => (
                         <ServiceCard
@@ -197,8 +207,8 @@ const Services = ({ title, items }: ServicesProps) => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-[0.2em] uppercase animate-pulse">
-        Scroll to Explore
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-[0.2em] uppercase animate-pulse z-[50]">
+        {scrollToExplore}
       </div>
     </section>
   );

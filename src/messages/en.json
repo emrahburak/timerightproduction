@@ -40,6 +40,7 @@
   },
   "services": {
     "title": "Our Services",
+    "scrollToExplore": "Scroll to Explore",
     "items": [
       {
         "title": "Corporate Brand Films",
