@@ -181,9 +181,14 @@
     },
     "management": {
       "title": "Management",
-      "subtitle": "Kariyerinizi Yönetin",
-      "description": "Sanatçı ve yetenek yönetiminde profesyonel yaklaşım.",
-      "stat": "100+ Başarı Hikayesi"
+      "subtitle": "Fatoş Yılmaz",
+      "text": [
+        "Audition Teknikleri",
+        "Oyuncu Menajerliği",
+        "Yönetmen Oyuncu İlişkisi",
+        "CV Marketing ve Kariyer Yönetimi",
+        "Sektörel Danışmanlık"
+      ]
     },
     "rhythmAtelier": {
       "title": "Ritim Atölyesi",

@@ -61,7 +61,7 @@ interface Messages {
       };
     };
     workshops: { title: string; subtitle: string; description: string; stat: string };
-    management: { title: string; subtitle: string; description: string; stat: string };
+    management: { title: string; subtitle: string; text: string[] };
     rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
   };
   brandGallery: {

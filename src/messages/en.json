@@ -181,9 +181,14 @@
     },
     "management": {
       "title": "Management",
-      "subtitle": "Manage Your Career",
-      "description": "A professional approach to artist and talent management.",
-      "stat": "100+ Success Stories"
+      "subtitle": "Fatoş Yılmaz",
+      "text": [
+        "Audition Techniques",
+        "Actor Management",
+        "Director-Actor Relationship",
+        "CV Marketing & Career Management",
+        "Industry Consulting"
+      ]
     },
     "rhythmAtelier": {
       "title": "Rhythm Atelier",
