@@ -1,3 +1,5 @@
+import { showcaseStackImages } from '@/data/showcaseStack';
+
 export const CDN_BASE_URL = 'https://cdn.timerightproduction.org';
 
 export const getInstructorImageUrl = (filename: string): string => {
@@ -67,6 +69,25 @@ export const getVideoUrl = (filename: string): string => {
 
   const normalizedFilename = filename.replace(/^\/+/, '');
   const path = `/videos/${normalizedFilename}`;
+  const normalizedPath = path.replace(/^\/+/, '');
+
+  return `${CDN_BASE_URL}/${normalizedPath}`;
+};
+
+export const getShowcaseStackUrl = (
+  componentName: string,
+  filename: string
+): string => {
+  const imageConfig = showcaseStackImages.find(
+    (item) => item.component === componentName
+  );
+
+  if (!imageConfig || !imageConfig.image) {
+    return '/placeholder-showcasestack.webp';
+  }
+
+  const normalizedFilename = imageConfig.image.replace(/^\/+/, '');
+  const path = `/images/showcasestack/${normalizedFilename}`;
   const normalizedPath = path.replace(/^\/+/, '');
 
   return `${CDN_BASE_URL}/${normalizedPath}`;

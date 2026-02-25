@@ -65,10 +65,6 @@
       {
         "title": "Rhythm Workshops",
         "description": "Discover the rhythm of harmony and collective production."
-      },
-      {
-        "title": "Digital Stage Performances",
-        "description": "Mesmerizing digital performances where technology meets art."
       }
     ]
   },
@@ -146,7 +142,36 @@
       "title": "Academy",
       "subtitle": "Shape the Future",
       "description": "Take your skills to the next level with our professional training programs.",
-      "stat": "50+ Certified Programs"
+      "stat": "50+ Certified Programs",
+      "programs": {
+        "acting": {
+          "title": "Acting",
+          "courses": [
+            "On-Camera Acting",
+            "Fundamentals of Acting",
+            "Conservatory Preparation",
+            "Effective Speech & Intonation",
+            "Diction, Articulation, Diaphragm",
+            "Voice & Breath Control",
+            "Monologue Studies"
+          ]
+        },
+        "writing": {
+          "title": "Writing",
+          "courses": [
+            "Screenwriting Techniques",
+            "Documentary Writing Techniques"
+          ]
+        },
+        "rhythm": {
+          "title": "Rhythm Atelier",
+          "courses": [
+            "Body Percussion",
+            "Rhythmic Motivation",
+            "Rhythm Instruments"
+          ]
+        }
+      }
     },
     "workshops": {
       "title": "Workshops",
@@ -165,12 +190,6 @@
       "subtitle": "Discover the Sound of Harmony",
       "description": "Strengthen teamwork and synergy through the power of rhythm.",
       "stat": "500+ Happy Participants"
-    },
-    "digitalStage": {
-      "title": "Digital Stage",
-      "subtitle": "Shows of the Future",
-      "description": "Breathtaking digital performances blending technology and art.",
-      "stat": "300+ Live Streams"
     }
   },
   "brandGallery": {

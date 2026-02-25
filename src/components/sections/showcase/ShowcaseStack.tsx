@@ -8,17 +8,25 @@ import Academy from './Academy';
 import Workshops from './Workshops';
 import Management from './Management';
 import RhythmAtelier from './RhythmAtelier';
-import DigitalStage from './DigitalStage';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export interface ShowcaseStackProps {
   messages: {
-    academy: { title: string; subtitle: string; description: string; stat: string };
+    academy: {
+      title: string;
+      subtitle: string;
+      description: string;
+      stat: string;
+      programs: {
+        acting: { title: string; courses: string[] };
+        writing: { title: string; courses: string[] };
+        rhythm: { title: string; courses: string[] };
+      };
+    };
     workshops: { title: string; subtitle: string; description: string; stat: string };
     management: { title: string; subtitle: string; description: string; stat: string };
     rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
-    digitalStage: { title: string; subtitle: string; description: string; stat: string };
   };
   onCompletion?: (completed: boolean) => void;
 }
@@ -100,9 +108,9 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion })
     <div ref={containerRef} className="showcase-stack-container relative w-full h-screen overflow-hidden bg-black">
       {/* Local Navigation Line - Only visible when pinned */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 md:bottom-auto md:left-10 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 z-[60] flex flex-row md:flex-col gap-3 md:gap-4">
-        {[0, 1, 2, 3, 4].map((i) => (
-          <div 
-            key={i} 
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
             className={`w-8 h-[2px] md:w-[2px] md:h-12 transition-colors duration-500 ${
               i <= activeSegment ? 'bg-white' : 'bg-white/20'
             }`}
@@ -112,7 +120,7 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion })
 
       {/* Stacked Sections */}
       <div className="showcase-item-wrapper absolute inset-0 z-10">
-        <Academy {...messages.academy} />
+        <Academy programs={messages.academy.programs} />
       </div>
       <div className="showcase-item-wrapper absolute inset-0 z-20">
         <Workshops {...messages.workshops} />
@@ -122,9 +130,6 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion })
       </div>
       <div className="showcase-item-wrapper absolute inset-0 z-40">
         <RhythmAtelier {...messages.rhythmAtelier} />
-      </div>
-      <div className="showcase-item-wrapper absolute inset-0 z-50">
-        <DigitalStage {...messages.digitalStage} />
       </div>
     </div>
   );

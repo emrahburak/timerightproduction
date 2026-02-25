@@ -49,11 +49,20 @@ interface Messages {
     items: { title: string }[];
   };
   showcaseStack: {
-    academy: { title: string; subtitle: string; description: string; stat: string };
+    academy: {
+      title: string;
+      subtitle: string;
+      description: string;
+      stat: string;
+      programs: {
+        acting: { title: string; courses: string[] };
+        writing: { title: string; courses: string[] };
+        rhythm: { title: string; courses: string[] };
+      };
+    };
     workshops: { title: string; subtitle: string; description: string; stat: string };
     management: { title: string; subtitle: string; description: string; stat: string };
     rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
-    digitalStage: { title: string; subtitle: string; description: string; stat: string };
   };
   brandGallery: {
     title: {
@@ -132,7 +141,7 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
 
         {/* ReelShowcase Section - Video Gallery (z-55) */}
-        <div data-section="reelshowcase" className="relative w-full h-screen overflow-hidden z-55">
+        <div data-section="reelshowcase" className="relative w-full h-screen z-55">
           <ReelShowcase messages={messages.reelShowcase} />
         </div>
 

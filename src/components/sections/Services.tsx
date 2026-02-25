@@ -49,12 +49,6 @@ const servicesData = [
     titleEn: 'Rhythm Workshops',
     icon: 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3',
   },
-  {
-    id: 7,
-    title: 'Dijital Sahne',
-    titleEn: 'Digital Performances',
-    icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-  },
 ];
 
 interface ServiceItem {

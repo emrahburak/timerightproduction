@@ -65,10 +65,6 @@
       {
         "title": "Ritm Atölyesi",
         "description": "Birlikte üretmenin ve uyumun ritmini keşfedin."
-      },
-      {
-        "title": "Dijital Sahne Gösterileri",
-        "description": "Teknoloji ve sanatın birleştiği büyüleyici dijital performanslar."
       }
     ]
   },
@@ -146,7 +142,36 @@
       "title": "Eğitimlerimiz",
       "subtitle": "Geleceği Şekillendirin",
       "description": "Profesyonel eğitim programlarımızla yeteneklerinizi bir üst seviyeye taşıyın.",
-      "stat": "50+ Sertifikalı Program"
+      "stat": "50+ Sertifikalı Program",
+      "programs": {
+        "acting": {
+          "title": "Oyunculuk",
+          "courses": [
+            "Kamera Önü Oyunculuk",
+            "Temel Oyunculuk",
+            "Konservatuara Hazırlık",
+            "Etkili Konuşma, Vurgulu Tonlama",
+            "Diksiyon, Artikülasyon, Diyafram",
+            "Ses ve Nefes Kullanımı",
+            "Monolog Çalışmaları"
+          ]
+        },
+        "writing": {
+          "title": "Yazarlık",
+          "courses": [
+            "Senaryo Yazım Teknikleri",
+            "Belgesel Yazım Teknikleri"
+          ]
+        },
+        "rhythm": {
+          "title": "Ritim Atölyesi",
+          "courses": [
+            "Beden Perküsyonu",
+            "Ritmik Motivasyon",
+            "Ritim Enstrumanları"
+          ]
+        }
+      }
     },
     "workshops": {
       "title": "Workshops",
@@ -165,12 +190,6 @@
       "subtitle": "Uyumun Sesini Keşfedin",
       "description": "Takım çalışmasını ve sinerjiyi ritmin gücüyle pekiştirin.",
       "stat": "500+ Mutlu Katılımcı"
-    },
-    "digitalStage": {
-      "title": "Dijital Sahne",
-      "subtitle": "Geleceğin Gösterileri",
-      "description": "Teknoloji ve sanatı harmanlayan büyüleyici dijital performanslar.",
-      "stat": "300+ Canlı Yayın"
     }
   },
   "brandGallery": {
