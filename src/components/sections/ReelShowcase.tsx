@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useRef, useState, useCallback } from 'react';
-import { reelItems, type ReelItem } from '@/data/reel';
-import { getVideoUrl } from '@/lib/constants';
+import { reelItems } from '@/data/reel';
+import { getVideoUrl, getThumbnailImageUrl } from '@/lib/constants';
 
 interface ReelShowcaseProps {
   messages: {
@@ -83,7 +83,8 @@ export default function ReelShowcase({ messages }: ReelShowcaseProps) {
               muted={isMuted}
               playsInline
               autoPlay={isPlaying}
-              preload="metadata"
+              preload="auto"
+              poster={getThumbnailImageUrl(currentVideo.thumbnail)}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onEnded={() => setIsPlaying(false)}
@@ -149,16 +150,20 @@ export default function ReelShowcase({ messages }: ReelShowcaseProps) {
                 }`}
               aria-label={`Play ${messages.items[index]?.title}`}
             >
-              <div className="w-full h-full flex items-center justify-center bg-neutral-800 relative">
-                <span className="text-white/80 text-lg font-syne font-bold z-10">
-                  {item.id}
-                </span>
-                {index !== currentVideoIndex && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity">
-                    <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9.75 19.5V4.5l10.5 7.5-10.5 7.5z" /></svg>
-                  </div>
-                )}
-              </div>
+              <img
+                src={getThumbnailImageUrl(item.thumbnail)}
+                alt={item.title}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/placeholder-thumbnail.webp';
+                }}
+              />
+              {index !== currentVideoIndex && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9.75 19.5V4.5l10.5 7.5-10.5 7.5z" /></svg>
+                </div>
+              )}
               {index === currentVideoIndex && isPlaying && !videoError && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                   <div className="flex gap-1">

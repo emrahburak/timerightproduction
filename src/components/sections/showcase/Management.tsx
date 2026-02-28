@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useRef } from 'react';
+import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getShowcaseStackUrl } from '@/lib/constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +18,7 @@ interface ManagementProps {
 const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
+  const imageUrl = getShowcaseStackUrl('management', 'timeright-image-showcase-03.webp');
 
   useGSAP(() => {
     if (!textContainerRef.current) return;
@@ -39,12 +42,11 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
       delay: 0.2,
     });
 
-    // Optional: Re-animate on scroll (for demo purposes)
+    // Re-animate on scroll logic
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top center',
       onEnter: () => {
-        // Exit animation (0deg → -90deg)
         gsap.to(words, {
           rotationX: -90,
           opacity: 0,
@@ -52,10 +54,9 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
           duration: 0.6,
           ease: 'power2.in',
           transformOrigin: '50% 100%',
-          delay: 1.5, // Wait before exiting
+          delay: 1.5,
         });
 
-        // Re-enter animation (-90deg → 0deg)
         gsap.fromTo(
           words,
           {
@@ -81,12 +82,23 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
       ref={containerRef}
       className="management-section w-full h-full flex items-center justify-center bg-[#0a0a0a] overflow-hidden relative"
     >
-      {/* Background texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-900/5 via-black to-black opacity-50" />
+      {/* Background Image Layer */}
+      <Image
+        src={imageUrl}
+        alt="Management Background"
+        fill
+        className="absolute inset-0 z-0 opacity-20 object-cover"
+      />
+
+      {/* Top Fade-out Overlay */}
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
+
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-900/10 via-black to-black opacity-50 z-[1]" />
 
       <div className="container mx-auto px-10 flex flex-col items-center text-center relative z-10">
         {/* Subtitle */}
-        <h3 className="font-syne font-bold text-xl md:text-2xl lg:text-3xl text-white mb-6 tracking-wide uppercase">
+        <h3 className="font-syne font-bold text-xl md:text-2xl lg:text-3xl text-white/70 mb-6 tracking-wide uppercase">
           {subtitle}
         </h3>
 
@@ -95,7 +107,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
           {title}
         </h2>
 
-        {/* 3D Text Container - Cylinder/Flap Effect */}
+        {/* 3D Text Container */}
         <div
           ref={textContainerRef}
           className="perspective-[800px]"

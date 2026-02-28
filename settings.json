@@ -1,0 +1,7 @@
+{
+	"env": {
+		"ANTHROPIC_BASE_URL": "http://127.0.0.1:8045",
+		"ANTHROPIC_API_KEY": "sk-4860837117c7438d9abb3282adfda963"
+	},
+	"model": "claude-sonnet-4-6"
+}

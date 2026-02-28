@@ -4,7 +4,7 @@ export const CDN_BASE_URL = 'https://cdn.timerightproduction.org';
 
 export const getInstructorImageUrl = (filename: string): string => {
   if (!filename || typeof filename !== 'string') {
-    return '/placeholder-instructor.webp';
+    return '/placeholder-thumbnail.webp';
   }
 
   const normalizedFilename = filename.replace(/^\/+/, '');
@@ -16,7 +16,7 @@ export const getInstructorImageUrl = (filename: string): string => {
 
 export const getGalleryImageUrl = (filename: string): string => {
   if (!filename || typeof filename !== 'string') {
-    return '/placeholder-gallery.webp';
+    return '/placeholder-thumbnail.webp';
   }
 
   const normalizedFilename = filename.replace(/^\/+/, '');
@@ -28,7 +28,7 @@ export const getGalleryImageUrl = (filename: string): string => {
 
 export const getHeroImageUrl = (filename: string): string => {
   if (!filename || typeof filename !== 'string') {
-    return '/placeholder-hero.webp';
+    return '/placeholder-thumbnail.webp';
   }
 
   const normalizedFilename = filename.replace(/^\/+/, '');
@@ -40,7 +40,7 @@ export const getHeroImageUrl = (filename: string): string => {
 
 export const getAboutImageUrl = (filename: string): string => {
   if (!filename || typeof filename !== 'string') {
-    return '/placeholder-about.webp';
+    return '/placeholder-thumbnail.webp';
   }
 
   const normalizedFilename = filename.replace(/^\/+/, '');
@@ -52,7 +52,7 @@ export const getAboutImageUrl = (filename: string): string => {
 
 export const getServiceImageUrl = (filename: string): string => {
   if (!filename || typeof filename !== 'string') {
-    return '/placeholder-service.webp';
+    return '/placeholder-thumbnail.webp';
   }
 
   const normalizedFilename = filename.replace(/^\/+/, '');
@@ -83,11 +83,23 @@ export const getShowcaseStackUrl = (
   );
 
   if (!imageConfig || !imageConfig.image) {
-    return '/placeholder-showcasestack.webp';
+    return '/placeholder-thumbnail.webp';
   }
 
   const normalizedFilename = imageConfig.image.replace(/^\/+/, '');
   const path = `/images/showcasestack/${normalizedFilename}`;
+  const normalizedPath = path.replace(/^\/+/, '');
+
+  return `${CDN_BASE_URL}/${normalizedPath}`;
+};
+
+export const getThumbnailImageUrl = (filename: string): string => {
+  if (!filename || typeof filename !== 'string') {
+    return '/placeholder-thumbnail.webp';
+  }
+
+  const normalizedFilename = filename.replace(/^\/+/, '');
+  const path = `/images/thumbnaills/${normalizedFilename}`;
   const normalizedPath = path.replace(/^\/+/, '');
 
   return `${CDN_BASE_URL}/${normalizedPath}`;
