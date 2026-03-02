@@ -104,3 +104,15 @@ export const getThumbnailImageUrl = (filename: string): string => {
 
   return `${CDN_BASE_URL}/${normalizedPath}`;
 };
+
+export const getRitmImageUrl = (filename: string): string => {
+  if (!filename || typeof filename !== 'string') {
+    return '/placeholder-thumbnail.webp';
+  }
+
+  const normalizedFilename = filename.replace(/^\/+/, '');
+  const path = `/images/ritm/${normalizedFilename}`;
+  const normalizedPath = path.replace(/^\/+/, '');
+
+  return `${CDN_BASE_URL}/${normalizedPath}`;
+};

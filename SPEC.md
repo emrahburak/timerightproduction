@@ -86,8 +86,8 @@ Bu dosya, proje geliştirme sürecinde tespit edilen problemleri ve yapılacak i
 ### Problem 4.1: Workshops Veri Dosyası Oluşturma
 - **Açıklama:** `src/data/workshops.ts` dosyası oluşturulmalı
 - **İstenen:** 
-  - 18 adet workshop image string'i eklenmeli
-  - Format: `altun-egitim-01.webp` - `altun-egitim-18.webp`
+  - 21 adet workshop image string'i eklenmeli
+  - Format: `altun-egitim-01.webp` - `altun-egitim-18.webp`, `timeright-image-workshop-01.webp`, `timeright-image-workshop-02.webp`, `timeright-image-workshop-03.webp`
 - **Önerilen Çözüm:** `workshopImages` array oluşturulmalı
 
 ### Problem 4.2: Constants.ts Fonksiyonu Ekleme
@@ -107,9 +107,78 @@ Bu dosya, proje geliştirme sürecinde tespit edilen problemleri ve yapılacak i
 - **Önerilen Çözüm:** CSS columns veya grid ile masonry, responsive breakpoints
 
 ### TODO:
-- [ ] src/data/workshops.ts oluştur (18 image string)
+- [ ] src/data/workshops.ts oluştur (21 image string)
 - [ ] constants.ts'ye getWorkshopImageUrl fonksiyonu ekle
 - [ ] Workshop.tsx'i masonry galeriye çevir (bg + overlay korunacak)
+
+---
+
+## Problem 5: BrandGallery Başlık ve Font Güncellemesi
+
+**Dosya:** `src/components/sections/BrandGallery.tsx`, `src/messages/en.json`, `src/messages/tr.json`
+
+### Problem 5.1: BrandGallery Title Metni
+- **Açıklama:** BrandGallery'de "Timeright Just in Time" / "Timeright Tam zamanı" yazısı değiştirilecek
+- **Mevcut Kod (en.json Satır 202-203):** `"brand": "Timeright", "tagline": "Just in Time"`
+- **Mevcut Kod (tr.json Satır 202-203):** `"brand": "Timeright", "tagline": "Tam Zamanı"`
+- **İstenen:** 
+  - **en.json:** `"brand": "Timeright", "tagline": "Just in Time"` → `"brand": "Timeright", "tagline": "Tam zamanı"` (Türkçe karakterler korunarak tek ifade)
+  - **tr.json:** Aynı şekilde güncellenecek
+- **Önerilen Çözüm:** `messages.title.brand` ve `messages.title.tagline` değerleri güncellenecek
+
+### Problem 5.2: "Art of Production" Türkçe Karşılığı
+- **Açıklama:** Servis veya academy bölümlerinde "Art of Production" için Türkçe karşılık eklenmeli
+- **İstenen:** Türkçe locale'de "Produksiyon Sanatı" kullanılmalı
+- **Önerilen Çözüm:** İlgili json dosyasında "Art of Production" → "Produksiyon Sanatı" olarak güncellenecek
+
+### Problem 5.3: BrandGallery Font Stili
+- **Açıklama:** BrandGallery'de font stili, About section title ile uyumlu olmalı
+- **Mevcut Kod (BrandGallery.tsx Satır 192):** `text-3xl md:text-5xl lg:text-6xl font-syne uppercase font-black tracking-[-0.02em]`
+- **Mevcut Kod (About.tsx Satır 69):** `font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)]`
+- **İstenen:** BrandGallery font büyüklüğü ve kalitesi About title ile aynı olmalı
+- **Önerilen Çözüm:** 
+  - Font class'ı: `font-syne uppercase font-black` (mevcut, korunacak)
+  - Font size: `text-[clamp(1.8rem,3.5vw,2.8rem)]` (About'daki gibi clamp kullanılmalı)
+  - Tracking ve diğer stiller korunabilir
+
+### TODO:
+- [ ] BrandGallery title metni (tr/en) "Timeright Tam zamanı" olarak güncellenecek
+- [ ] "Art of Production" → "Produksiyon Sanatı" çevirisi eklenecek
+- [ ] BrandGallery font stili About title ile uyumlu hale getirilecek (clamp font-size)
+
+---
+
+## Problem 6: Ritm Atelier Gallery
+
+**Dosya:** `src/data/ritm.ts`, `src/lib/constants.ts`, `src/components/sections/showcase/RhythmAtelier.tsx`
+
+### Problem 6.1: Ritm Veri Dosyası Oluşturma
+- **Açıklama:** `src/data/ritm.ts` dosyası oluşturulmalı
+- **İstenen:** 
+  - 4 adet ritm image string'i eklenmeli
+  - Format: `timeright-image-ritm-01.webp` - `timeright-image-ritm-04.webp`
+- **Önerilen Çözüm:** `ritmImages` array oluşturulmalı
+
+### Problem 6.2: Constants.ts Ritm Fonksiyonu
+- **Dosya:** `src/lib/constants.ts`
+- **Açıklama:** `getRitmImageUrl` fonksiyonu eklenmeli
+- **İstenen:** Return path: `images/ritm`
+- **Önerilen Çözüm:** Diğer get*ImageUrl fonksiyonları ile aynı pattern
+
+### Problem 6.3: RhythmAtelier.tsx Güncellemesi
+- **Dosya:** `src/components/sections/showcase/RhythmAtelier.tsx`
+- **Açıklama:** Mevcut ShowcaseItem kullanımı kaldırılacak, bg-image ve overlay korunarak yeni galeri eklenecek
+- **İstenen:**
+  - `ShowcaseItem` import ve kullanımı KALDIRILACAK
+  - Mevcut bg-image ve overlay KORUNACAK
+  - İçerik yazıları (title, subtitle, description, stat) KALDIRILACAK
+  - 4 ritm image `getRitmImageUrl` ile responsive grid olarak sergilenecek
+- **Önerilen Çözüm:** `ritmImages` array + `getRitmImageUrl` ile grid yapısı
+
+### TODO:
+- [ ] src/data/ritm.ts oluştur (4 image string)
+- [ ] constants.ts'ye getRitmImageUrl fonksiyonu ekle
+- [ ] RhythmAtelier.tsx'i güncelle (bg+overlay korunacak, içerik silinecek, yeni imageler eklenecek)
 
 ---
 
