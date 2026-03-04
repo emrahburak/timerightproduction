@@ -40,3 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .aider*
+
+# agent/tooling artifacts
+.agent/
+.agents/
+.qwen/
+skills-lock.json
