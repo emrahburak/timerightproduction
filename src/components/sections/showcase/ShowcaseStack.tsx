@@ -123,13 +123,13 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion })
         <Academy programs={messages.academy.programs} />
       </div>
       <div className="showcase-item-wrapper absolute inset-0 z-20">
-        <Workshops {...messages.workshops} />
+        <Workshops />
       </div>
       <div className="showcase-item-wrapper absolute inset-0 z-30">
         <Management {...messages.management} />
       </div>
       <div className="showcase-item-wrapper absolute inset-0 z-40">
-        <RhythmAtelier {...messages.rhythmAtelier} />
+        <RhythmAtelier />
       </div>
     </div>
   );

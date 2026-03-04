@@ -15,28 +15,62 @@ interface SectionProps {
   content: string;
 }
 
+const splitTextToChars = (text: string): string[] => {
+  return text.split('');
+};
+
 export default function About({ title, content }: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const textContainerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const contentRef = useRef<HTMLParagraphElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
+  const titleChars = useMemo(() => splitTextToChars(title), [title]);
+  const contentChars = useMemo(() => splitTextToChars(content), [content]);
+
   useGSAP(() => {
-    // Metin bloğu animasyonu - Soldan giriş
-    gsap.fromTo(
-      textContainerRef.current,
-      { opacity: 0, x: -50 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 60%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
+    // Title split text animasyonu - Karakterler sırayla gelir
+    if (titleRef.current) {
+      const chars = titleRef.current.querySelectorAll('.char');
+      gsap.fromTo(
+        chars,
+        { opacity: 0, y: 20, rotateX: -90 },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.8,
+          stagger: 0.03,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 60%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }
+
+    // Content split text animasyonu
+    if (contentRef.current) {
+      const chars = contentRef.current.querySelectorAll('.char');
+      gsap.fromTo(
+        chars,
+        { opacity: 0, y: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.02,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 55%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }
 
     // Görsel animasyonu - Hafif parallax
     gsap.fromTo(
@@ -65,12 +99,34 @@ export default function About({ title, content }: SectionProps) {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-7xl mx-auto z-10">
         {/* Sol Taraf: Title + Content */}
-        <div ref={textContainerRef} className="flex flex-col space-y-6 order-2 md:order-1">
-          <h2 className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight">
-            {title}
+        <div className="flex flex-col space-y-6 order-2 md:order-1">
+          <h2 
+            ref={titleRef}
+            className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight"
+          >
+            {titleChars.map((char, index) => (
+              <span 
+                key={`${index}-${char}`} 
+                className="char inline-block"
+                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
           </h2>
-          <p className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl">
-            {content}
+          <p 
+            ref={contentRef}
+            className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl"
+          >
+            {contentChars.map((char, index) => (
+              <span 
+                key={`${index}-${char}`} 
+                className="char inline-block"
+                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
           </p>
         </div>
 

@@ -23,7 +23,7 @@ interface BrandGalleryProps {
 const createInfiniteItems = (items: typeof galleryItems, repeatCount = 4) => {
   const result: typeof galleryItems = [];
   for (let i = 0; i < repeatCount; i++) {
-    result.push(...items.map((item, idx) => ({
+    result.push(...items.map((item) => ({
       ...item,
       id: item.id + (i * 100), // Unique ID için offset
     })));
@@ -189,7 +189,7 @@ export default function BrandGallery({ messages }: BrandGalleryProps) {
 
       {/* Başlık - Overlay Üzerinde */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <h2 className="text-white text-3xl md:text-5xl lg:text-6xl font-syne uppercase font-black tracking-[-0.02em] text-center px-4">
+          <h2 className="text-white text-[clamp(1.8rem,3.5vw,2.8rem)] font-syne uppercase font-black tracking-[-0.02em] text-center px-4">
           <span className="block md:inline font-light">{messages.title.brand}</span>
           <span className="block md:inline md:ml-4 font-bold">{messages.title.tagline}</span>
         </h2>

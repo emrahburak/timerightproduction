@@ -77,6 +77,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -88,15 +89,15 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
         </div>
 
         {/* Lower Section: Title & Courses */}
-        <div className="flex-1 sm:h-full sm:w-2/3 lg:h-[55%] lg:w-full w-full bg-zinc-900/80 backdrop-blur-sm flex flex-col items-center text-center sm:items-start sm:text-left lg:items-center lg:text-center justify-center sm:justify-start lg:justify-center pt-2 sm:pt-4 lg:pt-8 px-3 sm:px-4 lg:px-8 border-t sm:border-t sm:border-l lg:border-l-0 lg:border-t border-white/5 overflow-hidden">
+        <div className="flex-1 sm:h-full sm:w-2/3 lg:h-[55%] lg:w-full w-full bg-zinc-900/80 backdrop-blur-sm flex flex-col items-center text-center sm:items-start sm:text-left lg:items-center lg:text-center justify-start sm:justify-start lg:justify-start pt-4 sm:pt-4 lg:pt-8 px-3 sm:px-4 lg:px-8 border-t sm:border-t sm:border-l lg:border-l-0 lg:border-t border-white/5 overflow-hidden">
           <h3 className={`font-syne font-bold text-lg sm:text-xl md:text-2xl lg:text-4xl ${styles.titleColor} mb-2 sm:mb-3 lg:mb-6 tracking-wide uppercase`}>
             {title}
           </h3>
 
           {/* Courses List */}
-          <ul className="space-y-0.5 sm:space-y-1 lg:space-y-1.5 overflow-hidden">
-            {courses.map((course, index) => (
-              <li key={index} className="flex items-start gap-1.5 sm:gap-2 lg:gap-3 text-left">
+          <ul className="space-y-0.5 sm:space-y-1 lg:space-y-1.5 overflow-y-auto max-h-[200px] sm:max-h-[180px] lg:max-h-[320px] pb-4 w-full">
+            {courses.map((course) => (
+              <li key={course} className="flex items-start gap-1.5 sm:gap-2 lg:gap-3 text-left">
                 <span className={`${styles.courseDot} w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full mt-1.5 sm:mt-2 flex-shrink-0`} />
                 <span className={`font-cormorant text-xs sm:text-base md:text-lg lg:text-lg ${styles.courseText} leading-relaxed line-clamp-2`}>
                   {course}
