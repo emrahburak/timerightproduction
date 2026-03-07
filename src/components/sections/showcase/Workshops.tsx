@@ -1,9 +1,12 @@
 'use client';
 
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
+import { Thumbnails, Fullscreen, Zoom } from 'yet-another-react-lightbox/plugins';
 import { getShowcaseStackUrl, getWorkshopImageUrl } from '@/lib/constants';
 import { workshops, type WorkshopItem } from '@/data/workshops';
 
@@ -11,10 +14,14 @@ function ScrollRow({
   items,
   direction,
   speed,
+  onImageClick,
+  rowOffset,
 }: {
   items: WorkshopItem[];
   direction: 'rtl' | 'ltr';
   speed: number;
+  onImageClick: (item: WorkshopItem, globalIndex: number) => void;
+  rowOffset: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -60,31 +67,44 @@ function ScrollRow({
         ref={scrollRef}
         className="inline-flex gap-4 w-max h-full items-center"
       >
-        {duplicatedItems.map((item, index) => (
-          <div
-            key={`${item.image}-${index}`}
-            className="relative flex-shrink-0 w-[280px] h-[220px] rounded-lg overflow-hidden group cursor-pointer"
-          >
-            <Image
-              src={getWorkshopImageUrl(item.image)}
-              alt={item.title}
-              fill
-              className="object-cover hover:scale-105 transition-all duration-500"
-              sizes="280px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <h3 className="text-white text-base font-bold">{item.title}</h3>
-              <p className="text-white/70 text-sm mt-1 line-clamp-2">{item.description}</p>
+        {duplicatedItems.map((item, index) => {
+          const globalIndex = rowOffset + (index % items.length);
+          const isValidIndex = globalIndex < workshops.length;
+          
+          return (
+            <div
+              key={`${item.image}-${index}`}
+              className={`relative flex-shrink-0 w-[280px] h-[220px] rounded-lg overflow-hidden group ${isValidIndex ? 'cursor-pointer' : 'cursor-default'}`}
+              onClick={() => {
+                if (isValidIndex) {
+                  onImageClick(item, globalIndex);
+                }
+              }}
+            >
+              <Image
+                src={getWorkshopImageUrl(item.image)}
+                alt={item.title}
+                fill
+                className="object-cover hover:scale-105 transition-all duration-500"
+                sizes="280px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-300">
+                <h3 className="text-white text-base font-bold">{item.title}</h3>
+                <p className="text-white/70 text-sm mt-1 line-clamp-2">{item.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
 }
 
 export default function Workshops() {
+  const [open, setOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const rowData = [
     workshops.slice(0, 8),
     workshops.slice(8, 16),
@@ -97,8 +117,42 @@ export default function Workshops() {
     { direction: 'ltr' as const, speed: 60 },
   ];
 
+  const handleImageClick = (item: WorkshopItem, index: number) => {
+    setCurrentIndex(index);
+    setOpen(true);
+  };
+
   return (
-    <section className="w-full min-h-[120vh] lg:h-screen relative flex flex-col lg:flex-row overflow-hidden bg-black">
+    <>
+      {/* LIGHTBOX - Image modal */}
+      <Lightbox
+        open={open}
+        close={() => setOpen(false)}
+        index={currentIndex}
+        slides={workshops.map(item => ({
+          src: getWorkshopImageUrl(item.image),
+          alt: item.title,
+          title: item.title,
+          description: item.description,
+        }))}
+        
+        plugins={[Thumbnails, Fullscreen, Zoom]}
+        
+        // Overlay customization
+        styles={{
+          container: {
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            backdropFilter: 'blur(8px)',
+          },
+        }}
+        
+        // Zoom ayarları
+        zoom={{
+          maxZoomPixelRatio: 3,
+        }}
+      />
+
+      <section className="w-full min-h-[120vh] lg:h-screen relative flex flex-col lg:flex-row overflow-hidden bg-black">
 
       {/* Arka plan görseli - Tüm bileşen */}
       <div className="absolute inset-0 z-0">
@@ -110,15 +164,17 @@ export default function Workshops() {
         />
       </div>
 
+      {/* GLOBAL OVERLAY - Tüm section'ı kaplar (sinematik bütünlük) */}
+      {/* Sol taraftan ortaya doğru yumuşak geçiş - content ile rows arası belirsizlik */}
+      <div
+        className="absolute inset-0 z-5 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 60% 100% at 35% 50%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.3) 45%, transparent 65%)'
+        }}
+      />
+
       {/* SOL PANEL - İçerik */}
       <div className="relative z-20 w-full lg:w-[40%] h-full flex flex-col justify-center px-12 md:px-16">
-        {/* Sol panel gradient overlay - belirgin başlayıp sağa doğru belirsizleşir */}
-        <div
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to right, black 0%, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.7) 20%, rgba(0,0,0,0.4) 35%, transparent 50%)'
-          }}
-        />
         {/* İçerik */}
         <div className="relative z-10">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
@@ -141,9 +197,12 @@ export default function Workshops() {
             items={rowData[rowIndex] || []}
             direction={config.direction}
             speed={config.speed}
+            onImageClick={handleImageClick}
+            rowOffset={rowIndex * 8}
           />
         ))}
       </div>
     </section>
+    </>
   );
 }
