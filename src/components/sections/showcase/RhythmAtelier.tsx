@@ -16,52 +16,11 @@ interface SlideProps {
 }
 
 function Slide({ image, index, current, onClick }: SlideProps) {
-  const cardRef = useRef<HTMLLIElement>(null);
-  const xRef = useRef(0);
-  const yRef = useRef(0);
-  const frameRef = useRef<number | null>(null);
-
   const isActive = current === index;
-
-  useEffect(() => {
-    if (!isActive) return;
-
-    const animate = () => {
-      if (!cardRef.current) return;
-      cardRef.current.style.setProperty('--x', `${xRef.current}px`);
-      cardRef.current.style.setProperty('--y', `${yRef.current}px`);
-      frameRef.current = requestAnimationFrame(animate);
-    };
-
-    frameRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
-    };
-  }, [isActive]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLLIElement>) => {
-    if (!isActive || !cardRef.current) return;
-
-    const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    xRef.current = e.clientX - centerX;
-    yRef.current = e.clientY - centerY;
-  };
-
-  const handleMouseLeave = () => {
-    xRef.current = 0;
-    yRef.current = 0;
-  };
 
   return (
     <div style={{ perspective: '1200px', transformStyle: 'preserve-3d' }}>
       <li
-        ref={cardRef}
         className="flex-shrink-0 w-[70vmin] h-[70vmin] cursor-pointer"
         style={{
           transform: isActive
@@ -71,17 +30,12 @@ function Slide({ image, index, current, onClick }: SlideProps) {
           transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
           opacity: isActive ? 1 : 0.5,
         }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
         onClick={() => onClick(index)}
       >
         <div
           className="relative w-full h-full overflow-hidden rounded-sm"
           style={{
-            transform: isActive
-              ? 'translate3d(calc(var(--x)/30), calc(var(--y)/30), 0)'
-              : 'none',
-            transition: 'transform 0.3s ease-out',
+            transform: 'none',
           }}
         >
           <Image
@@ -98,22 +52,73 @@ function Slide({ image, index, current, onClick }: SlideProps) {
 }
 
 export default function RhythmAtelier() {
-  const [current, setCurrent] = useState(0);
   const slides = ritmImages;
+  const extendedSlides = [
+    slides[slides.length - 1],
+    ...slides,
+    slides[0],
+  ];
+
+  const [current, setCurrent] = useState(1);
+  const isTransitioning = useRef(false);
+  const ulRef = useRef<HTMLUListElement>(null);
 
   const handlePrev = () => {
-    setCurrent(prev => (prev - 1 + slides.length) % slides.length);
+    if (isTransitioning.current) return;
+    isTransitioning.current = true;
+    setCurrent(prev => prev - 1);
   };
 
   const handleNext = () => {
-    setCurrent(prev => (prev + 1) % slides.length);
+    if (isTransitioning.current) return;
+    isTransitioning.current = true;
+    setCurrent(prev => prev + 1);
   };
 
   const handleSlideClick = (index: number) => {
-    if (index !== current) {
+    if (index !== current && !isTransitioning.current) {
+      isTransitioning.current = true;
       setCurrent(index);
     }
   };
+
+  useEffect(() => {
+    if (!ulRef.current) return;
+
+    if (current === extendedSlides.length - 1) {
+      setTimeout(() => {
+        ulRef.current!.style.transition = 'none';
+        setCurrent(1);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (ulRef.current) {
+              ulRef.current.style.transition = 'transform 1000ms ease-in-out';
+            }
+            isTransitioning.current = false;
+          });
+        });
+      }, 1000);
+    }
+    else if (current === 0) {
+      setTimeout(() => {
+        ulRef.current!.style.transition = 'none';
+        setCurrent(slides.length);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (ulRef.current) {
+              ulRef.current.style.transition = 'transform 1000ms ease-in-out';
+            }
+            isTransitioning.current = false;
+          });
+        });
+      }, 1000);
+    }
+    else {
+      setTimeout(() => {
+        isTransitioning.current = false;
+      }, 1000);
+    }
+  }, [current, extendedSlides.length, slides.length]);
 
   return (
     <section className="w-full h-full flex items-center justify-center bg-[#0a0a0a] overflow-hidden relative">
@@ -137,17 +142,18 @@ export default function RhythmAtelier() {
         style={{ width: '70vmin', height: '70vmin', margin: '0 auto' }}
       >
         <ul
+          ref={ulRef}
           className="m-0 p-0 list-none"
           style={{
             display: 'flex',
-            width: `${slides.length * 70}vmin`,
+            width: `${extendedSlides.length * 70}vmin`,
             transform: `translateX(calc(-${current} * 70vmin))`,
             transition: 'transform 1000ms ease-in-out',
           }}
         >
-          {slides.map((image, index) => (
+          {extendedSlides.map((image, index) => (
             <Slide
-              key={image}
+              key={`${image}-${index}`}
               image={image}
               index={index}
               current={current}
