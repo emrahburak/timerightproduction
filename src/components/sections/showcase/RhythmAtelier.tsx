@@ -19,17 +19,28 @@ function Slide({ image, index, current, onClick }: SlideProps) {
   const cardRef = useRef<HTMLLIElement>(null);
   const xRef = useRef(0);
   const yRef = useRef(0);
-  const animationFrameRef = useRef<number | null>(null);
+  const frameRef = useRef<number | null>(null);
 
   const isActive = current === index;
 
   useEffect(() => {
+    if (!isActive) return;
+
+    const animate = () => {
+      if (!cardRef.current) return;
+      cardRef.current.style.setProperty('--x', `${xRef.current}px`);
+      cardRef.current.style.setProperty('--y', `${yRef.current}px`);
+      frameRef.current = requestAnimationFrame(animate);
+    };
+
+    frameRef.current = requestAnimationFrame(animate);
+
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
       }
     };
-  }, []);
+  }, [isActive]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLLIElement>) => {
     if (!isActive || !cardRef.current) return;
@@ -40,67 +51,49 @@ function Slide({ image, index, current, onClick }: SlideProps) {
 
     xRef.current = e.clientX - centerX;
     yRef.current = e.clientY - centerY;
-
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
-
-    animationFrameRef.current = requestAnimationFrame(() => {
-      if (cardRef.current) {
-        cardRef.current.style.setProperty('--x', `${xRef.current}px`);
-        cardRef.current.style.setProperty('--y', `${yRef.current}px`);
-      }
-    });
   };
 
   const handleMouseLeave = () => {
     xRef.current = 0;
     yRef.current = 0;
-
-    if (cardRef.current) {
-      cardRef.current.style.setProperty('--x', '0px');
-      cardRef.current.style.setProperty('--y', '0px');
-    }
   };
 
-  const isActiveStyle = isActive
-    ? { scale: '1', rotateX: '0deg', opacity: '1' }
-    : { scale: '0.98', rotateX: '8deg', opacity: '0.5' };
-
-  const innerTransform = isActive
-    ? 'translate3d(calc(var(--x)/30), calc(var(--y)/30), 0)'
-    : 'none';
-
   return (
-    <li
-      ref={cardRef}
-      className="absolute w-[70vmin] h-[70vmin] cursor-pointer"
-      style={{
-        transform: `scale(${isActiveStyle.scale}) rotateX(${isActiveStyle.rotateX}deg)`,
-        transformOrigin: 'bottom',
-        transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-        opacity: parseFloat(isActiveStyle.opacity),
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onClick={() => onClick(index)}
-    >
-      <div
-        className="relative w-full h-full overflow-hidden rounded-sm"
+    <div style={{ perspective: '1200px', transformStyle: 'preserve-3d' }}>
+      <li
+        ref={cardRef}
+        className="flex-shrink-0 w-[70vmin] h-[70vmin] cursor-pointer"
         style={{
-          transform: innerTransform,
-          transition: 'transform 0.3s ease-out',
+          transform: isActive
+            ? 'scale(1) rotateX(0deg)'
+            : 'scale(0.98) rotateX(8deg)',
+          transformOrigin: 'bottom',
+          transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          opacity: isActive ? 1 : 0.5,
         }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => onClick(index)}
       >
-        <Image
-          src={getRitmImageUrl(image)}
-          alt={`Ritm ${index + 1}`}
-          fill
-          className="object-cover"
-          sizes="70vmin"
-        />
-      </div>
-    </li>
+        <div
+          className="relative w-full h-full overflow-hidden rounded-sm"
+          style={{
+            transform: isActive
+              ? 'translate3d(calc(var(--x)/30), calc(var(--y)/30), 0)'
+              : 'none',
+            transition: 'transform 0.3s ease-out',
+          }}
+        >
+          <Image
+            src={getRitmImageUrl(image)}
+            alt={`Ritm ${index + 1}`}
+            fill
+            className="object-cover"
+            sizes="70vmin"
+          />
+        </div>
+      </li>
+    </div>
   );
 }
 
@@ -140,14 +133,15 @@ export default function RhythmAtelier() {
 
       {/* Carousel Container */}
       <div
-        className="relative z-[10] w-full h-full flex items-center justify-center"
-        style={{ perspective: '1200px' }}
+        className="relative z-[10] overflow-hidden"
+        style={{ width: '70vmin', height: '70vmin', margin: '0 auto' }}
       >
         <ul
-          className="relative w-full h-full"
+          className="m-0 p-0 list-none"
           style={{
-            transformStyle: 'preserve-3d',
-            transform: `translateX(-${current * (100 / slides.length)}%)`,
+            display: 'flex',
+            width: `${slides.length * 70}vmin`,
+            transform: `translateX(calc(-${current} * 70vmin))`,
             transition: 'transform 1000ms ease-in-out',
           }}
         >
@@ -164,7 +158,7 @@ export default function RhythmAtelier() {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="absolute z-[20] bottom-8 left-1/2 -translate-x-1/2 flex gap-4">
+      <div className="absolute z-[20] bottom-8 left-1/2 -translate-x-1/2 flex gap-4 mt-6">
         <button
           onClick={handlePrev}
           className="w-10 h-10 rounded-full backdrop-blur-sm
