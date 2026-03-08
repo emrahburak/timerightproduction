@@ -214,7 +214,10 @@ export default function Workshops({ messages }: WorkshopsProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLParagraphElement>(null);
 
-  const titleChars = useMemo(() => splitTextToChars(messages.title), [messages.title]);
+  // Split title by comma for two-line display
+  const titleParts = useMemo(() => messages.title.split(','), [messages.title]);
+  const titleLine1 = useMemo(() => splitTextToChars(titleParts[0] + ','), [titleParts]);
+  const titleLine2 = useMemo(() => splitTextToChars(titleParts[1] || ''), [titleParts]);
   const contentChars1 = useMemo(() => splitTextToChars(messages.paragraph1), [messages.paragraph1]);
   const contentChars2 = useMemo(() => splitTextToChars(messages.paragraph2), [messages.paragraph2]);
 
@@ -365,22 +368,37 @@ export default function Workshops({ messages }: WorkshopsProps) {
       />
 
       {/* SOL PANEL - İçerik */}
-      <div ref={sectionRef} className="relative z-20 w-full lg:w-[40%] h-auto lg:h-full flex flex-col justify-center px-6 md:px-12 lg:px-16 py-12 lg:py-0">
+      <div ref={sectionRef} className="relative z-20 w-full lg:w-[40%] h-auto lg:h-full flex flex-col justify-start px-6 md:px-12 lg:px-16 py-12 lg:py-0 lg:pt-[calc((100vh-784px)/2)]">
         {/* İçerik */}
         <div className="relative z-10">
           <h2
             ref={titleRef}
             className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight mb-6"
           >
-            {titleChars.map((char, index) => (
-              <span
-                key={`${index}-${char}`}
-                className="char inline-block"
-                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            ))}
+            {/* Line 1 */}
+            <span className="block whitespace-nowrap">
+              {titleLine1.map((char, index) => (
+                <span
+                  key={`line1-${index}-${char}`}
+                  className="char inline-block"
+                  style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </span>
+            {/* Line 2 */}
+            <span className="block whitespace-nowrap">
+              {titleLine2.map((char, index) => (
+                <span
+                  key={`line2-${index}-${char}`}
+                  className="char inline-block"
+                  style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </span>
           </h2>
           <p
             ref={contentRef}
@@ -409,6 +427,16 @@ export default function Workshops({ messages }: WorkshopsProps) {
           </p>
         </div>
       </div>
+
+      {/* KATMAN B — Dikey geçiş maskesi (Sol panel sağ kenarında) */}
+      <div
+        className="hidden lg:block absolute top-0 bottom-0 z-15 pointer-events-none"
+        style={{
+          left: '38%',
+          width: '250px',
+          background: 'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 70%, transparent 100%)',
+        }}
+      />
 
       {/* CAROUSEL - Mobile/Tablet only (< lg) */}
       <div className="lg:hidden relative z-10 w-full flex flex-col items-center py-8">
@@ -440,6 +468,14 @@ export default function Workshops({ messages }: WorkshopsProps) {
 
       {/* SAĞ PANEL - Görsel Şeritleri - Desktop only (lg+) */}
       <div className="hidden lg:block absolute left-[40%] top-0 w-[80%] h-full z-10 flex flex-col justify-center gap-8">
+        {/* KATMAN C — Row sol kenar vignette */}
+        <div
+          className="absolute top-0 left-0 bottom-0 z-11 pointer-events-none"
+          style={{
+            width: '180px',
+            background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, transparent 100%)',
+          }}
+        />
         {rowConfigs.map((config, rowIndex) => (
           <ScrollRow
             key={`row-${rowIndex}`}
