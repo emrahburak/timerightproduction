@@ -174,10 +174,9 @@
       }
     },
     "workshops": {
-      "title": "Workshops",
-      "subtitle": "Deneyimleyerek Öğrenin",
-      "description": "Uygulamalı atölye çalışmalarımızla yaratıcılığınızın sınırlarını zorlayın.",
-      "stat": "200+ Etkinlik"
+      "title": "Doğru Zamanda, Doğru İletişim",
+      "paragraph1": "Hayat iletişim aracılığıyla şekillenir; ancak iletişim yalnızca sözcüklerle sınırlı değildir. Uzman iş ortaklarımızla geliştirdiğimiz projeler, şirketinizin iç ve dış iletişim kanallarına güçlü destek sağlayan özel hizmet tasarımlarını kapsar.",
+      "paragraph2": "Yurt içi ve yurt dışındaki deneyimlerimizin ışığında sürekli yenilenerek ilerliyoruz. Henri Lefebvre'nin dediği gibi: \"Bir yer, bir zaman ve bir enerji tüketimi arasında etkileşim olan her yerde ritim vardır.\" Kendi ritminizi keşfedin."
     },
     "management": {
       "title": "Management",

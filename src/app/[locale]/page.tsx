@@ -60,7 +60,7 @@ interface Messages {
         rhythm: { title: string; courses: string[] };
       };
     };
-    workshops: { title: string; subtitle: string; description: string; stat: string };
+    workshops: { title: string; paragraph1: string; paragraph2: string };
     management: { title: string; subtitle: string; text: string[] };
     rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
   };

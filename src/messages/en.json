@@ -174,10 +174,9 @@
       }
     },
     "workshops": {
-      "title": "Workshops",
-      "subtitle": "Learn by Doing",
-      "description": "Push the boundaries of your creativity with our hands-on workshops.",
-      "stat": "200+ Events"
+      "title": "The Right Communication at the Right Time",
+      "paragraph1": "Life takes shape through communication; yet communication is never limited to words alone. The projects we develop with our expert partners encompass tailored service designs that provide strong support for your company's internal and external communication channels.",
+      "paragraph2": "Guided by our experience across domestic and international projects, we continue to grow by constantly renewing, learning, and experiencing. As Henri Lefebvre wrote: \"Wherever there is an interaction between a place, a time and an expenditure of energy, there is rhythm.\" Don't ignore your rhythm — discover it."
     },
     "management": {
       "title": "Management",

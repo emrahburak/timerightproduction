@@ -192,7 +192,15 @@ function ScrollRow({
   );
 }
 
-export default function Workshops() {
+interface WorkshopsProps {
+  messages: {
+    title: string;
+    paragraph1: string;
+    paragraph2: string;
+  };
+}
+
+export default function Workshops({ messages }: WorkshopsProps) {
   const [open, setOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -304,13 +312,13 @@ export default function Workshops() {
         {/* İçerik */}
         <div className="relative z-10">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 lg:mb-6">
-            Workshops
+            {messages.title}
           </h2>
           <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-md">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            {messages.paragraph1}
           </p>
           <p className="hidden md:block text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-md mt-4">
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+            {messages.paragraph2}
           </p>
         </div>
       </div>
