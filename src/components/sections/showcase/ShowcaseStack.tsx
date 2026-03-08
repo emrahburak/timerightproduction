@@ -26,7 +26,7 @@ export interface ShowcaseStackProps {
     };
     workshops: { title: string; paragraph1: string; paragraph2: string };
     management: { title: string; subtitle: string; text: string[] };
-    rhythmAtelier: { title: string; subtitle: string; description: string; stat: string };
+    rhythmAtelier: { title: string };
   };
   onCompletion?: (completed: boolean) => void;
 }
@@ -129,7 +129,7 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion })
         <Management {...messages.management} />
       </div>
       <div className="showcase-item-wrapper absolute inset-0 z-40">
-        <RhythmAtelier />
+        <RhythmAtelier messages={messages.rhythmAtelier} />
       </div>
     </div>
   );

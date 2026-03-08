@@ -51,7 +51,13 @@ function Slide({ image, index, current, onClick }: SlideProps) {
   );
 }
 
-export default function RhythmAtelier() {
+interface RhythmAtelierProps {
+  messages: {
+    title: string;
+  };
+}
+
+export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
   const slides = ritmImages;
   const extendedSlides = [
     slides[slides.length - 1],
@@ -135,6 +141,17 @@ export default function RhythmAtelier() {
 
       {/* Ambience Layer */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-30 z-[1]" />
+
+      {/* Title */}
+      <h2
+        className="absolute top-16 left-1/2 -translate-x-1/2
+                   z-[10] text-center whitespace-nowrap
+                   font-syne font-black uppercase
+                   text-[clamp(2rem,5vw,4rem)]
+                   text-white tracking-widest"
+      >
+        {messages.title}
+      </h2>
 
       {/* Carousel Container */}
       <div
