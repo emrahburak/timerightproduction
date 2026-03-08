@@ -66,8 +66,11 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
   ];
 
   const [current, setCurrent] = useState(1);
+  const [grabbing, setGrabbing] = useState(false);
   const isTransitioning = useRef(false);
   const ulRef = useRef<HTMLUListElement>(null);
+  const dragStartX = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
   const handlePrev = () => {
     if (isTransitioning.current) return;
@@ -86,6 +89,53 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
       isTransitioning.current = true;
       setCurrent(index);
     }
+  };
+
+  const handleSwipe = (startX: number, endX: number) => {
+    if (isTransitioning.current) return;
+
+    const diff = startX - endX;
+
+    if (diff > 50) {
+      handleNext();
+    } else if (diff < -50) {
+      handlePrev();
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    dragStartX.current = e.clientX;
+    isDragging.current = true;
+    setGrabbing(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isDragging.current || dragStartX.current === null) return;
+    isDragging.current = false;
+    setGrabbing(false);
+    handleSwipe(dragStartX.current, e.clientX);
+    dragStartX.current = null;
+  };
+
+  const handleMouseLeave = () => {
+    isDragging.current = false;
+    setGrabbing(false);
+    dragStartX.current = null;
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    dragStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (dragStartX.current === null) return;
+    handleSwipe(dragStartX.current, e.changedTouches[0].clientX);
+    dragStartX.current = null;
   };
 
   useEffect(() => {
@@ -144,20 +194,26 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
 
       {/* Title */}
       <h2
-        className="absolute top-12 left-1/2 -translate-x-1/2
-                   z-[10] text-center whitespace-nowrap
+        className="absolute top-8 left-1/2 -translate-x-1/2
+                   z-[10] text-center w-[90vw] max-w-2xl
                    font-syne font-black uppercase
-                   text-[clamp(2rem,5vw,4rem)]
+                   text-[clamp(1.2rem,4vw,4rem)]
                    text-white tracking-widest
-                   mb-4"
+                   leading-tight"
       >
         {messages.title}
       </h2>
 
       {/* Carousel Container */}
       <div
-        className="relative z-[10] overflow-hidden"
+        className={`relative z-[10] overflow-hidden ${grabbing ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{ width: '70vmin', height: '70vmin', margin: '0 auto', marginTop: '8rem' }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <ul
           ref={ulRef}
