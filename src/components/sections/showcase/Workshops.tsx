@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -9,6 +9,71 @@ import 'yet-another-react-lightbox/styles.css';
 import { Thumbnails, Fullscreen, Zoom } from 'yet-another-react-lightbox/plugins';
 import { getShowcaseStackUrl, getWorkshopImageUrl } from '@/lib/constants';
 import { workshops, type WorkshopItem } from '@/data/workshops';
+
+// Carousel Card Component for Mobile/Tablet
+function CarouselCard({
+  item,
+  index,
+  isActive,
+  onImageClick,
+}: {
+  item: WorkshopItem;
+  index: number;
+  isActive: boolean;
+  onImageClick: (item: WorkshopItem, index: number) => void;
+}) {
+  return (
+    <div
+      className="snap-center flex-shrink-0 w-[75vw] h-[260px] relative rounded-lg overflow-hidden transition-all duration-300 ease-out"
+      style={{
+        transform: isActive ? 'scale(1)' : 'scale(0.9)',
+        opacity: isActive ? 1 : 0.6,
+      }}
+      onClick={() => onImageClick(item, index)}
+    >
+      <Image
+        src={getWorkshopImageUrl(item.image)}
+        alt={item.title}
+        fill
+        className="object-cover"
+        sizes="75vw"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <h3 className="text-white text-lg font-bold">{item.title}</h3>
+        <p className="text-white/70 text-sm mt-1 line-clamp-2">{item.description}</p>
+      </div>
+    </div>
+  );
+}
+
+// Dot Indicator Component
+function DotIndicator({
+  total,
+  activeIndex,
+  onClick,
+}: {
+  total: number;
+  activeIndex: number;
+  onClick: (index: number) => void;
+}) {
+  return (
+    <div className="flex justify-center gap-2 mt-4">
+      {Array.from({ length: total }).map((_, index) => (
+        <button
+          key={index}
+          onClick={() => onClick(index)}
+          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            index === activeIndex
+              ? 'bg-white w-6'
+              : 'bg-white/40 hover:bg-white/60'
+          }`}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+      ))}
+    </div>
+  );
+}
 
 function ScrollRow({
   items,
@@ -130,6 +195,8 @@ function ScrollRow({
 export default function Workshops() {
   const [open, setOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const rowData = [
     workshops.slice(0, 8),
@@ -147,6 +214,39 @@ export default function Workshops() {
     setCurrentIndex(index);
     setOpen(true);
   };
+
+  const handleDotClick = (index: number) => {
+    setActiveIndex(index);
+    if (carouselRef.current) {
+      const cardWidth = carouselRef.current.offsetWidth * 0.75; // 75vw
+      const gap = 16; // gap-4
+      const scrollPosition = index * (cardWidth + gap);
+      carouselRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleScroll = () => {
+    if (carouselRef.current) {
+      const scrollLeft = carouselRef.current.scrollLeft;
+      const cardWidth = carouselRef.current.offsetWidth * 0.75;
+      const gap = 16;
+      const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+      if (newIndex !== activeIndex && newIndex >= 0 && newIndex < workshops.length) {
+        setActiveIndex(newIndex);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener('scroll', handleScroll, { passive: true });
+      return () => carousel.removeEventListener('scroll', handleScroll);
+    }
+  }, [activeIndex]);
 
   return (
     <>
@@ -215,39 +315,46 @@ export default function Workshops() {
         </div>
       </div>
 
-      {/* SAĞ PANEL - Görsel Şeritleri */}
-      {/* Mobile: relative, full width, 1 row */}
-      {/* Tablet: relative, full width, 2 rows */}
-      {/* Desktop: absolute left-[40%] w-[80%], 3 rows */}
-      <div className="relative lg:absolute left-0 lg:left-[40%] top-0 w-full lg:w-[80%] h-auto lg:h-full z-10 flex flex-col justify-center gap-4 md:gap-6 lg:gap-8 px-4 py-4 lg:py-0">
-        {/* Row 1 - Mobile, Tablet, Desktop (always visible) */}
-        <ScrollRow
-          items={rowData[0] || []}
-          direction={rowConfigs[0].direction}
-          speed={rowConfigs[0].speed}
-          onImageClick={handleImageClick}
-          rowOffset={0}
+      {/* CAROUSEL - Mobile/Tablet only (< lg) */}
+      <div className="lg:hidden relative z-10 w-full flex flex-col items-center py-8">
+        <div
+          ref={carouselRef}
+          className="flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth w-full px-6"
+          style={{
+            scrollSnapType: 'x mandatory',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {workshops.map((item, index) => (
+            <CarouselCard
+              key={item.image}
+              item={item}
+              index={index}
+              isActive={index === activeIndex}
+              onImageClick={handleImageClick}
+            />
+          ))}
+        </div>
+        <DotIndicator
+          total={workshops.length}
+          activeIndex={activeIndex}
+          onClick={handleDotClick}
         />
-        {/* Row 2 - Tablet, Desktop only (hidden on mobile) */}
-        <div className="hidden md:block">
+      </div>
+
+      {/* SAĞ PANEL - Görsel Şeritleri - Desktop only (lg+) */}
+      <div className="hidden lg:block absolute left-[40%] top-0 w-[80%] h-full z-10 flex flex-col justify-center gap-8">
+        {rowConfigs.map((config, rowIndex) => (
           <ScrollRow
-            items={rowData[1] || []}
-            direction={rowConfigs[1].direction}
-            speed={rowConfigs[1].speed}
+            key={`row-${rowIndex}`}
+            items={rowData[rowIndex] || []}
+            direction={config.direction}
+            speed={config.speed}
             onImageClick={handleImageClick}
-            rowOffset={8}
+            rowOffset={rowIndex * 8}
           />
-        </div>
-        {/* Row 3 - Desktop only (hidden on mobile & tablet) */}
-        <div className="hidden lg:block">
-          <ScrollRow
-            items={rowData[2] || []}
-            direction={rowConfigs[2].direction}
-            speed={rowConfigs[2].speed}
-            onImageClick={handleImageClick}
-            rowOffset={16}
-          />
-        </div>
+        ))}
       </div>
     </section>
     </>
