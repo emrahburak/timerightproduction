@@ -182,7 +182,7 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="absolute z-[20] bottom-8 left-1/2 -translate-x-1/2 flex gap-4 mt-6">
+      <div className="absolute z-[20] bottom-16 left-1/2 -translate-x-1/2 flex gap-4">
         <button
           onClick={handlePrev}
           className="w-10 h-10 rounded-full backdrop-blur-sm
