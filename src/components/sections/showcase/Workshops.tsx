@@ -25,73 +25,99 @@ function ScrollRow({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const animationStateRef = useRef<{ pause: () => void; resume: () => void } | null>(null);
 
   const duplicatedItems = [...items, ...items];
+  const ITEM_WIDTH = 280;
+  const GAP = 16;
+  const ITEM_TOTAL = ITEM_WIDTH + GAP;
 
   useGSAP(() => {
     if (!scrollRef.current) return;
 
+    const scrollEl = scrollRef.current;
+    const halfWidth = scrollEl.scrollWidth / 2;
+
+    // Set initial position based on direction
     if (direction === 'rtl') {
-      // Row 1 & 3: Right to Left
-      tweenRef.current = gsap.to(scrollRef.current, {
-        xPercent: -50,
-        x: 0,
-        ease: 'none',
-        duration: speed,
-        repeat: -1,
-      });
+      // RTL: Start at 0, move left to -50%
+      gsap.set(scrollEl, { xPercent: 0 });
     } else {
-      // Row 2: Left to Right
-      tweenRef.current = gsap.fromTo(scrollRef.current,
-        { xPercent: -50, x: '-50%' },
-        {
-          xPercent: 0,
-          x: 0,
+      // LTR: Start at -50%, move right to 0
+      gsap.set(scrollEl, { xPercent: -50 });
+    }
+
+    // Create animation
+    const tween = direction === 'rtl'
+      ? gsap.to(scrollEl, {
+          xPercent: -50,
           ease: 'none',
           duration: speed,
           repeat: -1,
-        }
-      );
-    }
+        })
+      : gsap.to(scrollEl, {
+          xPercent: 0,
+          ease: 'none',
+          duration: speed,
+          repeat: -1,
+        });
+
+    // Store pause/resume functions
+    animationStateRef.current = {
+      pause: () => tween.pause(),
+      resume: () => tween.resume(),
+    };
+
+    // Cleanup on unmount
+    return () => {
+      tween.kill();
+      animationStateRef.current = null;
+    };
   }, { scope: containerRef });
-  
+
   return (
     <div
       ref={containerRef}
       className="relative w-full h-[240px] overflow-hidden whitespace-nowrap"
-      onMouseEnter={() => tweenRef.current?.pause()}
-      onMouseLeave={() => tweenRef.current?.play()}
+      onMouseEnter={() => animationStateRef.current?.pause()}
+      onMouseLeave={() => animationStateRef.current?.resume()}
     >
       <div
         ref={scrollRef}
-        className="inline-flex gap-4 w-max h-full items-center"
+        className="inline-flex w-max h-full items-center"
       >
         {duplicatedItems.map((item, index) => {
           const globalIndex = rowOffset + (index % items.length);
           const isValidIndex = globalIndex < workshops.length;
-          
+
           return (
             <div
               key={`${item.image}-${index}`}
-              className={`relative flex-shrink-0 w-[280px] h-[220px] rounded-lg overflow-hidden group ${isValidIndex ? 'cursor-pointer' : 'cursor-default'}`}
+              className="relative flex-shrink-0 rounded-lg overflow-hidden group"
+              style={{
+                width: ITEM_WIDTH,
+                height: 220,
+                marginRight: GAP,
+              }}
               onClick={() => {
                 if (isValidIndex) {
                   onImageClick(item, globalIndex);
                 }
               }}
             >
-              <Image
-                src={getWorkshopImageUrl(item.image)}
-                alt={item.title}
-                fill
-                className="object-cover hover:scale-105 transition-all duration-500"
-                sizes="280px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-300">
-                <h3 className="text-white text-base font-bold">{item.title}</h3>
-                <p className="text-white/70 text-sm mt-1 line-clamp-2">{item.description}</p>
+              <div className={isValidIndex ? 'cursor-pointer' : 'cursor-default'}>
+                <Image
+                  src={getWorkshopImageUrl(item.image)}
+                  alt={item.title}
+                  fill
+                  className="object-cover hover:scale-105 transition-all duration-500"
+                  sizes="280px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-300">
+                  <h3 className="text-white text-base font-bold">{item.title}</h3>
+                  <p className="text-white/70 text-sm mt-1 line-clamp-2">{item.description}</p>
+                </div>
               </div>
             </div>
           );
