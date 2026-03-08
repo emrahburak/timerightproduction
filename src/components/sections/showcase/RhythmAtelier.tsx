@@ -144,7 +144,7 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
 
       {/* Title */}
       <h2
-        className="absolute top-16 left-1/2 -translate-x-1/2
+        className="absolute top-12 left-1/2 -translate-x-1/2
                    z-[10] text-center whitespace-nowrap
                    font-syne font-black uppercase
                    text-[clamp(2rem,5vw,4rem)]
@@ -157,7 +157,7 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
       {/* Carousel Container */}
       <div
         className="relative z-[10] overflow-hidden"
-        style={{ width: '70vmin', height: '70vmin', margin: '0 auto' }}
+        style={{ width: '70vmin', height: '70vmin', margin: '0 auto', marginTop: '8rem' }}
       >
         <ul
           ref={ulRef}
