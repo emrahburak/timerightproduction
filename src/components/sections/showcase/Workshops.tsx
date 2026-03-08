@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -9,6 +9,11 @@ import 'yet-another-react-lightbox/styles.css';
 import { Thumbnails, Fullscreen, Zoom } from 'yet-another-react-lightbox/plugins';
 import { getShowcaseStackUrl, getWorkshopImageUrl } from '@/lib/constants';
 import { workshops, type WorkshopItem } from '@/data/workshops';
+
+// Split text helper
+const splitTextToChars = (text: string): string[] => {
+  return text.split('');
+};
 
 // Carousel Card Component for Mobile/Tablet
 function CarouselCard({
@@ -205,6 +210,13 @@ export default function Workshops({ messages }: WorkshopsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const contentRef = useRef<HTMLParagraphElement>(null);
+
+  const titleChars = useMemo(() => splitTextToChars(messages.title), [messages.title]);
+  const contentChars1 = useMemo(() => splitTextToChars(messages.paragraph1), [messages.paragraph1]);
+  const contentChars2 = useMemo(() => splitTextToChars(messages.paragraph2), [messages.paragraph2]);
 
   const rowData = [
     workshops.slice(0, 8),
@@ -255,6 +267,51 @@ export default function Workshops({ messages }: WorkshopsProps) {
       return () => carousel.removeEventListener('scroll', handleScroll);
     }
   }, [activeIndex]);
+
+  useGSAP(() => {
+    // Title split text animasyonu - Karakterler sırayla gelir
+    if (titleRef.current) {
+      const chars = titleRef.current.querySelectorAll('.char');
+      gsap.fromTo(
+        chars,
+        { opacity: 0, y: 20, rotateX: -90 },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          duration: 0.8,
+          stagger: 0.03,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 60%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }
+
+    // Content split text animasyonu
+    if (contentRef.current) {
+      const chars = contentRef.current.querySelectorAll('.char');
+      gsap.fromTo(
+        chars,
+        { opacity: 0, y: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.02,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 55%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }
+  }, { scope: sectionRef });
 
   return (
     <>
@@ -308,17 +365,47 @@ export default function Workshops({ messages }: WorkshopsProps) {
       />
 
       {/* SOL PANEL - İçerik */}
-      <div className="relative z-20 w-full lg:w-[40%] h-auto lg:h-full flex flex-col justify-center px-6 md:px-12 lg:px-16 py-12 lg:py-0">
+      <div ref={sectionRef} className="relative z-20 w-full lg:w-[40%] h-auto lg:h-full flex flex-col justify-center px-6 md:px-12 lg:px-16 py-12 lg:py-0">
         {/* İçerik */}
         <div className="relative z-10">
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 lg:mb-6">
-            {messages.title}
+          <h2
+            ref={titleRef}
+            className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight mb-6"
+          >
+            {titleChars.map((char, index) => (
+              <span
+                key={`${index}-${char}`}
+                className="char inline-block"
+                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-md">
-            {messages.paragraph1}
+          <p
+            ref={contentRef}
+            className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl"
+          >
+            {contentChars1.map((char, index) => (
+              <span
+                key={`${index}-${char}`}
+                className="char inline-block"
+                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
           </p>
-          <p className="hidden md:block text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-md mt-4">
-            {messages.paragraph2}
+          <p className="hidden md:block font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl mt-4">
+            {contentChars2.map((char, index) => (
+              <span
+                key={`${index}-${char}`}
+                className="char inline-block"
+                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            ))}
           </p>
         </div>
       </div>
