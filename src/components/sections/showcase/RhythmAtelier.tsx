@@ -148,7 +148,8 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
                    z-[10] text-center whitespace-nowrap
                    font-syne font-black uppercase
                    text-[clamp(2rem,5vw,4rem)]
-                   text-white tracking-widest"
+                   text-white tracking-widest
+                   mb-4"
       >
         {messages.title}
       </h2>
