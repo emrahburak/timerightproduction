@@ -368,7 +368,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
       />
 
       {/* SOL PANEL - İçerik */}
-      <div ref={sectionRef} className="relative z-20 w-full lg:w-[40%] h-auto lg:h-full flex flex-col justify-start px-6 md:px-12 lg:px-16 py-12 lg:py-0 lg:pt-[calc((100vh-784px)/2)]">
+      <div ref={sectionRef} className="relative z-20 w-full lg:w-[40%] h-auto lg:h-full flex flex-col justify-center px-6 md:px-12 lg:px-16 py-12 lg:py-0">
         {/* İçerik */}
         <div className="relative z-10">
           <h2
@@ -467,7 +467,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
       </div>
 
       {/* SAĞ PANEL - Görsel Şeritleri - Desktop only (lg+) */}
-      <div className="hidden lg:block absolute left-[40%] top-0 w-[80%] h-full z-10 flex flex-col justify-center gap-8">
+      <div className="hidden lg:flex absolute left-[40%] top-0 w-[80%] h-full z-10 flex-col justify-center gap-8">
         {/* KATMAN C — Row sol kenar vignette */}
         <div
           className="absolute top-0 left-0 bottom-0 z-11 pointer-events-none"
