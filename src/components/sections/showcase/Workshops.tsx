@@ -178,7 +178,7 @@ export default function Workshops() {
         }}
       />
 
-      <section className="w-full min-h-[120vh] lg:h-screen relative flex flex-col lg:flex-row overflow-hidden bg-black">
+      <section className="w-full min-h-screen lg:h-screen relative flex flex-col lg:flex-row overflow-hidden bg-black">
 
       {/* Arka plan görseli - Tüm bileşen */}
       <div className="absolute inset-0 z-0">
@@ -200,33 +200,54 @@ export default function Workshops() {
       />
 
       {/* SOL PANEL - İçerik */}
-      <div className="relative z-20 w-full lg:w-[40%] h-full flex flex-col justify-center px-12 md:px-16">
+      <div className="relative z-20 w-full lg:w-[40%] h-auto lg:h-full flex flex-col justify-center px-6 md:px-12 lg:px-16 py-12 lg:py-0">
         {/* İçerik */}
         <div className="relative z-10">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 lg:mb-6">
             Workshops
           </h2>
-          <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-md">
+          <p className="text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-md">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </p>
-          <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-md mt-4">
+          <p className="hidden md:block text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-md mt-4">
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
           </p>
         </div>
       </div>
 
       {/* SAĞ PANEL - Görsel Şeritleri */}
-      <div className="absolute left-[40%] top-0 w-[80%] h-full z-10 flex flex-col justify-center gap-6 lg:gap-8 px-4">
-        {rowConfigs.map((config, rowIndex) => (
+      {/* Mobile: relative, full width, 1 row */}
+      {/* Tablet: relative, full width, 2 rows */}
+      {/* Desktop: absolute left-[40%] w-[80%], 3 rows */}
+      <div className="relative lg:absolute left-0 lg:left-[40%] top-0 w-full lg:w-[80%] h-auto lg:h-full z-10 flex flex-col justify-center gap-4 md:gap-6 lg:gap-8 px-4 py-4 lg:py-0">
+        {/* Row 1 - Mobile, Tablet, Desktop (always visible) */}
+        <ScrollRow
+          items={rowData[0] || []}
+          direction={rowConfigs[0].direction}
+          speed={rowConfigs[0].speed}
+          onImageClick={handleImageClick}
+          rowOffset={0}
+        />
+        {/* Row 2 - Tablet, Desktop only (hidden on mobile) */}
+        <div className="hidden md:block">
           <ScrollRow
-            key={`row-${rowIndex}`}
-            items={rowData[rowIndex] || []}
-            direction={config.direction}
-            speed={config.speed}
+            items={rowData[1] || []}
+            direction={rowConfigs[1].direction}
+            speed={rowConfigs[1].speed}
             onImageClick={handleImageClick}
-            rowOffset={rowIndex * 8}
+            rowOffset={8}
           />
-        ))}
+        </div>
+        {/* Row 3 - Desktop only (hidden on mobile & tablet) */}
+        <div className="hidden lg:block">
+          <ScrollRow
+            items={rowData[2] || []}
+            direction={rowConfigs[2].direction}
+            speed={rowConfigs[2].speed}
+            onImageClick={handleImageClick}
+            rowOffset={16}
+          />
+        </div>
       </div>
     </section>
     </>
