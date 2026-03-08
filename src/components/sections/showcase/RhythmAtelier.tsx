@@ -1,37 +1,124 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getShowcaseStackUrl, getRitmImageUrl } from '@/lib/constants';
 import { ritmImages } from '@/data/ritm';
 
 const bgImageUrl = getShowcaseStackUrl('ritm', '');
-const MAX_VISIBLE_CARDS = 4;
+
+interface SlideProps {
+  image: string;
+  index: number;
+  current: number;
+  onClick: (index: number) => void;
+}
+
+function Slide({ image, index, current, onClick }: SlideProps) {
+  const cardRef = useRef<HTMLLIElement>(null);
+  const xRef = useRef(0);
+  const yRef = useRef(0);
+  const animationFrameRef = useRef<number | null>(null);
+
+  const isActive = current === index;
+
+  useEffect(() => {
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLLIElement>) => {
+    if (!isActive || !cardRef.current) return;
+
+    const rect = cardRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    xRef.current = e.clientX - centerX;
+    yRef.current = e.clientY - centerY;
+
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
+    animationFrameRef.current = requestAnimationFrame(() => {
+      if (cardRef.current) {
+        cardRef.current.style.setProperty('--x', `${xRef.current}px`);
+        cardRef.current.style.setProperty('--y', `${yRef.current}px`);
+      }
+    });
+  };
+
+  const handleMouseLeave = () => {
+    xRef.current = 0;
+    yRef.current = 0;
+
+    if (cardRef.current) {
+      cardRef.current.style.setProperty('--x', '0px');
+      cardRef.current.style.setProperty('--y', '0px');
+    }
+  };
+
+  const isActiveStyle = isActive
+    ? { scale: '1', rotateX: '0deg', opacity: '1' }
+    : { scale: '0.98', rotateX: '8deg', opacity: '0.5' };
+
+  const innerTransform = isActive
+    ? 'translate3d(calc(var(--x)/30), calc(var(--y)/30), 0)'
+    : 'none';
+
+  return (
+    <li
+      ref={cardRef}
+      className="absolute w-[70vmin] h-[70vmin] cursor-pointer"
+      style={{
+        transform: `scale(${isActiveStyle.scale}) rotateX(${isActiveStyle.rotateX}deg)`,
+        transformOrigin: 'bottom',
+        transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+        opacity: parseFloat(isActiveStyle.opacity),
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={() => onClick(index)}
+    >
+      <div
+        className="relative w-full h-full overflow-hidden rounded-sm"
+        style={{
+          transform: innerTransform,
+          transition: 'transform 0.3s ease-out',
+        }}
+      >
+        <Image
+          src={getRitmImageUrl(image)}
+          alt={`Ritm ${index + 1}`}
+          fill
+          className="object-cover"
+          sizes="70vmin"
+        />
+      </div>
+    </li>
+  );
+}
 
 export default function RhythmAtelier() {
-  const [cards, setCards] = useState(ritmImages);
+  const [current, setCurrent] = useState(0);
+  const slides = ritmImages;
 
-  const moveToEnd = useCallback(() => {
-    setCards(prev => [...prev.slice(1), prev[0]]);
-  }, []);
+  const handlePrev = () => {
+    setCurrent(prev => (prev - 1 + slides.length) % slides.length);
+  };
 
-  const moveToStart = useCallback(() => {
-    setCards(prev => [prev[prev.length - 1], ...prev.slice(0, prev.length - 1)]);
-  }, []);
+  const handleNext = () => {
+    setCurrent(prev => (prev + 1) % slides.length);
+  };
 
-  const handleDragEnd = (_: any, info: any) => {
-    const offset = info.offset.y;
-    const velocity = info.velocity.y;
-
-    // Yukarı sürükle → aktif kartı arkaya gönder
-    if (offset > 50 || velocity > 500) {
-      moveToEnd();
-    }
-    // Aşağı sürükle → son kartı öne al
-    else if (offset < -50 || velocity < -500) {
-      moveToStart();
+  const handleSlideClick = (index: number) => {
+    if (index !== current) {
+      setCurrent(index);
     }
   };
 
@@ -51,83 +138,59 @@ export default function RhythmAtelier() {
       {/* Ambience Layer */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-30 z-[1]" />
 
-      {/* Card Stack Container */}
-      <div className="relative z-[10] w-full h-full flex items-center justify-center">
-        <AnimatePresence>
-          {cards.slice(0, MAX_VISIBLE_CARDS).map((image, index) => {
-            const brightness = Math.max(0.3, 1 - index * 0.15);
-            const scale = 1 - index * 0.06;
-            const offsetY = index * 10;
-
-            return (
-              <motion.div
-                key={image}
-                className="absolute w-72 aspect-[3/4]"
-                initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                animate={{
-                  opacity: 1,
-                  scale,
-                  y: offsetY,
-                  filter: `brightness(${brightness})`,
-                }}
-                exit={{ opacity: 0, scale: 0.8, y: -50 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 170,
-                  damping: 26,
-                }}
-                drag={index === 0 ? 'y' : false}
-                dragElastic={0.7}
-                onDragEnd={index === 0 ? handleDragEnd : undefined}
-                whileDrag={{ scale: 1.05 }}
-                style={{
-                  zIndex: MAX_VISIBLE_CARDS - index,
-                }}
-              >
-                <div className="relative w-full h-full overflow-hidden rounded-sm">
-                  <Image
-                    src={getRitmImageUrl(image)}
-                    alt={`Ritm ${index + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="288px"
-                  />
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+      {/* Carousel Container */}
+      <div
+        className="relative z-[10] w-full h-full flex items-center justify-center"
+        style={{ perspective: '1200px' }}
+      >
+        <ul
+          className="relative w-full h-full"
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: `translateX(-${current * (100 / slides.length)}%)`,
+            transition: 'transform 1000ms ease-in-out',
+          }}
+        >
+          {slides.map((image, index) => (
+            <Slide
+              key={image}
+              image={image}
+              index={index}
+              current={current}
+              onClick={handleSlideClick}
+            />
+          ))}
+        </ul>
       </div>
 
-      {/* Left Arrow Button — moveToStart */}
-      <button
-        onClick={moveToStart}
-        className="absolute z-[20] left-4 md:left-8 top-1/2 -translate-y-1/2
-                   w-12 h-12 rounded-full backdrop-blur-md
-                   bg-white/10 hover:bg-white/20
-                   border border-white/20
-                   flex items-center justify-center
-                   transition-colors duration-200
-                   focus:outline-none focus:ring-2 focus:ring-white/30"
-        aria-label="Previous card"
-      >
-        <ChevronLeft className="w-6 h-6 text-white" />
-      </button>
+      {/* Navigation Buttons */}
+      <div className="absolute z-[20] bottom-8 left-1/2 -translate-x-1/2 flex gap-4">
+        <button
+          onClick={handlePrev}
+          className="w-10 h-10 rounded-full backdrop-blur-sm
+                     bg-white/10 hover:bg-white/20
+                     border border-white/20
+                     flex items-center justify-center
+                     transition-colors duration-200
+                     focus:outline-none focus:ring-2 focus:ring-white/30"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-5 h-5 text-white" />
+        </button>
 
-      {/* Right Arrow Button — moveToEnd */}
-      <button
-        onClick={moveToEnd}
-        className="absolute z-[20] right-4 md:right-8 top-1/2 -translate-y-1/2
-                   w-12 h-12 rounded-full backdrop-blur-md
-                   bg-white/10 hover:bg-white/20
-                   border border-white/20
-                   flex items-center justify-center
-                   transition-colors duration-200
-                   focus:outline-none focus:ring-2 focus:ring-white/30"
-        aria-label="Next card"
-      >
-        <ChevronRight className="w-6 h-6 text-white" />
-      </button>
+        <button
+          onClick={handleNext}
+          className="w-10 h-10 rounded-full backdrop-blur-sm
+                     bg-white/10 hover:bg-white/20
+                     border border-white/20
+                     flex items-center justify-center
+                     transition-colors duration-200
+                     focus:outline-none focus:ring-2 focus:ring-white/30"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-5 h-5 text-white" />
+        </button>
+      </div>
     </section>
   );
 }
