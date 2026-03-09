@@ -18,10 +18,48 @@ interface ManagementProps {
 const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLHeadingElement>(null);
   const imageUrl = getShowcaseStackUrl('management', 'timeright-image-showcase-03.webp');
 
   useGSAP(() => {
     if (!textContainerRef.current) return;
+
+    // Subtitle — en erken başlar
+    const subtitleWords = gsap.utils.toArray<HTMLSpanElement>(
+      '.subtitle-word'
+    );
+    gsap.set(subtitleWords, {
+      rotationX: 90,
+      opacity: 0,
+      transformOrigin: '50% 100%',
+    });
+    gsap.to(subtitleWords, {
+      rotationX: 0,
+      opacity: 1,
+      stagger: 0.04,
+      duration: 0.7,
+      ease: 'expo.out',
+      delay: 0.1,
+    });
+
+    // Title — subtitle'dan biraz sonra
+    const titleWords = gsap.utils.toArray<HTMLSpanElement>(
+      '.title-word'
+    );
+    gsap.set(titleWords, {
+      rotationX: 90,
+      opacity: 0,
+      transformOrigin: '50% 100%',
+    });
+    gsap.to(titleWords, {
+      rotationX: 0,
+      opacity: 1,
+      stagger: 0.06,
+      duration: 0.8,
+      ease: 'expo.out',
+      delay: 0.3,
+    });
 
     const words = gsap.utils.toArray<HTMLSpanElement>('.management-word');
 
@@ -39,7 +77,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
       stagger: 0.015,
       duration: 0.8,
       ease: 'expo.out',
-      delay: 0.2,
+      delay: 0.6,
     });
 
     // Re-animate on scroll logic
@@ -54,7 +92,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
           duration: 0.6,
           ease: 'power2.in',
           transformOrigin: '50% 100%',
-          delay: 1.5,
+          delay: 1.9,
         });
 
         gsap.fromTo(
@@ -70,7 +108,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
             stagger: 0.015,
             duration: 0.8,
             ease: 'expo.out',
-            delay: 2.1,
+            delay: 2.5,
           }
         );
       },
@@ -98,13 +136,33 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
 
       <div className="container mx-auto px-10 flex flex-col items-center text-center relative z-10">
         {/* Subtitle */}
-        <h3 className="font-syne font-bold text-xl md:text-2xl lg:text-3xl text-white/70 mb-6 tracking-wide uppercase">
-          {subtitle}
+        <h3
+          ref={subtitleRef}
+          className="font-syne font-bold text-xl md:text-2xl lg:text-3xl text-white/70 mb-6 tracking-wide uppercase"
+        >
+          {subtitle.split(' ').map((word, i) => (
+            <span
+              key={i}
+              className="subtitle-word inline-block mr-[0.25em]"
+            >
+              {word}
+            </span>
+          ))}
         </h3>
 
         {/* Title */}
-        <h2 className="font-syne font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-none uppercase mb-8">
-          {title}
+        <h2
+          ref={titleRef}
+          className="font-syne font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-none uppercase mb-8"
+        >
+          {title.split(' ').map((word, i) => (
+            <span
+              key={i}
+              className="title-word inline-block mr-[0.25em]"
+            >
+              {word}
+            </span>
+          ))}
         </h2>
 
         {/* 3D Text Container */}
