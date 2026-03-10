@@ -91,6 +91,12 @@
         "image": "timeright-instructor-ilker-aksum.webp"
       },
       {
+        "name": "Hacı Mehmet DURANOĞLU",
+        "title": "Yönetmen-Akademisyen",
+        "bio": "",
+        "image": "timeright-instructor-haci-mehmet-duranoglu.webp"
+      },
+      {
         "name": "Soydan SOYDAŞ",
         "title": "Oyuncu",
         "bio": "",
@@ -107,12 +113,6 @@
         "title": "Cast Directörü-Menajer",
         "bio": "",
         "image": "timeright-instructor-fatos-yilmaz.webp"
-      },
-      {
-        "name": "Hacı Mehmet DURANOĞLU",
-        "title": "Yönetmen-Akademisyen",
-        "bio": "",
-        "image": "timeright-instructor-haci-mehmet-duranoglu.webp"
       },
       {
         "name": "Asef Okan YAĞCI",
@@ -198,9 +198,10 @@
   },
   "brandGallery": {
     "title": {
-      "brand": "Timeright",
-      "tagline": "Tam zamanı"
-    }
+      "brand": "Produksiyon",
+      "tagline": "Sanatı"
+    },
+    "statement": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
   },
   "reelShowcase": {
     "title": "Videolarımız",

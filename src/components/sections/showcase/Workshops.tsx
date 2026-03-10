@@ -213,6 +213,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLParagraphElement>(null);
+  const content2Ref = useRef<HTMLParagraphElement>(null);
 
   // Split title by comma for two-line display
   const titleParts = useMemo(() => messages.title.split(','), [messages.title]);
@@ -294,11 +295,11 @@ export default function Workshops({ messages }: WorkshopsProps) {
       );
     }
 
-    // Content split text animasyonu
+    // Content split text animasyonu - İlk paragraf
     if (contentRef.current) {
-      const chars = contentRef.current.querySelectorAll('.char');
-      gsap.fromTo(
-        chars,
+      const chars1 = contentRef.current.querySelectorAll('.char');
+      const firstParagraphTween = gsap.fromTo(
+        chars1,
         { opacity: 0, y: 10 },
         {
           opacity: 1,
@@ -313,6 +314,28 @@ export default function Workshops({ messages }: WorkshopsProps) {
           },
         }
       );
+
+      // İkinci paragraf animasyonu - İlk paragraf bittikten sonra
+      if (content2Ref.current) {
+        const chars2 = content2Ref.current.querySelectorAll('.char');
+        gsap.fromTo(
+          chars2,
+          { opacity: 0, y: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.02,
+            ease: 'power2.out',
+            delay: chars1.length * 0.02 + 0.6 + 0.3, // İlk paragraf süresi + küçük ara
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 55%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      }
     }
   }, { scope: sectionRef });
 
@@ -414,7 +437,10 @@ export default function Workshops({ messages }: WorkshopsProps) {
               </span>
             ))}
           </p>
-          <p className="hidden md:block font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl mt-4">
+          <p 
+            ref={content2Ref}
+            className="hidden md:block font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl mt-4"
+          >
             {contentChars2.map((char, index) => (
               <span
                 key={`${index}-${char}`}

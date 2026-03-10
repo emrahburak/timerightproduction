@@ -1,5 +1,5 @@
 import Hero from '@/components/Hero'; // Client component with GSAP animations
-import Statement from '@/components/sections/Statement';
+// import Statement from '@/components/sections/Statement';
 import BrandGallery from '@/components/sections/BrandGallery';
 import About from '@/components/sections/About';
 import Services from '@/components/sections/Services';
@@ -121,18 +121,18 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
 
         {/* Statement Section - Slide-Over transition (z-20) */}
-        <div data-section="statement" className="relative w-full h-screen overflow-hidden z-20">
+        {/* <div data-section="statement" className="relative w-full h-screen overflow-hidden z-20">
           <Statement content={messages.statement.text} />
-        </div>
+        </div> */}
 
-        {/* BrandGallery Section - Slide-Over transition (z-30) */}
-        <div data-section="brandgallery" className="relative w-full h-screen overflow-hidden z-30">
-          <BrandGallery messages={messages.brandGallery} />
-        </div>
-
-        {/* About Section - Slide-Over transition (z-40) */}
-        <div data-section="about" className="relative w-full h-screen overflow-hidden z-40">
+        {/* About Section - Slide-Over transition (z-30) */}
+        <div data-section="about" className="relative w-full h-screen overflow-hidden z-30">
           <About title={messages.about.title} content={messages.about.content} />
+        </div>
+
+        {/* BrandGallery Section - Slide-Over transition (z-40) */}
+        <div data-section="brandgallery" className="relative w-full h-screen overflow-hidden z-40">
+          <BrandGallery messages={messages.brandGallery} />
         </div>
 
         {/* Services Section - Horizontal scroll (internal pinning) */}

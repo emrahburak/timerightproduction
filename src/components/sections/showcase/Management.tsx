@@ -74,7 +74,10 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
     gsap.to(words, {
       rotationX: 0,
       opacity: 1,
-      stagger: 0.015,
+      stagger: {
+        each: 0.08,
+        from: 'start',
+      },
       duration: 0.8,
       ease: 'expo.out',
       delay: 0.6,
@@ -88,7 +91,10 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
         gsap.to(words, {
           rotationX: -90,
           opacity: 0,
-          stagger: 0.015,
+          stagger: {
+            each: 0.05,
+            from: 'start',
+          },
           duration: 0.6,
           ease: 'power2.in',
           transformOrigin: '50% 100%',
@@ -105,7 +111,10 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
           {
             rotationX: 0,
             opacity: 1,
-            stagger: 0.015,
+            stagger: {
+              each: 0.08,
+              from: 'start',
+            },
             duration: 0.8,
             ease: 'expo.out',
             delay: 2.5,
@@ -153,7 +162,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
         {/* Title */}
         <h2
           ref={titleRef}
-          className="font-syne font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-none uppercase mb-8"
+          className="font-syne font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight uppercase mb-8"
         >
           {title.split(' ').map((word, i) => (
             <span
@@ -170,12 +179,22 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
           ref={textContainerRef}
           className="perspective-[800px]"
         >
-          <div className="flex flex-col justify-center gap-2 md:gap-3">
+          <style>{`
+            @media (max-width: 767px) {
+              .management-word { padding-left: 0 !important; }
+            }
+          `}</style>
+          <div className="flex flex-col gap-2 md:gap-3 w-full max-w-2xl">
             {text.map((word, index) => (
               <span
                 key={index}
-                className="management-word inline-block font-syne font-bold text-lg md:text-xl lg:text-2xl text-white backface-hidden will-change-transform"
+                className="management-word inline-flex items-center gap-3 font-syne font-bold text-lg md:text-xl lg:text-2xl text-white backface-hidden will-change-transform"
+                style={{
+                  paddingLeft: `${index * 1.5}rem`,
+                }}
               >
+                {/* Dot indicator */}
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-white/40" />
                 {word}
               </span>
             ))}

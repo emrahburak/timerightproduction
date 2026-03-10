@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useParams } from 'next/navigation';
 import PrivacyContent from '@/components/PrivacyContent';
+import { getFooterImageUrl } from '@/lib/constants';
+import { footerImage } from '@/data/footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,6 +39,7 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
   
   const params = useParams();
   const locale = params.locale as string;
+  const imageUrl = getFooterImageUrl(footerImage.image);
 
   useGSAP(() => {
     // 1. UNVEIL EFFECT (Whole section reveal)
@@ -126,9 +130,22 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
       <section
         ref={containerRef}
         id="contact"
-        className="sticky top-0 h-screen bg-black overflow-hidden flex flex-col items-center justify-center"
+        className="sticky top-0 h-screen bg-black overflow-hidden flex flex-col items-center justify-center relative"
       >
-        <div ref={contentWrapperRef} className="w-full h-full relative flex flex-col items-center justify-center">
+        {/* Background Image Layer */}
+        <Image
+          src={imageUrl}
+          alt="Footer Background"
+          fill
+          className="absolute inset-0 z-0 opacity-20 object-cover"
+        />
+
+        {/* Top Fade-out Overlay */}
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
+
+        {/* Background Ambience */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-900/10 via-black to-black opacity-50 z-[1]" />
+        <div ref={contentWrapperRef} className="w-full h-full relative flex flex-col items-center justify-center z-10">
           
           {/* 1. SOL ÜST KÖŞE (The Signature) */}
           <div className="absolute top-10 left-10 z-20 hidden md:block">

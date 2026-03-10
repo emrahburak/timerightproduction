@@ -16,6 +16,7 @@ interface BrandGalleryProps {
       brand: string;
       tagline: string;
     };
+    statement: string;
   };
 }
 
@@ -187,12 +188,15 @@ export default function BrandGallery({ messages }: BrandGalleryProps) {
       {/* Overlay Katman */}
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* Başlık - Overlay Üzerinde */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <h2 className="text-white text-[clamp(1.8rem,3.5vw,2.8rem)] font-syne uppercase font-black tracking-[-0.02em] text-center px-4">
-          <span className="block md:inline font-light">{messages.title.brand}</span>
-          <span className="block md:inline md:ml-4 font-bold">{messages.title.tagline}</span>
+      {/* Başlık ve Statement - Overlay Üzerinde */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4">
+        <h2 className="font-syne font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight uppercase text-center mb-6">
+          <span className="block md:inline">{messages.title.brand}</span>
+          <span className="block md:inline md:ml-4">{messages.title.tagline}</span>
         </h2>
+        <p className="font-cormorant italic text-white/90 max-w-3xl text-center leading-relaxed text-[clamp(1.2rem,2.5vw,2rem)]">
+          {messages.statement}
+        </p>
       </div>
     </section>
   );
