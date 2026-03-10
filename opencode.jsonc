@@ -1,0 +1,32 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "antigravity-manager": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "Antigravity Manager",
+      "options": {
+        "baseURL": "http://127.0.0.1:8045/v1",
+        "apiKey": "sk-4860837117c7438d9abb3282adfda963"
+      },
+      "models": {
+        "claude-sonnet-4-6": {
+          "name": "Claude Sonnet 4.6",
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

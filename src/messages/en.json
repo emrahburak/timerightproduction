@@ -1,0 +1,231 @@
+{
+  "navbar": {
+    "home": {
+      "label": "Home",
+      "path": "#home"
+    },
+    "about": {
+      "label": "About",
+      "path": "#about"
+    },
+    "services": {
+      "label": "Services",
+      "path": "#services"
+    },
+    "team": {
+      "label": "Instructors",
+      "path": "#instructors"
+    },
+    "contact": {
+      "label": "Contact",
+      "path": "#contact"
+    },
+    "privacy": "PRIVACY POLICY"
+  },
+  "privacy": {
+    "title": "PRIVACY POLICY",
+    "back": "GO BACK",
+    "content": "At Time Right Production ('Company'), we attach maximum importance to the security of your personal data. Your personal data is processed and stored in accordance with the relevant Data Protection Laws.<br/><br/><strong>1. Data Controller</strong><br/>Your personal data may be processed by Time Right Production in the capacity of data controller within the scope explained below.<br/><br/><strong>2. Purpose of Processing Personal Data</strong><br/>Your collected personal data is processed for the purposes of carrying out the necessary work by our business units to benefit you from the products and services offered by our Company, and ensuring the legal and commercial security of persons who are in a business relationship with our Company.<br/><br/><strong>3. Data Security</strong><br/>Your data is protected against unauthorized access, loss, or disclosure using industry-standard security measures."
+  },
+  "hero": {
+    "title": "Time Right Production",
+    "description": ""
+  },
+  "statement": {
+    "text": "When the time comes for everything to be exactly as it should be, and exactly on time."
+  },
+  "about": {
+    "title": "The time for unforgettable, exciting events has come.",
+    "content": "Life is shaped through communication; however, communication is not limited to words. The projects we develop with our expert partners include special service designs that provide strong support to your company’s internal and external communication channels."
+  },
+  "services": {
+    "title": "Our Services",
+    "scrollToExplore": "Scroll to Explore",
+    "items": [
+      {
+        "title": "Corporate Brand Films",
+        "description": "Tell your brand's story to the world with a cinematic language."
+      },
+      {
+        "title": "Documentary Productions",
+        "description": "Immortalize reality with artistic depth and perspective."
+      },
+      {
+        "title": "Talent Management",
+        "description": "Professionally managing the career journeys of extraordinary talents."
+      },
+      {
+        "title": "Festival & Event Organization",
+        "description": "Designing large-scale events that create unforgettable moments."
+      },
+      {
+        "title": "Corporate Motivation Events",
+        "description": "Energy-filled corporate gatherings that strengthen team spirit."
+      },
+      {
+        "title": "Rhythm Workshops",
+        "description": "Discover the rhythm of harmony and collective production."
+      }
+    ]
+  },
+  "instructors": {
+    "title": "Instructors",
+    "description": "Meet our team of expert instructors.",
+    "members": [
+      {
+        "name": "Onur TAN",
+        "title": "Yönetmen-Senarist",
+        "bio": "",
+        "image": "timeright-instructor-onur-tan.webp"
+      },
+      {
+        "name": "Ömer Faruk SORAK",
+        "title": "Yönetmen",
+        "bio": "",
+        "image": "timeright-instructor-omer-faruk-sorak.webp"
+      },
+      {
+        "name": "İlker AKSUM",
+        "title": "Oyuncu",
+        "bio": "",
+        "image": "timeright-instructor-ilker-aksum.webp"
+      },
+      {
+        "name": "Hacı Mehmet DURANOĞLU",
+        "title": "Yönetmen-Akademisyen",
+        "bio": "",
+        "image": "timeright-instructor-haci-mehmet-duranoglu.webp"
+      },
+      {
+        "name": "Soydan SOYDAŞ",
+        "title": "Oyuncu",
+        "bio": "",
+        "image": "timeright-instructor-soydan-soydas.webp"
+      },
+      {
+        "name": "Zafer ALTUN",
+        "title": "Oyuncu-Acting Coach",
+        "bio": "",
+        "image": "timeright-instructor-zafer-altun.webp"
+      },
+      {
+        "name": "Fatoş YILMAZ",
+        "title": "Cast Directörü-Menajer",
+        "bio": "",
+        "image": "timeright-instructor-fatos-yilmaz.webp"
+      },
+      {
+        "name": "Asef Okan YAĞCI",
+        "title": "Baterist-Perküsyonist",
+        "bio": "",
+        "image": "timeright-instructor-asef-okan-yagci.webp"
+      }
+    ]
+  },
+  "contact": {
+    "mainTitle": "THE TIME IS RIGHT",
+    "email": "info@timerightproduction.org",
+    "brandName": "TIME RIGHT PRODUCTION",
+    "phoneLabels": {
+      "gsm": "GSM",
+      "schweiz": "SCHWEIZ"
+    },
+    "phoneNumbers": {
+      "gsm": "+90 532 414 44 48",
+      "schweiz": "+41 79 127 72 26"
+    },
+    "socialHandle": "@timerightproduction",
+    "copyright": "© 2026 TIME RIGHT PRODUCTION. ALL RIGHTS RESERVED."
+  },
+  "showcaseStack": {
+    "academy": {
+      "title": "Academy",
+      "subtitle": "Shape the Future",
+      "description": "Take your skills to the next level with our professional training programs.",
+      "stat": "50+ Certified Programs",
+      "programs": {
+        "acting": {
+          "title": "Acting",
+          "courses": [
+            "On-Camera Acting",
+            "Fundamentals of Acting",
+            "Conservatory Preparation",
+            "Effective Speech & Intonation",
+            "Diction, Articulation, Diaphragm",
+            "Voice & Breath Control",
+            "Monologue Studies"
+          ]
+        },
+        "writing": {
+          "title": "Writing",
+          "courses": [
+            "Screenwriting Techniques",
+            "Documentary Writing Techniques"
+          ]
+        },
+        "rhythm": {
+          "title": "Rhythm Atelier",
+          "courses": [
+            "Body Percussion",
+            "Rhythmic Motivation",
+            "Rhythm Instruments"
+          ]
+        }
+      }
+    },
+    "workshops": {
+      "title": "The Right Communication at the Right Time",
+      "paragraph1": "Life takes shape through communication; yet communication is never limited to words alone. The projects we develop with our expert partners encompass tailored service designs that provide strong support for your company's internal and external communication channels.",
+      "paragraph2": "Guided by our experience across domestic and international projects, we continue to grow by constantly renewing, learning, and experiencing. As Henri Lefebvre wrote: \"Wherever there is an interaction between a place, a time and an expenditure of energy, there is rhythm.\" Don't ignore your rhythm — discover it."
+    },
+    "management": {
+      "title": "Management",
+      "subtitle": "Fatoş Yılmaz",
+      "text": [
+        "Audition Techniques",
+        "Actor Management",
+        "Director-Actor Relationship",
+        "CV Marketing & Career Management",
+        "Industry Consulting"
+      ]
+    },
+    "rhythmAtelier": {
+      "title": "Rhythm Atelier",
+      "subtitle": "Discover the Sound of Harmony",
+      "description": "Strengthen teamwork and synergy through the power of rhythm.",
+      "stat": "500+ Happy Participants"
+    }
+  },
+  "brandGallery": {
+    "title": {
+      "brand": "Art of",
+      "tagline": "Production"
+    },
+    "statement": "When the time comes for everything to be exactly as it should be, and exactly on time."
+  },
+  "reelShowcase": {
+    "title": "Our Videos",
+    "play": "Play",
+    "items": [
+      {
+        "title": "TimeRight Media 02"
+      },
+      {
+        "title": "TimeRight Media 03"
+      },
+      {
+        "title": "TimeRight Media 04"
+      },
+      {
+        "title": "TimeRight Media 05"
+      },
+      {
+        "title": "TimeRight Media 08"
+      }
+    ]
+  },
+  "rhythmAtelier": {
+    "title": "Rhythm Atelier",
+    "description": "Rhythm exists not only in music but also in the breath of a team, the tempo of a meeting, and the silent energy of collective creation. In our workshops, we explore that energy through the guidance of body and voice."
+  }
+}
