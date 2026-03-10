@@ -46,3 +46,8 @@ next-env.d.ts
 .agents/
 .qwen/
 skills-lock.json
+
+# Markdown dosyalarını görmezden gel ama README'yi tut
+*.md
+!README.md
+!readme.md
