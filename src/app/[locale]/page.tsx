@@ -69,6 +69,7 @@ interface Messages {
       brand: string;
       tagline: string;
     };
+    statement: string;
   };
   instructors: {
     title: string;
