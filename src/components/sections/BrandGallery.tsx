@@ -12,10 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface BrandGalleryProps {
   messages: {
-    title: {
-      brand: string;
-      tagline: string;
-    };
+    title: string;
     statement: string;
   };
 }
@@ -189,14 +186,32 @@ export default function BrandGallery({ messages }: BrandGalleryProps) {
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Başlık ve Statement - Overlay Üzerinde */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4">
-        <h2 className="font-syne font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight uppercase text-center mb-6">
-          <span className="block md:inline">{messages.title.brand}</span>
-          <span className="block md:inline md:ml-4">{messages.title.tagline}</span>
-        </h2>
-        <p className="font-cormorant italic text-white/90 max-w-3xl text-center leading-relaxed text-[clamp(1.2rem,2.5vw,2rem)]">
-          {messages.statement}
-        </p>
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+        <div className="w-full flex flex-col items-center">
+          <h2
+            className="font-syne font-black uppercase
+             text-center mb-6 text-white
+             leading-tight tracking-wide
+             px-4 w-full
+             text-[clamp(1.4rem,6vw,3.5rem)]"
+            style={{
+              textShadow: '0 2px 12px rgba(0,0,0,0.9)',
+              wordBreak: 'break-word',
+              overflowWrap: 'anywhere',
+              whiteSpace: 'normal',
+            }}
+          >
+            {messages.title}
+          </h2>
+          <p
+            className="font-cormorant italic font-semibold text-white max-w-3xl text-center leading-relaxed text-[clamp(1.1rem,2.5vw,1.8rem)] px-6 md:px-0"
+            style={{
+              textShadow: '0 2px 12px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)'
+            }}
+          >
+            {messages.statement}
+          </p>
+        </div>
       </div>
     </section>
   );

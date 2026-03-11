@@ -197,10 +197,7 @@
     }
   },
   "brandGallery": {
-    "title": {
-      "brand": "Produksiyon",
-      "tagline": "Sanatı"
-    },
+    "title": "Produksiyon Sanatı",
     "statement": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
   },
   "reelShowcase": {

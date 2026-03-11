@@ -24,11 +24,23 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
   const css = `
     .ec-wrap {
       position: relative;
-      display: inline-block;
+      display: block;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
       color-scheme: light dark;
     }
 
+    @media (min-width: 640px) {
+      .ec-wrap {
+        display: inline-block;
+        width: auto;
+        max-width: none;
+      }
+    }
+
     .card-container {
+      width: 100%;
       padding: 2px;
       border-radius: 1.5em;
       position: relative;
@@ -75,6 +87,13 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       background: oklch(0.09 0 0);
       width: 100%;
       min-height: 320px;
+    }
+
+    @media (max-width: 639px) {
+      .main-card {
+        width: 100%;
+        min-height: 480px;
+      }
     }
 
     @media (min-width: 1024px) {
