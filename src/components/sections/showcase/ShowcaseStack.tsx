@@ -96,9 +96,15 @@ const ShowcaseStack: React.FC<ShowcaseStackProps> = ({ messages, onCompletion })
     // Create a sequence where each section slides up to cover the previous one
     sections.forEach((section, i) => {
       if (i === 0) return;
+
+      // Boş bekleme — scroll döner, içerik sabit
+      tl.to({}, { duration: 0.4 });
+
+      // Section aşağıdan yukarı çıkar
       tl.to(section, {
         yPercent: 0,
-        ease: "none"
+        ease: "none",
+        duration: 1,
       });
     });
 

@@ -283,9 +283,9 @@ export default function Workshops({ messages }: WorkshopsProps) {
           opacity: 1,
           y: 0,
           rotateX: 0,
-          duration: 0.8,
-          stagger: 0.03,
-          ease: 'power3.out',
+          duration: 0.6,
+          stagger: 0.015,
+          ease: 'power4.out',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 60%',
@@ -298,15 +298,15 @@ export default function Workshops({ messages }: WorkshopsProps) {
     // Content split text animasyonu - İlk paragraf
     if (contentRef.current) {
       const chars1 = contentRef.current.querySelectorAll('.char');
-      const firstParagraphTween = gsap.fromTo(
+      gsap.fromTo(
         chars1,
         { opacity: 0, y: 10 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
-          stagger: 0.02,
-          ease: 'power2.out',
+          duration: 0.4,
+          stagger: 0.008,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 55%',
@@ -315,7 +315,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
         }
       );
 
-      // İkinci paragraf animasyonu - İlk paragraf bittikten sonra
+      // İkinci paragraf animasyonu - İlk paragraf ile neredeyse eş zamanlı ama hafif gecikmeli
       if (content2Ref.current) {
         const chars2 = content2Ref.current.querySelectorAll('.char');
         gsap.fromTo(
@@ -324,10 +324,10 @@ export default function Workshops({ messages }: WorkshopsProps) {
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.02,
-            ease: 'power2.out',
-            delay: chars1.length * 0.02 + 0.6 + 0.3, // İlk paragraf süresi + küçük ara
+            duration: 0.4,
+            stagger: 0.008,
+            ease: 'power3.out',
+            delay: 0.2, // Sabit kısa bir gecikme
             scrollTrigger: {
               trigger: sectionRef.current,
               start: 'top 55%',

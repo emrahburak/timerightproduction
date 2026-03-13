@@ -19,6 +19,7 @@ interface NavLinks {
   home: NavItem;
   about: NavItem;
   services: NavItem;
+  projects: NavItem;
   team: NavItem;
   contact: NavItem;
   privacy?: string;

@@ -63,6 +63,7 @@ export default function ReelShowcase({ messages }: ReelShowcaseProps) {
 
   return (
     <section
+      id="reelshowcase"
       className="relative w-full h-full bg-black flex flex-col justify-center items-center py-8 md:py-12"
       data-section="reelshowcase"
     >
