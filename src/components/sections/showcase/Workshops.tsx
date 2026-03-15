@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -15,66 +15,61 @@ const splitTextToChars = (text: string): string[] => {
   return text.split('');
 };
 
-// Carousel Card Component for Mobile/Tablet
-function CarouselCard({
-  item,
-  index,
-  isActive,
+function MasonryGrid({
   onImageClick,
 }: {
-  item: WorkshopItem;
-  index: number;
-  isActive: boolean;
   onImageClick: (item: WorkshopItem, index: number) => void;
 }) {
+  // workshops dizisinin ilk 6 öğesi gösterilecek
+  // 2 sütun, CSS column-count ile masonry
+  const items = workshops.slice(0, 6);
+
   return (
     <div
-      className="snap-center flex-shrink-0 w-[75vw] h-[260px] relative rounded-lg overflow-hidden transition-all duration-300 ease-out"
+      className="w-full px-4"
       style={{
-        transform: isActive ? 'scale(1)' : 'scale(0.9)',
-        opacity: isActive ? 1 : 0.6,
+        columnCount: 2,
+        columnGap: '0.5rem',
       }}
-      onClick={() => onImageClick(item, index)}
     >
-      <Image
-        src={getWorkshopImageUrl(item.image)}
-        alt={item.title}
-        fill
-        className="object-cover"
-        sizes="75vw"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <h3 className="text-white text-lg font-bold">{item.title}</h3>
-        <p className="text-white/70 text-sm mt-1 line-clamp-2">{item.description}</p>
-      </div>
-    </div>
-  );
-}
-
-// Dot Indicator Component
-function DotIndicator({
-  total,
-  activeIndex,
-  onClick,
-}: {
-  total: number;
-  activeIndex: number;
-  onClick: (index: number) => void;
-}) {
-  return (
-    <div className="flex justify-center gap-2 mt-4">
-      {Array.from({ length: total }).map((_, index) => (
-        <button
-          key={index}
-          onClick={() => onClick(index)}
-          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-            index === activeIndex
-              ? 'bg-white w-6'
-              : 'bg-white/40 hover:bg-white/60'
-          }`}
-          aria-label={`Go to slide ${index + 1}`}
-        />
+      {items.map((item, index) => (
+        <div
+          key={item.image}
+          className="break-inside-avoid mb-2 relative
+                     rounded-lg overflow-hidden cursor-pointer
+                     group"
+          style={{
+            // Çift-tek index ile yükseklik farkı oluşturulur
+            // masonry hissi için
+            height: index % 2 === 0 ? '180px' : '140px',
+          }}
+          onClick={() => onImageClick(item, index)}
+        >
+          <Image
+            src={getWorkshopImageUrl(item.image)}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform
+                       duration-500 group-hover:scale-105"
+            sizes="45vw"
+          />
+          {/* Hover overlay */}
+          <div className="absolute inset-0
+                          bg-gradient-to-t from-black/80
+                          via-black/20 to-transparent
+                          opacity-0 group-hover:opacity-100
+                          transition-opacity duration-300" />
+          {/* Title - hover'da görünür */}
+          <div className="absolute bottom-0 left-0 right-0
+                          p-3 translate-y-full
+                          group-hover:translate-y-0
+                          transition-transform duration-300">
+            <h3 className="text-white text-sm font-syne
+                           font-bold leading-tight">
+              {item.title}
+            </h3>
+          </div>
+        </div>
       ))}
     </div>
   );
@@ -100,13 +95,11 @@ function ScrollRow({
   const duplicatedItems = [...items, ...items];
   const ITEM_WIDTH = 280;
   const GAP = 16;
-  const ITEM_TOTAL = ITEM_WIDTH + GAP;
 
   useGSAP(() => {
     if (!scrollRef.current) return;
 
     const scrollEl = scrollRef.current;
-    const halfWidth = scrollEl.scrollWidth / 2;
 
     // Set initial position based on direction
     if (direction === 'rtl') {
@@ -208,8 +201,6 @@ interface WorkshopsProps {
 export default function Workshops({ messages }: WorkshopsProps) {
   const [open, setOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLParagraphElement>(null);
@@ -238,39 +229,6 @@ export default function Workshops({ messages }: WorkshopsProps) {
     setCurrentIndex(index);
     setOpen(true);
   };
-
-  const handleDotClick = (index: number) => {
-    setActiveIndex(index);
-    if (carouselRef.current) {
-      const cardWidth = carouselRef.current.offsetWidth * 0.75; // 75vw
-      const gap = 16; // gap-4
-      const scrollPosition = index * (cardWidth + gap);
-      carouselRef.current.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  const handleScroll = () => {
-    if (carouselRef.current) {
-      const scrollLeft = carouselRef.current.scrollLeft;
-      const cardWidth = carouselRef.current.offsetWidth * 0.75;
-      const gap = 16;
-      const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-      if (newIndex !== activeIndex && newIndex >= 0 && newIndex < workshops.length) {
-        setActiveIndex(newIndex);
-      }
-    }
-  };
-
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    if (carousel) {
-      carousel.addEventListener('scroll', handleScroll, { passive: true });
-      return () => carousel.removeEventListener('scroll', handleScroll);
-    }
-  }, [activeIndex]);
 
   useGSAP(() => {
     // Title split text animasyonu - Karakterler sırayla gelir
@@ -464,32 +422,9 @@ export default function Workshops({ messages }: WorkshopsProps) {
         }}
       />
 
-      {/* CAROUSEL - Mobile/Tablet only (< lg) */}
-      <div className="lg:hidden relative z-10 w-full flex flex-col items-center py-8">
-        <div
-          ref={carouselRef}
-          className="flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth w-full px-6"
-          style={{
-            scrollSnapType: 'x mandatory',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {workshops.map((item, index) => (
-            <CarouselCard
-              key={item.image}
-              item={item}
-              index={index}
-              isActive={index === activeIndex}
-              onImageClick={handleImageClick}
-            />
-          ))}
-        </div>
-        <DotIndicator
-          total={workshops.length}
-          activeIndex={activeIndex}
-          onClick={handleDotClick}
-        />
+      {/* MASONRY GRID - Mobile/Tablet only (< lg) */}
+      <div className="lg:hidden relative z-10 w-full py-6">
+        <MasonryGrid onImageClick={handleImageClick} />
       </div>
 
       {/* SAĞ PANEL - Görsel Şeritleri - Desktop only (lg+) */}
