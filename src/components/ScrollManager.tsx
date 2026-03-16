@@ -27,19 +27,44 @@ export default function ScrollManager({ children }: ScrollManagerProps) {
     const sectionZIndexes: Record<string, number> = {
       'hero': 10,
       'statement': 20,
-      'brandgallery': 30,
-      'about': 40,
-      'services': 50,
-      'reelshowcase': 55,
-      'showcase-stack': 60,
-      'instructors': 70,
-      'contact': 80,
+      'brandgallery': 5,
+      'about': 50,
+      'services': 60,
+      'reelshowcase': 65,
+      'showcase-stack': 70,
+      'instructors': 80,
+      'contact': 90,
     };
 
     Object.entries(sectionZIndexes).forEach(([section, zIndex]) => {
       const el = document.querySelector(`[data-section="${section}"]`) as HTMLElement;
       if (el) {
         gsap.set(el, { zIndex });
+      }
+    });
+
+    // Mobile'da about ve brandgallery
+    // arasında kesin z-index ayırımı
+    const mm = gsap.matchMedia();
+    mm.add("(max-width: 767px)", () => {
+      const aboutEl = document.querySelector(
+        '[data-section="about"]'
+      ) as HTMLElement;
+      const brandGalleryEl = document.querySelector(
+        '[data-section="brandgallery"]'
+      ) as HTMLElement;
+
+      if (aboutEl) {
+        gsap.set(aboutEl, {
+          zIndex: 50,
+          position: 'relative',
+        });
+      }
+      if (brandGalleryEl) {
+        gsap.set(brandGalleryEl, {
+          zIndex: 10,
+          position: 'relative',
+        });
       }
     });
 
@@ -59,39 +84,44 @@ export default function ScrollManager({ children }: ScrollManagerProps) {
   // Statement yukarı kayarken, BrandGallery aşağıdan yukarı beliriyor
   // ============================================
   useGSAP(() => {
-    const statement = document.querySelector('[data-section="statement"]');
-    const brandGallery = document.querySelector('[data-section="brandgallery"]');
+    const mm = gsap.matchMedia();
 
-    if (!statement || !brandGallery) return;
+    mm.add("(min-width: 768px)", () => {
+      // Statement → BrandGallery "Perde Çekilme" Efekti
+      const statement = document.querySelector('[data-section="statement"]');
+      const brandGallery = document.querySelector('[data-section="brandgallery"]');
 
-    // Statement: Yukarı doğru perde gibi çekiliyor
-    gsap.to(statement, {
-      y: -100,
-      opacity: 0,
-      ease: 'power2.inOut',
-      scrollTrigger: {
-        trigger: statement,
-        start: 'bottom top',
-        end: 'top top',
-        scrub: 1,
-      },
+      if (statement && brandGallery) {
+        gsap.to(statement, {
+          y: -100,
+          opacity: 0,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: statement,
+            start: 'bottom top',
+            end: 'top top',
+            scrub: 1,
+          },
+        });
+
+        gsap.fromTo(
+          brandGallery,
+          { y: 100 },
+          {
+            y: 0,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: brandGallery,
+              start: 'top bottom',
+              end: 'center center',
+              scrub: 1.5,
+            },
+          }
+        );
+      }
     });
 
-    // BrandGallery: Aşağıdan yukarı scroll ile beliriyor
-    gsap.fromTo(
-      brandGallery,
-      { y: 100 },
-      {
-        y: 0,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: brandGallery,
-          start: 'top bottom',
-          end: 'center center',
-          scrub: 1.5,
-        },
-      }
-    );
+    return () => mm.revert();
   }, { scope: containerRef });
 
   // ============================================

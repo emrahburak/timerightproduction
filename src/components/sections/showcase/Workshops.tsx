@@ -71,7 +71,6 @@ function MasonryGrid({
 
   const visibleItems = workshops.slice(0, 6);
   const hiddenItems = workshops.slice(6);
-  const remainingCount = hiddenItems.length;
 
   return (
     <div className="w-full px-4 flex flex-col gap-0">
@@ -92,7 +91,7 @@ function MasonryGrid({
       </div>
 
       {/* Accordion — sadece hiddenItems varsa render et */}
-      {remainingCount > 0 && (
+      {hiddenItems.length > 0 && (
         <>
           {/* Expand/Collapse alanı */}
           <div
@@ -134,10 +133,7 @@ function MasonryGrid({
                        active:bg-white/10"
           >
             <span>
-              {isExpanded
-                ? 'Gizle'
-                : `Tüm Fotoğrafları Göster (${remainingCount})`
-              }
+              {isExpanded ? 'Gizle' : 'Tüm Fotoğrafları Göster'}
             </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
