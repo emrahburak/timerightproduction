@@ -6,6 +6,7 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import ServiceCard from './ServiceCard';
+import MobileServiceCard from './MobileServiceCard';
 import { getServiceImageUrl } from '@/lib/constants';
 import { serviceImage } from '@/data/services';
 
@@ -184,19 +185,31 @@ const Services = ({ title, items, scrollToExplore }: ServicesProps) => {
         </h1>
       </div>
 
-      {/* Carousel Wrapper */}
-      {/* 'flex items-center' ile kartları hizalıyoruz. 
-          Başlangıç pozisyonunu GSAP 'set' ile yöneteceğiz, bu yüzden CSS ile ötelemeye gerek yok.
-          Sadece container yüksekliğini ve dikey hizalamayı koruyoruz. */}
-      <div className="w-full h-full absolute inset-0 flex items-center z-[40]">
+      {/* DESKTOP Carousel — md ve üzeri */}
+      <div className="hidden md:flex w-full h-full absolute inset-0 items-center z-[40]">
         <div ref={wrapper} className="flex gap-12 md:gap-24 px-10 items-center">
           {mergedServices.map((service, index) => (
-                        <ServiceCard
-                          key={service.id}
-                          ref={(el) => { cardsRef.current[index] = el; }}
-                          service={service}
-                        />          ))}
+            <ServiceCard
+              key={service.id}
+              ref={(el) => { cardsRef.current[index] = el; }}
+              service={service}
+            />
+          ))}
         </div>
+      </div>
+
+      {/* MOBILE Liste — md altı */}
+      <div className="md:hidden w-full h-full
+                      absolute inset-0
+                      overflow-y-auto z-[40]
+                      flex flex-col justify-center
+                      px-4 py-8 gap-3">
+        {mergedServices.map((service) => (
+          <MobileServiceCard
+            key={service.id}
+            service={service}
+          />
+        ))}
       </div>
 
       {/* Scroll Indicator */}
