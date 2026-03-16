@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Image from 'next/image';
@@ -9,6 +9,7 @@ import { heroImage } from '@/data/hero';
 
 interface HeroProps {
   title: string;
+  description: string;
 }
 
 function ContentBlock({ title }: { title: string }) {
@@ -34,9 +35,14 @@ function ContentSet({ title }: { title: string }) {
   );
 }
 
-export default function Hero({ title }: HeroProps) {
+export default function Hero({ title, description }: HeroProps) {
   const container = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
+
+  const descriptionChars = useMemo(
+    () => description.split(''),
+    [description]
+  );
 
   useGSAP(() => {
     if (!marqueeRef.current) return;
@@ -46,6 +52,24 @@ export default function Hero({ title }: HeroProps) {
       repeat: -1,
       duration: 60,
       ease: 'none',
+    });
+
+    // Description split text — scroll tetikli değil,
+    // sayfa yüklenince gecikmeyle başlar
+    const descChars = gsap.utils.toArray<HTMLSpanElement>(
+      '.hero-desc-char'
+    );
+    gsap.set(descChars, {
+      opacity: 0,
+      y: 15,
+    });
+    gsap.to(descChars, {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      stagger: 0.018,
+      ease: 'power3.out',
+      delay: 1.2,
     });
   }, { scope: container });
 
@@ -69,6 +93,49 @@ export default function Hero({ title }: HeroProps) {
           <ContentSet title={title} />
           <ContentSet title={title} />
         </div>
+      </div>
+
+      {/* Description — Split Text */}
+      {/* Desktop: sol alt | Mobile/Tablet: orta alt */}
+      <div
+        className="
+          absolute z-20 bottom-10
+          left-0 right-0
+          flex justify-center
+          px-6
+          md:px-10
+          lg:justify-start
+          lg:left-12
+          lg:right-auto
+          lg:max-w-lg
+        "
+      >
+        <p
+          className="
+            font-cormorant italic
+            text-white/90 leading-[1.4]
+            text-[clamp(1.25rem,2.2vw,1.85rem)]
+            text-center
+            lg:text-left
+            tracking-wide
+          "
+        >
+          {descriptionChars.map((char, index) => (
+            char === '\n' ? (
+              <br key={index} />
+            ) : (
+              <span
+                key={index}
+                className="hero-desc-char inline-block"
+                style={{
+                  display: char === ' ' ? 'inline' : 'inline-block'
+                }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+            )
+          ))}
+        </p>
       </div>
     </section>
   );

@@ -115,7 +115,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <main className="w-full bg-black">
         {/* Hero Section - Native scroll (z-10) */}
         <div data-section="hero" className="relative w-full h-screen overflow-hidden z-10">
-          <Hero title={messages.hero.title} />
+          <Hero title={messages.hero.title} description={messages.hero.description} />
         </div>
 
         {/* Statement Section - Slide-Over transition (z-20) */}
@@ -124,7 +124,7 @@ export default async function HomePage({ params }: HomePageProps) {
         </div> */}
 
         {/* About Section - Slide-Over transition (z-30) */}
-        <div data-section="about" className="relative w-full h-screen overflow-hidden z-30">
+        <div data-section="about" className="relative w-full min-h-screen md:h-screen overflow-visible md:overflow-hidden z-30">
           <About title={messages.about.title} content={messages.about.content} />
         </div>
 

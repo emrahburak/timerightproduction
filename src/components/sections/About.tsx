@@ -25,7 +25,7 @@ export default function About({ title, content }: SectionProps) {
   const contentRef = useRef<HTMLParagraphElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
-  const titleChars = useMemo(() => splitTextToChars(title), [title]);
+  const titleWords = useMemo(() => title.split(' '), [title]);
   const contentChars = useMemo(() => splitTextToChars(content), [content]);
 
   useGSAP(() => {
@@ -64,8 +64,8 @@ export default function About({ title, content }: SectionProps) {
           stagger: 0.02,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 55%',
+            trigger: contentRef.current,
+            start: 'top 85%',
             toggleActions: 'play none none reverse',
           },
         }
@@ -73,44 +73,50 @@ export default function About({ title, content }: SectionProps) {
     }
 
     // Görsel animasyonu - Hafif parallax
-    gsap.fromTo(
-      imageRef.current,
-      { y: 50, opacity: 0 },
-      {
-        y: -30,
-        opacity: 1,
-        duration: 1.5,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      }
-    );
+    if (imageRef.current) {
+      gsap.fromTo(
+        imageRef.current,
+        { y: 50, opacity: 0 },
+        {
+          y: -30,
+          opacity: 1,
+          duration: 1.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: imageRef.current,
+            start: 'top 90%',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      );
+    }
   }, { scope: sectionRef });
 
   return (
     <section
       id="about"
       ref={sectionRef}
-      className="h-screen bg-black relative flex items-center px-8 md:px-16 lg:px-24 overflow-hidden"
+      data-section="about"
+      className="min-h-screen md:h-screen bg-black relative isolate flex items-center px-8 md:px-16 lg:px-24 overflow-visible md:overflow-hidden py-16 md:py-0"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-7xl mx-auto z-10">
         {/* Sol Taraf: Title + Content */}
-        <div className="flex flex-col space-y-6 order-2 md:order-1">
+        <div className="flex flex-col space-y-6 order-1 md:order-1">
           <h2
             ref={titleRef}
             className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight"
           >
-            {titleChars.map((char, index) => (
+            {titleWords.map((word, wordIndex) => (
               <span
-                key={`${index}-${char}`}
-                className="char inline-block"
-                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
+                key={wordIndex}
+                className="inline-block whitespace-nowrap mr-[0.25em]"
               >
-                {char === ' ' ? '\u00A0' : char}
+                {word.split('').map((char, charIndex) => (
+                  <span key={charIndex} className="char inline-block">
+                    {char}
+                  </span>
+                ))}
               </span>
             ))}
           </h2>
@@ -133,7 +139,7 @@ export default function About({ title, content }: SectionProps) {
         {/* Sağ Taraf: Image */}
         <div
           ref={imageRef}
-          className="relative w-full aspect-[3/4] max-h-[70vh] order-1 md:order-2"
+          className="relative w-full aspect-[3/4] max-h-[70vh] order-2 md:order-2 z-20 isolate"
         >
           <Image
             src={getAboutImageUrl(aboutImage.image)}
