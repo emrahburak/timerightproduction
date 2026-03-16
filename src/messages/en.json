@@ -12,6 +12,10 @@
       "label": "Services",
       "path": "#services"
     },
+    "projects": {
+      "label": "Our Projects",
+      "path": "#reelshowcase"
+    },
     "team": {
       "label": "Instructors",
       "path": "#instructors"
@@ -197,11 +201,8 @@
     }
   },
   "brandGallery": {
-    "title": {
-      "brand": "Art of",
-      "tagline": "Production"
-    },
-    "statement": "When the time comes for everything to be exactly as it should be, and exactly on time."
+    "title": "The Art of Production",
+    "statement": "When everything comes together at exactly the right time, exactly as it should be."
   },
   "reelShowcase": {
     "title": "Our Videos",

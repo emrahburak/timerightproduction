@@ -100,13 +100,13 @@ export default function About({ title, content }: SectionProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-7xl mx-auto z-10">
         {/* Sol Taraf: Title + Content */}
         <div className="flex flex-col space-y-6 order-2 md:order-1">
-          <h2 
+          <h2
             ref={titleRef}
             className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight"
           >
             {titleChars.map((char, index) => (
-              <span 
-                key={`${index}-${char}`} 
+              <span
+                key={`${index}-${char}`}
                 className="char inline-block"
                 style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
               >
@@ -114,13 +114,13 @@ export default function About({ title, content }: SectionProps) {
               </span>
             ))}
           </h2>
-          <p 
+          <p
             ref={contentRef}
             className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl"
           >
             {contentChars.map((char, index) => (
-              <span 
-                key={`${index}-${char}`} 
+              <span
+                key={`${index}-${char}`}
                 className="char inline-block"
                 style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
               >
@@ -131,8 +131,8 @@ export default function About({ title, content }: SectionProps) {
         </div>
 
         {/* Sağ Taraf: Image */}
-        <div 
-          ref={imageRef} 
+        <div
+          ref={imageRef}
           className="relative w-full aspect-[3/4] max-h-[70vh] order-1 md:order-2"
         >
           <Image

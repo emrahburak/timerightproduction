@@ -14,10 +14,10 @@ interface HeroProps {
 function ContentBlock({ title }: { title: string }) {
   return (
     <div className="flex items-center flex-shrink-0">
-      <span className="font-syne text-white uppercase font-black text-[clamp(4rem,12vw,10rem)] tracking-[-0.02em]">
+      <span className="font-syne text-white uppercase font-black text-[clamp(2rem,8vw,10rem)] tracking-[-0.02em]">
         {title}
       </span>
-      <span className="font-syne text-white uppercase font-black text-[clamp(4rem,12vw,10rem)] tracking-[-0.02em] px-20 min-w-[5rem]">
+      <span className="font-syne text-white uppercase font-black text-[clamp(2rem,8vw,10rem)] tracking-[-0.02em] px-10 md:px-20 min-w-[2rem] md:min-w-[5rem]">
         -
       </span>
     </div>

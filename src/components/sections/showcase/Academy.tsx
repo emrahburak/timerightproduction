@@ -66,7 +66,7 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
   return (
     <section
       ref={containerRef}
-      className="academy-section w-full h-full flex items-center justify-center bg-[#0a0a0a] overflow-hidden relative"
+      className="academy-section w-full min-h-full sm:h-full flex items-center justify-center bg-[#0a0a0a] overflow-y-auto sm:overflow-hidden relative py-12 sm:py-0"
     >
       {/* Background Image */}
       <Image

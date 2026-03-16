@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -15,67 +15,152 @@ const splitTextToChars = (text: string): string[] => {
   return text.split('');
 };
 
-// Carousel Card Component for Mobile/Tablet
-function CarouselCard({
+function MasonryItem({
   item,
   index,
-  isActive,
+  globalIndex,
   onImageClick,
 }: {
   item: WorkshopItem;
   index: number;
-  isActive: boolean;
+  globalIndex: number;
   onImageClick: (item: WorkshopItem, index: number) => void;
 }) {
   return (
     <div
-      className="snap-center flex-shrink-0 w-[75vw] h-[260px] relative rounded-lg overflow-hidden transition-all duration-300 ease-out"
+      className="break-inside-avoid mb-2
+                 relative rounded-lg overflow-hidden
+                 cursor-pointer group"
       style={{
-        transform: isActive ? 'scale(1)' : 'scale(0.9)',
-        opacity: isActive ? 1 : 0.6,
+        height: index % 2 === 0 ? '180px' : '140px',
       }}
-      onClick={() => onImageClick(item, index)}
+      onClick={() => onImageClick(item, globalIndex)}
     >
       <Image
         src={getWorkshopImageUrl(item.image)}
         alt={item.title}
         fill
-        className="object-cover"
-        sizes="75vw"
+        className="object-cover transition-transform
+                   duration-500 group-hover:scale-105"
+        sizes="45vw"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <h3 className="text-white text-lg font-bold">{item.title}</h3>
-        <p className="text-white/70 text-sm mt-1 line-clamp-2">{item.description}</p>
+      <div className="absolute inset-0
+                      bg-gradient-to-t from-black/80
+                      via-black/20 to-transparent
+                      opacity-0 group-hover:opacity-100
+                      transition-opacity duration-300" />
+      <div className="absolute bottom-0 left-0 right-0
+                      p-3 translate-y-full
+                      group-hover:translate-y-0
+                      transition-transform duration-300">
+        <h3 className="text-white text-sm font-syne
+                       font-bold leading-tight">
+          {item.title}
+        </h3>
       </div>
     </div>
   );
 }
 
-// Dot Indicator Component
-function DotIndicator({
-  total,
-  activeIndex,
-  onClick,
+function MasonryGrid({
+  onImageClick,
 }: {
-  total: number;
-  activeIndex: number;
-  onClick: (index: number) => void;
+  onImageClick: (item: WorkshopItem, index: number) => void;
 }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const visibleItems = workshops.slice(0, 6);
+  const hiddenItems = workshops.slice(6);
+  const remainingCount = hiddenItems.length;
+
   return (
-    <div className="flex justify-center gap-2 mt-4">
-      {Array.from({ length: total }).map((_, index) => (
-        <button
-          key={index}
-          onClick={() => onClick(index)}
-          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-            index === activeIndex
-              ? 'bg-white w-6'
-              : 'bg-white/40 hover:bg-white/60'
-          }`}
-          aria-label={`Go to slide ${index + 1}`}
-        />
-      ))}
+    <div className="w-full px-4 flex flex-col gap-0">
+
+      {/* Her zaman görünen ilk 6 görsel */}
+      <div
+        style={{ columnCount: 2, columnGap: '0.5rem' }}
+      >
+        {visibleItems.map((item, index) => (
+          <MasonryItem
+            key={item.image}
+            item={item}
+            index={index}
+            globalIndex={index}
+            onImageClick={onImageClick}
+          />
+        ))}
+      </div>
+
+      {/* Accordion — sadece hiddenItems varsa render et */}
+      {remainingCount > 0 && (
+        <>
+          {/* Expand/Collapse alanı */}
+          <div
+            style={{
+              maxHeight: isExpanded ? '2000px' : '0px',
+              overflow: 'hidden',
+              transition: 'max-height 0.5s ease-in-out',
+            }}
+          >
+            <div
+              style={{
+                columnCount: 2,
+                columnGap: '0.5rem',
+                paddingTop: '0.5rem',
+              }}
+            >
+              {hiddenItems.map((item, index) => (
+                <MasonryItem
+                  key={item.image}
+                  item={item}
+                  index={index}
+                  globalIndex={6 + index}
+                  onImageClick={onImageClick}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Accordion Butonu */}
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="mt-4 w-full flex items-center
+                       justify-center gap-2 py-3 px-4
+                       rounded-lg border border-white/20
+                       bg-white/5 backdrop-blur-sm
+                       text-white/80 font-syne font-bold
+                       text-sm uppercase tracking-wider
+                       transition-all duration-300
+                       active:bg-white/10"
+          >
+            <span>
+              {isExpanded
+                ? 'Gizle'
+                : `Tüm Fotoğrafları Göster (${remainingCount})`
+              }
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16" height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                transform: isExpanded
+                  ? 'rotate(180deg)'
+                  : 'rotate(0deg)',
+                transition: 'transform 0.3s ease',
+              }}
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+        </>
+      )}
+
     </div>
   );
 }
@@ -100,13 +185,11 @@ function ScrollRow({
   const duplicatedItems = [...items, ...items];
   const ITEM_WIDTH = 280;
   const GAP = 16;
-  const ITEM_TOTAL = ITEM_WIDTH + GAP;
 
   useGSAP(() => {
     if (!scrollRef.current) return;
 
     const scrollEl = scrollRef.current;
-    const halfWidth = scrollEl.scrollWidth / 2;
 
     // Set initial position based on direction
     if (direction === 'rtl') {
@@ -208,8 +291,6 @@ interface WorkshopsProps {
 export default function Workshops({ messages }: WorkshopsProps) {
   const [open, setOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLParagraphElement>(null);
@@ -239,39 +320,6 @@ export default function Workshops({ messages }: WorkshopsProps) {
     setOpen(true);
   };
 
-  const handleDotClick = (index: number) => {
-    setActiveIndex(index);
-    if (carouselRef.current) {
-      const cardWidth = carouselRef.current.offsetWidth * 0.75; // 75vw
-      const gap = 16; // gap-4
-      const scrollPosition = index * (cardWidth + gap);
-      carouselRef.current.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  const handleScroll = () => {
-    if (carouselRef.current) {
-      const scrollLeft = carouselRef.current.scrollLeft;
-      const cardWidth = carouselRef.current.offsetWidth * 0.75;
-      const gap = 16;
-      const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-      if (newIndex !== activeIndex && newIndex >= 0 && newIndex < workshops.length) {
-        setActiveIndex(newIndex);
-      }
-    }
-  };
-
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    if (carousel) {
-      carousel.addEventListener('scroll', handleScroll, { passive: true });
-      return () => carousel.removeEventListener('scroll', handleScroll);
-    }
-  }, [activeIndex]);
-
   useGSAP(() => {
     // Title split text animasyonu - Karakterler sırayla gelir
     if (titleRef.current) {
@@ -283,9 +331,9 @@ export default function Workshops({ messages }: WorkshopsProps) {
           opacity: 1,
           y: 0,
           rotateX: 0,
-          duration: 0.8,
-          stagger: 0.03,
-          ease: 'power3.out',
+          duration: 0.6,
+          stagger: 0.015,
+          ease: 'power4.out',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 60%',
@@ -298,15 +346,15 @@ export default function Workshops({ messages }: WorkshopsProps) {
     // Content split text animasyonu - İlk paragraf
     if (contentRef.current) {
       const chars1 = contentRef.current.querySelectorAll('.char');
-      const firstParagraphTween = gsap.fromTo(
+      gsap.fromTo(
         chars1,
         { opacity: 0, y: 10 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
-          stagger: 0.02,
-          ease: 'power2.out',
+          duration: 0.4,
+          stagger: 0.008,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 55%',
@@ -315,7 +363,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
         }
       );
 
-      // İkinci paragraf animasyonu - İlk paragraf bittikten sonra
+      // İkinci paragraf animasyonu - İlk paragraf ile neredeyse eş zamanlı ama hafif gecikmeli
       if (content2Ref.current) {
         const chars2 = content2Ref.current.querySelectorAll('.char');
         gsap.fromTo(
@@ -324,10 +372,10 @@ export default function Workshops({ messages }: WorkshopsProps) {
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.02,
-            ease: 'power2.out',
-            delay: chars1.length * 0.02 + 0.6 + 0.3, // İlk paragraf süresi + küçük ara
+            duration: 0.4,
+            stagger: 0.008,
+            ease: 'power3.out',
+            delay: 0.2, // Sabit kısa bir gecikme
             scrollTrigger: {
               trigger: sectionRef.current,
               start: 'top 55%',
@@ -464,32 +512,9 @@ export default function Workshops({ messages }: WorkshopsProps) {
         }}
       />
 
-      {/* CAROUSEL - Mobile/Tablet only (< lg) */}
-      <div className="lg:hidden relative z-10 w-full flex flex-col items-center py-8">
-        <div
-          ref={carouselRef}
-          className="flex gap-4 overflow-x-auto overflow-y-hidden scroll-smooth w-full px-6"
-          style={{
-            scrollSnapType: 'x mandatory',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {workshops.map((item, index) => (
-            <CarouselCard
-              key={item.image}
-              item={item}
-              index={index}
-              isActive={index === activeIndex}
-              onImageClick={handleImageClick}
-            />
-          ))}
-        </div>
-        <DotIndicator
-          total={workshops.length}
-          activeIndex={activeIndex}
-          onClick={handleDotClick}
-        />
+      {/* MASONRY GRID - Mobile/Tablet only (< lg) */}
+      <div className="lg:hidden relative z-10 w-full py-6">
+        <MasonryGrid onImageClick={handleImageClick} />
       </div>
 
       {/* SAĞ PANEL - Görsel Şeritleri - Desktop only (lg+) */}

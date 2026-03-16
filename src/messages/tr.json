@@ -12,6 +12,10 @@
       "label": "Hizmetler",
       "path": "#services"
     },
+    "projects": {
+      "label": "Projelerimiz",
+      "path": "#reelshowcase"
+    },
     "team": {
       "label": "Eğitmenlerimiz",
       "path": "#instructors"
@@ -197,10 +201,7 @@
     }
   },
   "brandGallery": {
-    "title": {
-      "brand": "Produksiyon",
-      "tagline": "Sanatı"
-    },
+    "title": "Produksiyon Sanatı",
     "statement": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
   },
   "reelShowcase": {

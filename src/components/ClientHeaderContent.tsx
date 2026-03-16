@@ -19,6 +19,7 @@ interface NavLinks {
   home: NavItem;
   about: NavItem;
   services: NavItem;
+  projects: NavItem;
   team: NavItem;
   contact: NavItem;
   privacy?: string;
@@ -125,9 +126,9 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
 
     if (isMenuOpen && isMobile) {
       // ===== OPENING: Beam rises from bottom, items follow =====
-      
+
       gsap.set(overlay, { visibility: 'visible' });
-      
+
       const openTl = gsap.timeline();
 
       // 1. Overlay fades in
@@ -163,12 +164,12 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
 
     } else if (!isMenuOpen && isMobile) {
       // ===== CLOSING: Items go down first, then beam sweeps from top =====
-      
+
       // Make sure overlay is visible before animation
       gsap.set(overlay, { visibility: 'visible', opacity: 1 });
       gsap.set(content, { y: 0, opacity: 1 });
       gsap.set(beam, { y: '-100%', opacity: 0, scaleY: 0.3 });
-      
+
       const closeTl = gsap.timeline();
 
       // 1. Close button disappears first
@@ -195,16 +196,16 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
         duration: 1.2,
         ease: 'power4.inOut'
       }, 0.3) // Starts after content begins moving
-      .to(beam, {
-        scaleY: 3,
-        duration: 0.6,
-        ease: 'power2.in'
-      }, 0.3)
-      .to(beam, {
-        scaleY: 0.3,
-        duration: 0.5,
-        ease: 'elastic.out(1, 0.5)'
-      }, 0.8);
+        .to(beam, {
+          scaleY: 3,
+          duration: 0.6,
+          ease: 'power2.in'
+        }, 0.3)
+        .to(beam, {
+          scaleY: 0.3,
+          duration: 0.5,
+          ease: 'elastic.out(1, 0.5)'
+        }, 0.8);
 
       // 4. Overlay fades at very end (after beam passes)
       closeTl.to(overlay, {
@@ -267,14 +268,14 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
       <button ref={closeButtonRef} className={`fixed z-[200] w-12 h-12 flex items-center justify-center top-6 right-6 ${isMenuOpen && isMobile ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
         <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round">
-            <path d="M18 6L6 18M6 6l12 12"/>
+            <path d="M18 6L6 18M6 6l12 12" />
           </svg>
         </div>
       </button>
 
       {/* Menu Overlay */}
       <div ref={menuOverlayRef} className="fixed inset-0 z-[101] bg-gray-900/40 backdrop-blur-xl flex flex-col justify-center items-center md:hidden opacity-0">
-        
+
         {/* Beam - Separate laser element */}
         <div ref={beamRef} className="absolute left-0 w-full h-[600px] z-20 pointer-events-none" style={{
           background: 'linear-gradient(to bottom, transparent 0%, rgba(236, 72, 153, 0) 20%, rgba(236, 72, 153, 1) 40%, #ffffff 50%, rgba(236, 72, 153, 1) 60%, rgba(236, 72, 153, 0) 80%, transparent 100%)',
@@ -282,20 +283,20 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
         }} />
 
         {/* Menu Content */}
-        <div ref={menuContentRef} className="flex flex-col items-start gap-8 pl-8 z-30">
-          <nav className="flex flex-col items-start gap-8">
+        <div ref={menuContentRef} className="flex flex-col items-center gap-4 px-6 w-full max-w-xs z-30">
+          <nav className="flex flex-col items-start gap-3 w-full">
             {navItems.map((item, index) => (
-              <a key={item.key} href={item.path} onClick={(e) => handleSmoothScroll(e, item.path)} className="font-syne font-black text-5xl uppercase text-white hover:text-[#EAB308] transition-colors flex items-center gap-6">
-                <span className="font-syne text-lg text-white/30">{String(index + 1).padStart(2, '0')}</span>
-                <span>{item.label}</span>
+              <a key={item.key} href={item.path} onClick={(e) => handleSmoothScroll(e, item.path)} className="font-syne font-black text-[clamp(1.1rem,3.5vw,1.5rem)] uppercase text-white hover:text-[#EAB308] transition-colors flex items-center gap-3 w-full">
+                <span className="font-syne text-xs text-white/50 min-w-[1.5rem]">{String(index + 1).padStart(2, '0')}</span>
+                <span className="flex-1 leading-tight break-words">{item.label}</span>
               </a>
             ))}
           </nav>
 
           {/* Language Buttons */}
-          <div className="mt-4 flex gap-6">
-            <button onClick={() => handleLocaleChange('tr')} className={`font-syne text-lg uppercase px-6 py-3 border-2 rounded-full ${locale === 'tr' ? 'border-[#EAB308] text-[#EAB308] bg-[#EAB308]/10' : 'border-white/20 text-white/60'}`}>Türkçe</button>
-            <button onClick={() => handleLocaleChange('en')} className={`font-syne text-lg uppercase px-6 py-3 border-2 rounded-full ${locale === 'en' ? 'border-[#EAB308] text-[#EAB308] bg-[#EAB308]/10' : 'border-white/20 text-white/60'}`}>English</button>
+          <div className="mt-4 flex gap-3 justify-center w-full">
+            <button onClick={() => handleLocaleChange('tr')} className={`font-syne text-xs uppercase px-4 py-2 border-2 rounded-full transition-all duration-300 ${locale === 'tr' ? 'border-[#EAB308] text-[#EAB308] bg-[#EAB308]/10' : 'border-white/30 text-white/70 hover:border-white/50'}`}>TR</button>
+            <button onClick={() => handleLocaleChange('en')} className={`font-syne text-xs uppercase px-4 py-2 border-2 rounded-full transition-all duration-300 ${locale === 'en' ? 'border-[#EAB308] text-[#EAB308] bg-[#EAB308]/10' : 'border-white/30 text-white/70 hover:border-white/50'}`}>EN</button>
           </div>
         </div>
 

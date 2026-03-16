@@ -65,10 +65,7 @@ interface Messages {
     rhythmAtelier: { title: string; description: string; };
   };
   brandGallery: {
-    title: {
-      brand: string;
-      tagline: string;
-    };
+    title: string;
     statement: string;
   };
   instructors: {
