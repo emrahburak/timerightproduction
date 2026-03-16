@@ -15,62 +15,152 @@ const splitTextToChars = (text: string): string[] => {
   return text.split('');
 };
 
+function MasonryItem({
+  item,
+  index,
+  globalIndex,
+  onImageClick,
+}: {
+  item: WorkshopItem;
+  index: number;
+  globalIndex: number;
+  onImageClick: (item: WorkshopItem, index: number) => void;
+}) {
+  return (
+    <div
+      className="break-inside-avoid mb-2
+                 relative rounded-lg overflow-hidden
+                 cursor-pointer group"
+      style={{
+        height: index % 2 === 0 ? '180px' : '140px',
+      }}
+      onClick={() => onImageClick(item, globalIndex)}
+    >
+      <Image
+        src={getWorkshopImageUrl(item.image)}
+        alt={item.title}
+        fill
+        className="object-cover transition-transform
+                   duration-500 group-hover:scale-105"
+        sizes="45vw"
+      />
+      <div className="absolute inset-0
+                      bg-gradient-to-t from-black/80
+                      via-black/20 to-transparent
+                      opacity-0 group-hover:opacity-100
+                      transition-opacity duration-300" />
+      <div className="absolute bottom-0 left-0 right-0
+                      p-3 translate-y-full
+                      group-hover:translate-y-0
+                      transition-transform duration-300">
+        <h3 className="text-white text-sm font-syne
+                       font-bold leading-tight">
+          {item.title}
+        </h3>
+      </div>
+    </div>
+  );
+}
+
 function MasonryGrid({
   onImageClick,
 }: {
   onImageClick: (item: WorkshopItem, index: number) => void;
 }) {
-  // workshops dizisinin ilk 6 öğesi gösterilecek
-  // 2 sütun, CSS column-count ile masonry
-  const items = workshops.slice(0, 6);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const visibleItems = workshops.slice(0, 6);
+  const hiddenItems = workshops.slice(6);
+  const remainingCount = hiddenItems.length;
 
   return (
-    <div
-      className="w-full px-4"
-      style={{
-        columnCount: 2,
-        columnGap: '0.5rem',
-      }}
-    >
-      {items.map((item, index) => (
-        <div
-          key={item.image}
-          className="break-inside-avoid mb-2 relative
-                     rounded-lg overflow-hidden cursor-pointer
-                     group"
-          style={{
-            // Çift-tek index ile yükseklik farkı oluşturulur
-            // masonry hissi için
-            height: index % 2 === 0 ? '180px' : '140px',
-          }}
-          onClick={() => onImageClick(item, index)}
-        >
-          <Image
-            src={getWorkshopImageUrl(item.image)}
-            alt={item.title}
-            fill
-            className="object-cover transition-transform
-                       duration-500 group-hover:scale-105"
-            sizes="45vw"
+    <div className="w-full px-4 flex flex-col gap-0">
+
+      {/* Her zaman görünen ilk 6 görsel */}
+      <div
+        style={{ columnCount: 2, columnGap: '0.5rem' }}
+      >
+        {visibleItems.map((item, index) => (
+          <MasonryItem
+            key={item.image}
+            item={item}
+            index={index}
+            globalIndex={index}
+            onImageClick={onImageClick}
           />
-          {/* Hover overlay */}
-          <div className="absolute inset-0
-                          bg-gradient-to-t from-black/80
-                          via-black/20 to-transparent
-                          opacity-0 group-hover:opacity-100
-                          transition-opacity duration-300" />
-          {/* Title - hover'da görünür */}
-          <div className="absolute bottom-0 left-0 right-0
-                          p-3 translate-y-full
-                          group-hover:translate-y-0
-                          transition-transform duration-300">
-            <h3 className="text-white text-sm font-syne
-                           font-bold leading-tight">
-              {item.title}
-            </h3>
+        ))}
+      </div>
+
+      {/* Accordion — sadece hiddenItems varsa render et */}
+      {remainingCount > 0 && (
+        <>
+          {/* Expand/Collapse alanı */}
+          <div
+            style={{
+              maxHeight: isExpanded ? '2000px' : '0px',
+              overflow: 'hidden',
+              transition: 'max-height 0.5s ease-in-out',
+            }}
+          >
+            <div
+              style={{
+                columnCount: 2,
+                columnGap: '0.5rem',
+                paddingTop: '0.5rem',
+              }}
+            >
+              {hiddenItems.map((item, index) => (
+                <MasonryItem
+                  key={item.image}
+                  item={item}
+                  index={index}
+                  globalIndex={6 + index}
+                  onImageClick={onImageClick}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+
+          {/* Accordion Butonu */}
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="mt-4 w-full flex items-center
+                       justify-center gap-2 py-3 px-4
+                       rounded-lg border border-white/20
+                       bg-white/5 backdrop-blur-sm
+                       text-white/80 font-syne font-bold
+                       text-sm uppercase tracking-wider
+                       transition-all duration-300
+                       active:bg-white/10"
+          >
+            <span>
+              {isExpanded
+                ? 'Gizle'
+                : `Tüm Fotoğrafları Göster (${remainingCount})`
+              }
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16" height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                transform: isExpanded
+                  ? 'rotate(180deg)'
+                  : 'rotate(0deg)',
+                transition: 'transform 0.3s ease',
+              }}
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+        </>
+      )}
+
     </div>
   );
 }
