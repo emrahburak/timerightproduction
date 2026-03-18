@@ -213,7 +213,7 @@ const Services = ({ title, items, scrollToExplore }: ServicesProps) => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-[0.2em] uppercase animate-pulse z-[50]">
+      <div className="hidden lg:block absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-[0.2em] uppercase animate-pulse z-[50]">
         {scrollToExplore}
       </div>
     </section>
