@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import AcademyCard from './AcademyCard';
 import { academyPrograms } from '@/data/academy';
 import { getShowcaseStackUrl } from '@/lib/constants';
@@ -63,6 +64,16 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
     },
   ];
 
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + cards.length) % cards.length);
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % cards.length);
+  };
+
   return (
     <section
       ref={containerRef}
@@ -84,7 +95,91 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
 
       {/* Cards Grid - Centered horizontal layout */}
       <div className="container mx-auto px-4 sm:px-8 md:px-12 lg:px-10 relative z-10">
-        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8 lg:gap-12 w-full">
+
+        {/* MOBILE/TABLET — 3D Carousel (< lg) */}
+        <div className="lg:hidden relative w-full flex flex-col items-center overflow-hidden">
+          {/* Perspective wrapper */}
+          <div
+            className="relative w-full h-[560px] flex items-center justify-center"
+            style={{ perspective: '1000px' }}
+          >
+            {cards.map((card, index) => {
+              const total = cards.length;
+              let offset = index - activeIndex;
+              // Wrap around
+              if (offset > Math.floor(total / 2)) offset -= total;
+              if (offset < -Math.floor(total / 2)) offset += total;
+
+              const isCenter = offset === 0;
+              const isAdjacent = Math.abs(offset) === 1;
+              const isHidden = Math.abs(offset) > 1;
+
+              return (
+                <div
+                  key={index}
+                  className="absolute transition-all duration-500 ease-in-out"
+                  style={{
+                    transform: `
+                      translateX(${offset * 55}%)
+                      scale(${isCenter ? 1 : isAdjacent ? 0.82 : 0.65})
+                      rotateY(${offset * -12}deg)
+                    `,
+                    zIndex: isCenter ? 10 : isAdjacent ? 5 : 1,
+                    opacity: isCenter ? 1 : isAdjacent ? 0.35 : 0,
+                    filter: isCenter ? 'blur(0px)' : 'blur(3px)',
+                    visibility: isHidden ? 'hidden' : 'visible',
+                    pointerEvents: isCenter ? 'auto' : 'none',
+                    width: '75vw',
+                    maxWidth: '320px',
+                  }}
+                >
+                  <AcademyCard
+                    title={card.title}
+                    icon={card.icon}
+                    courses={card.courses}
+                    themeColor={card.themeColor}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex items-center gap-6 mt-4">
+            <button
+              onClick={handlePrev}
+              className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-colors duration-200 focus:outline-none"
+              aria-label="Previous card"
+            >
+              <ChevronLeft className="w-6 h-6 text-white" />
+            </button>
+
+            {/* Dot Indicator */}
+            <div className="flex gap-2">
+              {cards.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveIndex(i)}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === activeIndex ? 'w-6 h-2 bg-white' : 'w-2 h-2 bg-white/40'
+                  }`}
+                  aria-label={`Go to card ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={handleNext}
+              className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-colors duration-200 focus:outline-none"
+              aria-label="Next card"
+            >
+              <ChevronRight className="w-6 h-6 text-white" />
+            </button>
+          </div>
+        </div>
+
+        {/* DESKTOP — mevcut layout (lg+) */}
+        <div className="hidden lg:flex flex-row flex-wrap items-center justify-center gap-8 lg:gap-12 w-full">
           {/* Card 1: Acting */}
           <div className="academy-card-wrapper w-full sm:w-auto lg:w-auto flex justify-center">
             <AcademyCard
@@ -115,6 +210,7 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
             />
           </div>
         </div>
+
       </div>
 
       {/* Background large text for texture */}
