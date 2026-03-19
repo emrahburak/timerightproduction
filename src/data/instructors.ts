@@ -1,20 +1,20 @@
 import { Instructor } from "./instructor";
 
 export const instructors: Instructor[] = [
-  {
-    id: 1,
-    fullname: "Onur TAN",
-    role: "Yönetmen-Senarist",
-    description: "",
-    image: "timeright-instructor-onur-tan.webp",
-  },
-  {
-    id: 2,
-    fullname: "Ömer Faruk SORAK",
-    role: "Yönetmen",
-    description: "",
-    image: "timeright-instructor-omer-faruk-sorak.webp",
-  },
+  // {
+  //   id: 1,
+  //   fullname: "Onur TAN",
+  //   role: "Yönetmen-Senarist",
+  //   description: "",
+  //   image: "timeright-instructor-onur-tan.webp",
+  // },
+  // {
+  //   id: 2,
+  //   fullname: "Ömer Faruk SORAK",
+  //   role: "Yönetmen",
+  //   description: "",
+  //   image: "timeright-instructor-omer-faruk-sorak.webp",
+  // },
   {
     id: 3,
     fullname: "İlker AKSUM",
