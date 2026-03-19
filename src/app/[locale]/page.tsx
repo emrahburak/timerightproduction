@@ -8,6 +8,7 @@ import ShowcaseStack from '@/components/sections/showcase/ShowcaseStack';
 import Instructors, { type Instructor } from '@/components/sections/Instructors';
 import Contact from '@/components/sections/Contact';
 import ScrollManager from '@/components/ScrollManager';
+import { INSTRUCTORS_DATA } from '@/data/instructors';
 
 // Define a type for the messages object to ensure type safety
 interface Messages {
@@ -71,7 +72,7 @@ interface Messages {
   instructors: {
     title: string;
     description: string;
-    members: Instructor[];
+    roles: Record<string, { title: string; bio: string }>;
   };
   contact: {
     mainTitle: string;
@@ -109,6 +110,17 @@ export default async function HomePage({ params }: HomePageProps) {
   const locale = unwrappedParams.locale;
 
   const messages = await getAllMessages(locale); // Fetch all messages
+
+  const mergedInstructorsData = {
+    title: messages.instructors.title,
+    description: messages.instructors.description,
+    members: INSTRUCTORS_DATA.map(inst => ({
+      name: inst.fullname,
+      image: inst.image,
+      title: messages.instructors.roles[inst.id]?.title || "",
+      bio: messages.instructors.roles[inst.id]?.bio || ""
+    }))
+  };
 
   return (
     <ScrollManager>
@@ -150,7 +162,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
         {/* Instructors Section - Revealed after ShowcaseStack (z-70) */}
         <div data-section="instructors" className="relative w-full h-screen overflow-hidden z-70">
-          <Instructors instructors={messages.instructors} />
+          <Instructors instructors={mergedInstructorsData} />
         </div>
 
         {/* Contact Section - Slide-Over transition (z-80) */}
