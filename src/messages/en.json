@@ -75,56 +75,32 @@
   "instructors": {
     "title": "Instructors",
     "description": "Meet our team of expert instructors.",
-    "members": [
-      {
-        "name": "Onur TAN",
-        "title": "Yönetmen-Senarist",
-        "bio": "",
-        "image": "timeright-instructor-onur-tan.webp"
+    "roles": {
+      "3": {
+        "title": "Actor",
+        "bio": ""
       },
-      {
-        "name": "Ömer Faruk SORAK",
-        "title": "Yönetmen",
-        "bio": "",
-        "image": "timeright-instructor-omer-faruk-sorak.webp"
+      "4": {
+        "title": "Director-Academician",
+        "bio": ""
       },
-      {
-        "name": "İlker AKSUM",
-        "title": "Oyuncu",
-        "bio": "",
-        "image": "timeright-instructor-ilker-aksum.webp"
+      "5": {
+        "title": "Actor",
+        "bio": ""
       },
-      {
-        "name": "Hacı Mehmet DURANOĞLU",
-        "title": "Yönetmen-Akademisyen",
-        "bio": "",
-        "image": "timeright-instructor-haci-mehmet-duranoglu.webp"
+      "6": {
+        "title": "Actor-Acting Coach",
+        "bio": ""
       },
-      {
-        "name": "Soydan SOYDAŞ",
-        "title": "Oyuncu",
-        "bio": "",
-        "image": "timeright-instructor-soydan-soydas.webp"
+      "7": {
+        "title": "Cast Director-Manager",
+        "bio": ""
       },
-      {
-        "name": "Zafer ALTUN",
-        "title": "Oyuncu-Acting Coach",
-        "bio": "",
-        "image": "timeright-instructor-zafer-altun.webp"
-      },
-      {
-        "name": "Fatoş YILMAZ",
-        "title": "Cast Directörü-Menajer",
-        "bio": "",
-        "image": "timeright-instructor-fatos-yilmaz.webp"
-      },
-      {
-        "name": "Asef Okan YAĞCI",
-        "title": "Baterist-Perküsyonist",
-        "bio": "",
-        "image": "timeright-instructor-asef-okan-yagci.webp"
+      "8": {
+        "title": "Drummer-Percussionist",
+        "bio": ""
       }
-    ]
+    }
   },
   "contact": {
     "mainTitle": "THE TIME IS RIGHT",
