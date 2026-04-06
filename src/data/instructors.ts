@@ -18,7 +18,6 @@ export const INSTRUCTORS_DATA: Instructor[] = [
   {
     id: "5",
     fullname: "Soydan SOYDAŞ",
-    fullname_en: "Soydan SOYDAS", // Optional for future use if names differ
     image: "timeright-instructor-soydan-soydas.webp",
   },
   {
@@ -29,13 +28,11 @@ export const INSTRUCTORS_DATA: Instructor[] = [
   {
     id: "7",
     fullname: "Fatoş YILMAZ",
-    fullname_en: "Fatos YILMAZ",
     image: "timeright-instructor-fatos-yilmaz.webp",
   },
   {
     id: "8",
     fullname: "Asef Okan YAĞCI",
-    fullname_en: "Asef Okan YAGCI",
     image: "timeright-instructor-asef-okan-yagci.webp",
   },
 ] as const;
