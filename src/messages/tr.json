@@ -1,232 +1,208 @@
 {
-  "navbar": {
-    "home": {
-      "label": "Anasayfa",
-      "path": "#home"
-    },
-    "about": {
-      "label": "Hakkımızda",
-      "path": "#about"
-    },
-    "services": {
-      "label": "Hizmetler",
-      "path": "#services"
-    },
-    "projects": {
-      "label": "Projelerimiz",
-      "path": "#reelshowcase"
-    },
-    "team": {
-      "label": "Eğitmenlerimiz",
-      "path": "#instructors"
-    },
-    "contact": {
-      "label": "İletişim",
-      "path": "#contact"
-    },
-    "privacy": "GİZLİLİK POLİTİKASI"
-  },
-  "privacy": {
-    "title": "GİZLİLİK POLİTİKASI",
-    "back": "GERİ DÖN",
-    "content": "Time Right Production ('Şirket') olarak, kişisel verilerinizin güvenliği hususuna azami hassasiyet göstermekteyiz. Kişisel verileriniz 6698 sayılı Kişisel Verilerin Korunması Kanunu ('KVKK') hükümleri doğrultusunda işlenmekte ve muhafaza edilmektedir.<br/><br/><strong>1. Veri Sorumlusu</strong><br/>Kişisel verileriniz; veri sorumlusu sıfatıyla Time Right Production tarafından aşağıda açıklanan kapsamda işlenebilecektir.<br/><br/><strong>2. Kişisel Verilerin İşlenme Amacı</strong><br/>Toplanan kişisel verileriniz; Şirketimiz tarafından sunulan ürün ve hizmetlerden sizleri faydalandırmak için gerekli çalışmaların iş birimlerimiz tarafından yapılması, Şirketimiz ile iş ilişkisi içerisinde olan ilgili kişilerin hukuki ve ticari güvenliğinin temini amaçlarıyla işlenmektedir.<br/><br/><strong>3. Veri Güvenliği</strong><br/>Verileriniz, yetkisiz erişimlere, kaybolmaya veya ifşaya karşı endüstri standardı güvenlik önlemleri ile korunmaktadır."
-  },
-  "hero": {
-    "title": "Time Right Production",
-    "description": "Doğru zamanda,\nDoğru yerde,\nDoğru iletişim,\nSizin için buradayız..."
-  },
-  "statement": {
-    "text": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
-  },
-  "about": {
-    "title": "Unutulmaz heyecan verici olayların zamanı geldi.",
-    "content": "Hayat iletişim aracılığıyla şekillenir; ancak iletişim sadece sözcüklerle sınırlı değildir. Uzman iş ortaklarımızla geliştirdiğimiz projeler, şirketinizin iç ve dış iletişim kanallarına güçlü destek sağlayan özel hizmet tasarımlarını içermektedir."
-  },
-  "services": {
-    "title": "Hizmetlerimiz",
-    "scrollToExplore": "Keşfetmek için Kaydır",
-    "items": [
-      {
-        "title": "Firma Tanıtım Filmleri",
-        "description": "Markanızın hikayesini sinematik bir dille dünyaya anlatın."
-      },
-      {
-        "title": "Belgesel Filmleri",
-        "description": "Gerçekliği sanatsal bir derinlikle ölümsüzleştirin."
-      },
-      {
-        "title": "Menajerlik Hizmetleri",
-        "description": "Yeteneklerin kariyer yolculuğunu profesyonelce yönetiyoruz."
-      },
-      {
-        "title": "Festival Şenlik Organizasyon",
-        "description": "Unutulmaz anlar yaratan büyük ölçekli etkinlik tasarımları."
-      },
-      {
-        "title": "Şirket İçi Motivasyon Etkinlikleri",
-        "description": "Takım ruhunu güçlendiren, enerji dolu kurumsal buluşmalar."
-      },
-      {
-        "title": "Ritm Atölyesi",
-        "description": "Birlikte üretmenin ve uyumun ritmini keşfedin."
-      }
-    ]
-  },
-  "instructors": {
-    "title": "Eğitmenlerimiz",
-    "description": "Alanında uzman eğitmen kadromuzla tanışın.",
-    "members": [
-      {
-        "name": "Onur TAN",
-        "title": "Yönetmen-Senarist",
-        "bio": "",
-        "image": "timeright-instructor-onur-tan.webp"
-      },
-      {
-        "name": "Ömer Faruk SORAK",
-        "title": "Yönetmen",
-        "bio": "",
-        "image": "timeright-instructor-omer-faruk-sorak.webp"
-      },
-      {
-        "name": "İlker AKSUM",
-        "title": "Oyuncu",
-        "bio": "",
-        "image": "timeright-instructor-ilker-aksum.webp"
-      },
-      {
-        "name": "Hacı Mehmet DURANOĞLU",
-        "title": "Yönetmen-Akademisyen",
-        "bio": "",
-        "image": "timeright-instructor-haci-mehmet-duranoglu.webp"
-      },
-      {
-        "name": "Soydan SOYDAŞ",
-        "title": "Oyuncu",
-        "bio": "",
-        "image": "timeright-instructor-soydan-soydas.webp"
-      },
-      {
-        "name": "Zafer ALTUN",
-        "title": "Oyuncu-Acting Coach",
-        "bio": "",
-        "image": "timeright-instructor-zafer-altun.webp"
-      },
-      {
-        "name": "Fatoş YILMAZ",
-        "title": "Cast Directörü-Menajer",
-        "bio": "",
-        "image": "timeright-instructor-fatos-yilmaz.webp"
-      },
-      {
-        "name": "Asef Okan YAĞCI",
-        "title": "Baterist-Perküsyonist",
-        "bio": "",
-        "image": "timeright-instructor-asef-okan-yagci.webp"
-      }
-    ]
-  },
-  "contact": {
-    "mainTitle": "TAM ZAMANI",
-    "email": "info@timerightproduction.org",
-    "brandName": "TIME RIGHT PRODUCTION",
-    "phoneLabels": {
-      "gsm": "GSM",
-      "schweiz": "SCHWEIZ"
-    },
-    "phoneNumbers": {
-      "gsm": "+90 532 414 44 48",
-      "schweiz": "+41 79 127 72 26"
-    },
-    "socialHandle": "@timerightproduction",
-    "copyright": "© 2026 TIME RIGHT PRODUCTION. TÜM HAKLARI SAKLIDIR."
-  },
-  "showcaseStack": {
-    "academy": {
-      "title": "Eğitimlerimiz",
-      "subtitle": "Geleceği Şekillendirin",
-      "description": "Profesyonel eğitim programlarımızla yeteneklerinizi bir üst seviyeye taşıyın.",
-      "stat": "50+ Sertifikalı Program",
-      "programs": {
-        "acting": {
-          "title": "Oyunculuk",
-          "courses": [
-            "Kamera Önü Oyunculuk",
-            "Temel Oyunculuk",
-            "Konservatuara Hazırlık",
-            "Etkili Konuşma, Vurgulu Tonlama",
-            "Diksiyon, Artikülasyon, Diyafram",
-            "Ses ve Nefes Kullanımı",
-            "Monolog Çalışmaları"
-          ]
-        },
-        "writing": {
-          "title": "Yazarlık",
-          "courses": [
-            "Senaryo Yazım Teknikleri",
-            "Belgesel Yazım Teknikleri"
-          ]
-        },
-        "rhythm": {
-          "title": "Ritim Atölyesi",
-          "courses": [
-            "Beden Perküsyonu",
-            "Ritmik Motivasyon",
-            "Ritim Enstrumanları"
-          ]
-        }
-      }
-    },
-    "workshops": {
-      "title": "Doğru Zamanda, Doğru İletişim",
-      "paragraph1": "Hayat iletişim aracılığıyla şekillenir; ancak iletişim yalnızca sözcüklerle sınırlı değildir. Uzman iş ortaklarımızla geliştirdiğimiz projeler, şirketinizin iç ve dış iletişim kanallarına güçlü destek sağlayan özel hizmet tasarımlarını kapsar.",
-      "paragraph2": "Yurt içi ve yurt dışındaki deneyimlerimizin ışığında sürekli yenilenerek ilerliyoruz. Henri Lefebvre'nin dediği gibi: \"Bir yer, bir zaman ve bir enerji tüketimi arasında etkileşim olan her yerde ritim vardır.\" Kendi ritminizi keşfedin."
-    },
-    "management": {
-      "title": "Management",
-      "subtitle": "Fatoş Yılmaz",
-      "text": [
-        "Audition Teknikleri",
-        "Oyuncu Menajerliği",
-        "Yönetmen Oyuncu İlişkisi",
-        "CV Marketing ve Kariyer Yönetimi",
-        "Sektörel Danışmanlık"
-      ]
-    },
-    "rhythmAtelier": {
-      "title": "Ritim Atölyesi",
-      "subtitle": "Uyumun Sesini Keşfedin",
-      "description": "Takım çalışmasını ve sinerjiyi ritmin gücüyle pekiştirin.",
-      "stat": "500+ Mutlu Katılımcı"
-    }
-  },
-  "brandGallery": {
-    "title": "Produksiyon Sanatı",
-    "statement": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
-  },
-  "reelShowcase": {
-    "title": "Videolarımız",
-    "play": "Oynat",
-    "items": [
-      {
-        "title": "TimeRight Media 02"
-      },
-      {
-        "title": "TimeRight Media 03"
-      },
-      {
-        "title": "TimeRight Media 04"
-      },
-      {
-        "title": "TimeRight Media 05"
-      },
-      {
-        "title": "TimeRight Media 08"
-      }
-    ]
-  },
-  "rhythmAtelier": {
-    "title": "Ritim Atölyesi",
-    "description": "Ritim yalnızca müzikte değil, bir ekibin nefesinde, bir toplantının temposunda, birlikte üretmenin sessiz enerjisinde de vardır. Atölyelerimizde bedenin ve sesin rehberliğiyle o enerjiyi keşfediyoruz"
-  }
+	"navbar": {
+		"home": {
+			"label": "Anasayfa",
+			"path": "#home"
+		},
+		"about": {
+			"label": "Hakkımızda",
+			"path": "#about"
+		},
+		"services": {
+			"label": "Hizmetler",
+			"path": "#services"
+		},
+		"projects": {
+			"label": "Projelerimiz",
+			"path": "#reelshowcase"
+		},
+		"team": {
+			"label": "Eğitmenlerimiz",
+			"path": "#instructors"
+		},
+		"contact": {
+			"label": "İletişim",
+			"path": "#contact"
+		},
+		"privacy": "GİZLİLİK POLİTİKASI"
+	},
+	"privacy": {
+		"title": "GİZLİLİK POLİTİKASI",
+		"back": "GERİ DÖN",
+		"content": "Time Right Production ('Şirket') olarak, kişisel verilerinizin güvenliği hususuna azami hassasiyet göstermekteyiz. Kişisel verileriniz 6698 sayılı Kişisel Verilerin Korunması Kanunu ('KVKK') hükümleri doğrultusunda işlenmekte ve muhafaza edilmektedir.<br/><br/><strong>1. Veri Sorumlusu</strong><br/>Kişisel verileriniz; veri sorumlusu sıfatıyla Time Right Production tarafından aşağıda açıklanan kapsamda işlenebilecektir.<br/><br/><strong>2. Kişisel Verilerin İşlenme Amacı</strong><br/>Toplanan kişisel verileriniz; Şirketimiz tarafından sunulan ürün ve hizmetlerden sizleri faydalandırmak için gerekli çalışmaların iş birimlerimiz tarafından yapılması, Şirketimiz ile iş ilişkisi içerisinde olan ilgili kişilerin hukuki ve ticari güvenliğinin temini amaçlarıyla işlenmektedir.<br/><br/><strong>3. Veri Güvenliği</strong><br/>Verileriniz, yetkisiz erişimlere, kaybolmaya veya ifşaya karşı endüstri standardı güvenlik önlemleri ile korunmaktadır."
+	},
+	"hero": {
+		"title": "Time Right Production",
+		"description": "Doğru zamanda,\nDoğru yerde,\nDoğru iletişim,\nSizin için buradayız..."
+	},
+	"statement": {
+		"text": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
+	},
+	"about": {
+		"title": "Unutulmaz heyecan verici olayların zamanı geldi.",
+		"content": "Hayat iletişim aracılığıyla şekillenir; ancak iletişim sadece sözcüklerle sınırlı değildir. Uzman iş ortaklarımızla geliştirdiğimiz projeler, şirketinizin iç ve dış iletişim kanallarına güçlü destek sağlayan özel hizmet tasarımlarını içermektedir."
+	},
+	"services": {
+		"title": "Hizmetlerimiz",
+		"scrollToExplore": "Keşfetmek için Kaydır",
+		"items": [
+			{
+				"title": "Firma Tanıtım Filmleri",
+				"description": "Markanızın hikayesini sinematik bir dille dünyaya anlatın."
+			},
+			{
+				"title": "Belgesel Filmleri",
+				"description": "Gerçekliği sanatsal bir derinlikle ölümsüzleştirin."
+			},
+			{
+				"title": "Menajerlik Hizmetleri",
+				"description": "Yeteneklerin kariyer yolculuğunu profesyonelce yönetiyoruz."
+			},
+			{
+				"title": "Festival Şenlik Organizasyon",
+				"description": "Unutulmaz anlar yaratan büyük ölçekli etkinlik tasarımları."
+			},
+			{
+				"title": "Şirket İçi Motivasyon Etkinlikleri",
+				"description": "Takım ruhunu güçlendiren, enerji dolu kurumsal buluşmalar."
+			},
+			{
+				"title": "Ritm Atölyesi",
+				"description": "Birlikte üretmenin ve uyumun ritmini keşfedin."
+			}
+		]
+	},
+	"instructors": {
+		"title": "Eğitmenlerimiz",
+		"description": "Alanında uzman eğitmen kadromuzla tanışın.",
+		"roles": {
+			"3": {
+				"title": "Oyuncu",
+				"bio": ""
+			},
+			"4": {
+				"title": "Yönetmen-Akademisyen",
+				"bio": ""
+			},
+			"5": {
+				"title": "Oyuncu",
+				"bio": ""
+			},
+			"6": {
+				"title": "Oyuncu-Acting Coach",
+				"bio": ""
+			},
+			"7": {
+				"title": "Cast Directörü-Menajer",
+				"bio": ""
+			},
+			"8": {
+				"title": "Baterist-Perküsyonist",
+				"bio": ""
+			}
+		}
+	},
+	"contact": {
+		"mainTitle": "TAM ZAMANI",
+		"email": "info@timerightproduction.org",
+		"brandName": "TIME RIGHT PRODUCTION",
+		"phoneLabels": {
+			"gsm": "GSM",
+			"schweiz": "SCHWEIZ"
+		},
+		"phoneNumbers": {
+			"gsm": "+90 532 414 44 48",
+			"schweiz": "+41 79 127 72 26"
+		},
+		"socialHandle": "@timerightproduction",
+		"copyright": "© 2026 TIME RIGHT PRODUCTION. TÜM HAKLARI SAKLIDIR."
+	},
+	"showcaseStack": {
+		"academy": {
+			"title": "Eğitimlerimiz",
+			"subtitle": "Geleceği Şekillendirin",
+			"description": "Profesyonel eğitim programlarımızla yeteneklerinizi bir üst seviyeye taşıyın.",
+			"stat": "50+ Sertifikalı Program",
+			"programs": {
+				"acting": {
+					"title": "Oyunculuk",
+					"courses": [
+						"Kamera Önü Oyunculuk",
+						"Temel Oyunculuk",
+						"Konservatuara Hazırlık",
+						"Etkili Konuşma, Vurgulu Tonlama",
+						"Diksiyon, Artikülasyon, Diyafram",
+						"Ses ve Nefes Kullanımı",
+						"Monolog Çalışmaları"
+					]
+				},
+				"writing": {
+					"title": "Yazarlık",
+					"courses": [
+						"Senaryo Yazım Teknikleri",
+						"Belgesel Yazım Teknikleri"
+					]
+				},
+				"rhythm": {
+					"title": "Ritim Atölyesi",
+					"courses": [
+						"Beden Perküsyonu",
+						"Ritmik Motivasyon",
+						"Ritim Enstrumanları"
+					]
+				}
+			}
+		},
+		"workshops": {
+			"title": "Doğru Zamanda, Doğru İletişim",
+			"paragraph1": "Hayat iletişim aracılığıyla şekillenir; ancak iletişim yalnızca sözcüklerle sınırlı değildir. Uzman iş ortaklarımızla geliştirdiğimiz projeler, şirketinizin iç ve dış iletişim kanallarına güçlü destek sağlayan özel hizmet tasarımlarını kapsar.",
+			"paragraph2": "Yurt içi ve yurt dışındaki deneyimlerimizin ışığında sürekli yenilenerek ilerliyoruz. Henri Lefebvre'nin dediği gibi: \"Bir yer, bir zaman ve bir enerji tüketimi arasında etkileşim olan her yerde ritim vardır.\" Kendi ritminizi keşfedin."
+		},
+		"management": {
+			"title": "Management",
+			"subtitle": "Fatoş Yılmaz",
+			"text": [
+				"Audition Teknikleri",
+				"Oyuncu Menajerliği",
+				"Yönetmen Oyuncu İlişkisi",
+				"CV Marketing ve Kariyer Yönetimi",
+				"Sektörel Danışmanlık"
+			]
+		},
+		"rhythmAtelier": {
+			"title": "Ritim Atölyesi",
+			"subtitle": "Uyumun Sesini Keşfedin",
+			"description": "Takım çalışmasını ve sinerjiyi ritmin gücüyle pekiştirin.",
+			"stat": "500+ Mutlu Katılımcı"
+		}
+	},
+	"brandGallery": {
+		"title": "Produksiyon Sanatı",
+		"statement": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
+	},
+	"reelShowcase": {
+		"title": "Videolarımız",
+		"play": "Oynat",
+		"items": [
+			{
+				"title": "TimeRight Media 02"
+			},
+			{
+				"title": "TimeRight Media 03"
+			},
+			{
+				"title": "TimeRight Media 04"
+			},
+			{
+				"title": "TimeRight Media 05"
+			},
+			{
+				"title": "TimeRight Media 08"
+			}
+		]
+	},
+	"rhythmAtelier": {
+		"title": "Ritim Atölyesi",
+		"description": "Ritim yalnızca müzikte değil, bir ekibin nefesinde, bir toplantının temposunda, birlikte üretmenin sessiz enerjisinde de vardır. Atölyelerimizde bedenin ve sesin rehberliğiyle o enerjiyi keşfediyoruz"
+	}
 }

@@ -40,7 +40,7 @@ export default function Instructors({ instructors }: SectionProps) {
   const textRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  
+
   const slotARef = useRef<HTMLDivElement>(null);
   const slotBRef = useRef<HTMLDivElement>(null);
   const nextBufferRef = useRef<HTMLDivElement>(null);
@@ -53,20 +53,20 @@ export default function Instructors({ instructors }: SectionProps) {
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!cursorRef.current) return;
-      
+
       const rect = container.getBoundingClientRect();
       const containerWidth = rect.width;
       const relativeX = e.clientX - rect.left;
-      
+
       const centerX = containerWidth / 2;
-      
+
       gsap.to(cursorRef.current, {
         x: e.clientX,
         y: e.clientY,
         duration: 0.3,
         ease: "power3"
       });
-      
+
       setCursorSide(relativeX < centerX ? 'left' : 'right');
     };
 
@@ -96,7 +96,7 @@ export default function Instructors({ instructors }: SectionProps) {
       ease: "power2.inOut",
     }, 0);
 
-    tl.fromTo(grid, 
+    tl.fromTo(grid,
       { y: 100, opacity: 0.5 },
       { y: 0, opacity: 1, ease: "power2.inOut" },
       0
@@ -106,9 +106,9 @@ export default function Instructors({ instructors }: SectionProps) {
 
   const handleNav = (e: React.MouseEvent | React.TouchEvent) => {
     if (isAnimating || members.length < 2) return;
-    
+
     let isNext = cursorSide === 'right';
-    
+
     if ('touches' in e && e.touches.length > 0) {
       const touch = e.touches[0];
       if (containerRef.current) {
@@ -118,9 +118,9 @@ export default function Instructors({ instructors }: SectionProps) {
         isNext = relativeX >= centerX;
       }
     }
-    
+
     setIsAnimating(true);
-    
+
     const newMain = isNext ? secondaryIndex : prevBufferIndex;
     const newSecondary = isNext ? nextBufferIndex : currentIndex;
 
@@ -225,28 +225,28 @@ export default function Instructors({ instructors }: SectionProps) {
       className="absolute top-0 left-0 w-full h-screen bg-black cursor-pointer"
     >
       {/* 120px Glass Effect Cursor - Fixed position outside sticky */}
-      <div 
+      <div
         ref={cursorRef}
         className="fixed top-0 left-0 w-[120px] h-[120px] bg-white/30 backdrop-blur-md border border-white/20 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 opacity-0 flex items-center justify-center"
       >
-        <svg 
-          width="40" 
-          height="40" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="black" 
-          strokeWidth="2.5" 
-          strokeLinecap="round" 
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          strokeWidth="2.5"
+          strokeLinecap="round"
           strokeLinejoin="round"
           className={`transition-transform duration-300 ${cursorSide === 'left' ? 'rotate-180' : ''}`}
         >
-          <path d="M5 12h14M12 5l7 7-7 7"/>
+          <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </div>
 
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* Section Title - Top Left */}
-        <div 
+        <div
           ref={titleRef}
           className="absolute top-[5%] left-8 z-30"
         >
@@ -256,12 +256,12 @@ export default function Instructors({ instructors }: SectionProps) {
         </div>
 
         {/* 50/50 Split Grid */}
-        <div 
+        <div
           ref={gridRef}
           className="absolute top-0 left-0 w-full h-full grid grid-cols-1 md:grid-cols-2 pt-32 md:pt-0"
         >
           {/* Left Column - Sticky Image */}
-          <div 
+          <div
             className="relative h-full flex items-center justify-center bg-black overflow-hidden"
             onMouseEnter={() => gsap.to(cursorRef.current, { opacity: 1, duration: 0.3 })}
             onMouseLeave={() => gsap.to(cursorRef.current, { opacity: 0, duration: 0.3 })}
@@ -281,7 +281,7 @@ export default function Instructors({ instructors }: SectionProps) {
             <div ref={slotARef} className="absolute left-[5%] bottom-[10%] w-[30%] h-[50%] overflow-hidden z-10">
               <Image src={getInstructorImageUrl(members[secondaryIndex].image)} alt="Secondary" fill className="object-cover grayscale" />
             </div>
-            
+
             {/* SLOT B: Main Slot (Large) */}
             <div ref={slotBRef} className="absolute left-[35%] bottom-[10%] w-[60%] h-[70%] overflow-hidden z-20 shadow-2xl">
               <Image src={getInstructorImageUrl(members[currentIndex].image)} alt={members[currentIndex].name} fill className="object-cover" priority />
@@ -289,7 +289,7 @@ export default function Instructors({ instructors }: SectionProps) {
           </div>
 
           {/* Right Column - Info (Scrolls) */}
-          <div 
+          <div
             className="flex flex-col justify-center px-10 md:px-20 py-20 relative z-30"
             onMouseEnter={() => gsap.to(cursorRef.current, { opacity: 1, duration: 0.3 })}
             onMouseLeave={() => gsap.to(cursorRef.current, { opacity: 0, duration: 0.3 })}
