@@ -1,16 +1,8 @@
-'use client';
-
-import React, { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
 import Image from 'next/image';
-import ServiceCard from './ServiceCard';
-import MobileServiceCard from './MobileServiceCard';
+import ServiceListItem from './ServiceListItem';
 import { getServiceImageUrl } from '@/lib/constants';
 import { serviceImage } from '@/data/services';
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Hizmet Verileri
 const servicesData = [
@@ -36,7 +28,7 @@ const servicesData = [
     id: 4,
     title: 'Festival Organizasyon',
     titleEn: 'Festival & Events',
-    icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z',
+    icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001/0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z',
   },
   {
     id: 5,
@@ -64,11 +56,7 @@ interface ServicesProps {
 }
 
 const Services = ({ title, items, scrollToExplore }: ServicesProps) => {
-  const container = useRef<HTMLDivElement>(null);
-  const wrapper = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const imageUrl = getServiceImageUrl(serviceImage.image);
-
 
   // Merge servicesData with passed items to get localized text with icons
   const mergedServices = servicesData.map((service, index) => {
@@ -80,90 +68,10 @@ const Services = ({ title, items, scrollToExplore }: ServicesProps) => {
     };
   });
 
-  useGSAP(
-    () => {
-      if (!wrapper.current) return;
-
-      const mm = gsap.matchMedia();
-
-      mm.add({
-        isMobile: "(max-width: 767px)",
-        isDesktop: "(min-width: 768px)",
-      }, (context) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { isMobile } = context.conditions as any;
-
-        const scrollWidth = wrapper.current!.scrollWidth;
-        const viewportWidth = window.innerWidth;
-
-        gsap.set(wrapper.current, { x: viewportWidth });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: container.current,
-            pin: true,
-            scrub: 1,
-            start: 'top top',
-            end: () => `+=${wrapper.current!.scrollWidth}`, 
-            invalidateOnRefresh: true,
-          },
-        });
-
-        tl.to(wrapper.current, {
-          x: -scrollWidth, 
-          ease: 'none',
-        });
-
-        const updateCards = () => {
-          const centerPoint = window.innerWidth / 2;
-          
-          cardsRef.current.forEach((card) => {
-            if (!card) return;
-
-            const rect = card.getBoundingClientRect();
-            const cardCenter = rect.left + rect.width / 2;
-            const dist = Math.abs(centerPoint - cardCenter);
-            
-            const effectRange = window.innerWidth / (isMobile ? 1.2 : 1.5);
-            const normDist = gsap.utils.clamp(0, 1, dist / effectRange);
-
-            // Responsive Values
-            const maxVerticalMove = isMobile ? 100 : 200;
-            const edgeScale = isMobile ? 0.7 : 0.75;
-            const rotationFactor = isMobile ? 0.04 : 0.03;
-
-            const scale = gsap.utils.interpolate(1.1, edgeScale, normDist); 
-            const yPos = gsap.utils.interpolate(0, maxVerticalMove, normDist);
-            const rotate = (cardCenter - centerPoint) * rotationFactor; 
-
-            gsap.set(card, {
-              scale: scale,
-              y: yPos,
-              rotation: rotate,
-              zIndex: 100 - Math.round(normDist * 100),
-            });
-          });
-        };
-
-        gsap.ticker.add(updateCards);
-        
-        // Return a cleanup function for the ticker
-        return () => {
-          gsap.ticker.remove(updateCards);
-        };
-      });
-
-      // Return a cleanup function for matchMedia
-      return () => mm.revert();
-    },
-    { scope: container }
-  );
-
   return (
     <section
       id="services"
-      ref={container}
-      className="relative h-screen bg-black overflow-hidden flex flex-col justify-center"
+      className="relative min-h-screen bg-black overflow-hidden flex flex-col justify-center py-24"
     >
       {/* Background Image */}
       <Image
@@ -185,31 +93,15 @@ const Services = ({ title, items, scrollToExplore }: ServicesProps) => {
         </h1>
       </div>
 
-      {/* DESKTOP Carousel — md ve üzeri */}
-      <div className="hidden md:flex w-full h-full absolute inset-0 items-center z-[40]">
-        <div ref={wrapper} className="flex gap-12 md:gap-24 px-10 items-center">
-          {mergedServices.map((service, index) => (
-            <ServiceCard
+      <div className="container mx-auto px-6 relative z-[40]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          {mergedServices.map((service) => (
+            <ServiceListItem
               key={service.id}
-              ref={(el) => { cardsRef.current[index] = el; }}
               service={service}
             />
           ))}
         </div>
-      </div>
-
-      {/* MOBILE Liste — md altı */}
-      <div className="md:hidden w-full h-full
-                      absolute inset-0
-                      overflow-y-auto z-[40]
-                      flex flex-col justify-center
-                      px-4 py-8 gap-3">
-        {mergedServices.map((service) => (
-          <MobileServiceCard
-            key={service.id}
-            service={service}
-          />
-        ))}
       </div>
 
       {/* Scroll Indicator */}
