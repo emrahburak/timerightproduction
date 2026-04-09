@@ -77,7 +77,7 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
   return (
     <section
       ref={containerRef}
-      className="academy-section w-full min-h-full sm:h-full flex items-center justify-center bg-[#0a0a0a] overflow-y-auto sm:overflow-hidden relative py-12 sm:py-0"
+      className="academy-section w-full min-h-screen flex items-center justify-center bg-[#0a0a0a] overflow-hidden relative py-24 lg:py-32"
     >
       {/* Background Image */}
       <Image
@@ -89,6 +89,9 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
 
       {/* Top Fade-out Overlay */}
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
+      
+      {/* Bottom Fade-out Overlay */}
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent z-[2]" />
 
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black opacity-50 z-[1]" />

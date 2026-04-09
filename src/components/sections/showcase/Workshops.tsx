@@ -413,7 +413,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
         }}
       />
 
-      <section className="w-full min-h-screen lg:h-screen relative flex flex-col lg:flex-row overflow-hidden bg-black">
+      <section className="w-full min-h-screen relative flex flex-col lg:flex-row overflow-hidden bg-black py-24 lg:py-32">
 
       {/* Arka plan görseli - Tüm bileşen */}
       <div className="absolute inset-0 z-0">
@@ -423,6 +423,10 @@ export default function Workshops({ messages }: WorkshopsProps) {
           fill
           className="object-cover opacity-40"
         />
+        {/* Top Fade-out Overlay */}
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
+        {/* Bottom Fade-out Overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent z-[2]" />
       </div>
 
       {/* GLOBAL OVERLAY - Tüm section'ı kaplar (sinematik bütünlük) */}
