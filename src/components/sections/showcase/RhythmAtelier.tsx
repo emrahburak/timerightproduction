@@ -77,7 +77,7 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
   };
 
   return (
-    <section ref={sectionRef} className="w-full h-full flex items-center justify-center bg-[#0a0a0a] overflow-hidden relative">
+    <section ref={sectionRef} className="w-full min-h-screen flex items-center justify-center bg-[#0a0a0a] overflow-hidden relative">
       <Image
         src={bgImageUrl}
         alt="Ritm Background"
@@ -85,6 +85,7 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
         className="absolute inset-0 z-0 opacity-20 object-cover"
       />
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent z-[2]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-30 z-[1]" />
 
       <div

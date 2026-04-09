@@ -29,6 +29,9 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
 
       {/* Top Fade-out Overlay */}
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
+      
+      {/* Bottom Fade-out Overlay */}
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent z-[2]" />
 
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-900/10 via-black to-black opacity-50 z-[1]" />
