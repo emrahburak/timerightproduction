@@ -7,7 +7,7 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, phone, email, kvkk } = body;
+    const { name, phone, email, kvkk, courseTitle } = body;
 
     // Basit validasyon
     if (!name || !phone || !kvkk) {
@@ -22,9 +22,10 @@ export async function POST(req: Request) {
       const { data, error } = await resend.emails.send({
         from: 'Başvuru Sistemi <onboarding@resend.dev>', // resend.dev test domain'i
         to: 'gemrahburak@gmail.com', // Sizin test adresiniz
-        subject: `Yeni Kurs Başvurusu: ${name}`,
+        subject: `Yeni Kurs Başvurusu (${courseTitle || 'Belirtilmedi'}): ${name}`,
         html: `
           <h2>Yeni Kurs Başvurusu Alındı</h2>
+          <p><strong>Seçilen Kurs:</strong> ${courseTitle || 'Belirtilmedi'}</p>
           <p><strong>Ad Soyad:</strong> ${name}</p>
           <p><strong>Telefon:</strong> ${phone}</p>
           <p><strong>E-posta:</strong> ${email || 'Belirtilmedi'}</p>

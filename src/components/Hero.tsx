@@ -15,8 +15,9 @@ interface HeroProps {
   description: string;
 }
 
-// Aktif kursu bul (isActive: true olan ilk kurs)
-const activeCourse = courses.find(c => c.isActive) || courses[0];
+// Aktif kursları bul (isActive: true olanlar)
+const activeCourses = courses.filter(c => c.isActive);
+const defaultCourse = activeCourses.length > 0 ? activeCourses[0] : courses[0];
 
 function ContentBlock({ title }: { title: string }) {
   return (
@@ -103,7 +104,7 @@ export default function Hero({ title, description }: HeroProps) {
         </div>
 
         {/* Hero Pill / Badge for Course Announcement */}
-        {activeCourse && (
+        {activeCourses.length > 0 && (
           <div className="absolute top-[20%] md:top-[25%] left-0 right-0 flex justify-center z-30 px-4">
             <div 
               ref={pillRef}
@@ -114,7 +115,9 @@ export default function Hero({ title, description }: HeroProps) {
                 🚀
               </span>
               <span className="text-sm font-medium text-white tracking-wide">
-                {activeCourse.pillLabel}
+                {activeCourses.length > 1 
+                  ? `Yeni Kayıtlar: ${activeCourses.map(c => c.location.split(',')[0]).join(' & ')}`
+                  : activeCourses[0].pillLabel}
               </span>
               <ArrowRight size={16} className="text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </div>

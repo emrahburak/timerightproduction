@@ -11,14 +11,18 @@ interface CourseApplicationModalProps {
 }
 
 export default function CourseApplicationModal({ isOpen, onClose }: CourseApplicationModalProps) {
-  const activeCourse = courses.find(c => c.isActive) || courses[0];
+  const activeCourses = courses.filter(c => c.isActive);
+  const initialCourse = activeCourses.length > 0 ? activeCourses[0] : courses[0];
+
+  const [selectedCourseId, setSelectedCourseId] = useState(initialCourse?.id);
   
+  const activeCourse = courses.find(c => c.id === selectedCourseId) || initialCourse;
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
     kvkk: false,
-    courseId: activeCourse?.id || 'unknown'
   });
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -33,7 +37,11 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
       const res = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          courseId: activeCourse.id,
+          courseTitle: activeCourse.title
+        }),
       });
       
       if (res.ok) {
@@ -152,6 +160,25 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
+                      {activeCourses.length > 1 && (
+                        <div className="space-y-1.5">
+                          <label htmlFor="courseSelect" className="text-xs font-medium text-white/60 ml-1">Katılmak İstediğiniz Kurs</label>
+                          <select
+                            id="courseSelect"
+                            value={selectedCourseId}
+                            onChange={(e) => setSelectedCourseId(e.target.value)}
+                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm appearance-none cursor-pointer"
+                            style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1rem' }}
+                          >
+                            {activeCourses.map(course => (
+                              <option key={course.id} value={course.id} className="bg-[#111] text-white">
+                                {course.title} ({course.location.split(',')[0]})
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
                       <div className="space-y-1.5">
                         <label htmlFor="name" className="text-xs font-medium text-white/60 ml-1">Ad Soyad</label>
                         <input
