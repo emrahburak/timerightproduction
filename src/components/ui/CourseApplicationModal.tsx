@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
+import courses from '@/data/courses.json';
 
 interface CourseApplicationModalProps {
   isOpen: boolean;
@@ -10,11 +11,14 @@ interface CourseApplicationModalProps {
 }
 
 export default function CourseApplicationModal({ isOpen, onClose }: CourseApplicationModalProps) {
+  const activeCourse = courses.find(c => c.isActive) || courses[0];
+  
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
     kvkk: false,
+    courseId: activeCourse?.id || 'unknown'
   });
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -74,16 +78,15 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                 
                 <div>
                   <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 mb-6">
-                    🌍 Yurt Dışı Eğitim Programı
+                    🌍 {activeCourse.category}
                   </div>
                   
                   <h3 className="text-2xl md:text-3xl font-syne text-white mb-4">
-                    Londra Oyunculuk Masterclass
+                    {activeCourse.title}
                   </h3>
                   
                   <p className="text-white/60 text-sm leading-relaxed mb-8">
-                    Uluslararası eğitmenler eşliğinde kamera önü oyunculuk ve audition teknikleri. 
-                    Kariyerinizi globale taşıyacak yoğunlaştırılmış 5 günlük program.
+                    {activeCourse.description}
                   </p>
                   
                   <div className="space-y-4">
@@ -93,7 +96,7 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                       </div>
                       <div>
                         <p className="text-xs text-white/40">Lokasyon</p>
-                        <p className="text-sm font-medium">Londra, Birleşik Krallık</p>
+                        <p className="text-sm font-medium">{activeCourse.location}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/80">
@@ -102,7 +105,7 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                       </div>
                       <div>
                         <p className="text-xs text-white/40">Tarih</p>
-                        <p className="text-sm font-medium">15 - 20 Ağustos 2024</p>
+                        <p className="text-sm font-medium">{activeCourse.date}</p>
                       </div>
                     </div>
                   </div>

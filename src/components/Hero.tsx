@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import Image from 'next/image';
 import { getHeroImageUrl } from '@/lib/constants';
 import { heroImage } from '@/data/hero';
+import courses from '@/data/courses.json';
 import { ArrowRight } from 'lucide-react';
 import CourseApplicationModal from '@/components/ui/CourseApplicationModal';
 
@@ -13,6 +14,9 @@ interface HeroProps {
   title: string;
   description: string;
 }
+
+// Aktif kursu bul (isActive: true olan ilk kurs)
+const activeCourse = courses.find(c => c.isActive) || courses[0];
 
 function ContentBlock({ title }: { title: string }) {
   return (
@@ -99,21 +103,23 @@ export default function Hero({ title, description }: HeroProps) {
         </div>
 
         {/* Hero Pill / Badge for Course Announcement */}
-        <div className="absolute top-[20%] md:top-[25%] left-0 right-0 flex justify-center z-30 px-4">
-          <div 
-            ref={pillRef}
-            onClick={() => setIsModalOpen(true)}
-            className="group cursor-pointer flex items-center gap-3 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md px-5 py-2.5 rounded-full transition-all duration-300"
-          >
-            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs animate-pulse">
-              🚀
-            </span>
-            <span className="text-sm font-medium text-white tracking-wide">
-              Yeni: Londra Oyunculuk Masterclass
-            </span>
-            <ArrowRight size={16} className="text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+        {activeCourse && (
+          <div className="absolute top-[20%] md:top-[25%] left-0 right-0 flex justify-center z-30 px-4">
+            <div 
+              ref={pillRef}
+              onClick={() => setIsModalOpen(true)}
+              className="group cursor-pointer flex items-center gap-3 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md px-5 py-2.5 rounded-full transition-all duration-300"
+            >
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs animate-pulse">
+                🚀
+              </span>
+              <span className="text-sm font-medium text-white tracking-wide">
+                {activeCourse.pillLabel}
+              </span>
+              <ArrowRight size={16} className="text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Content */}
         <div className="relative z-10 w-full mt-10 md:mt-0">

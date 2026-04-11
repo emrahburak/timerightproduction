@@ -1,0 +1,22 @@
+[
+  {
+    "id": "london-2024",
+    "isActive": true,
+    "pillLabel": "🚀 Yeni: Londra Oyunculuk Masterclass",
+    "title": "Londra Oyunculuk Masterclass",
+    "description": "Uluslararası eğitmenler eşliğinde kamera önü oyunculuk ve audition teknikleri. Kariyerinizi globale taşıyacak yoğunlaştırılmış 5 günlük program.",
+    "location": "Londra, Birleşik Krallık",
+    "date": "15 - 20 Ağustos 2024",
+    "category": "Yurt Dışı Eğitim Programı"
+  },
+  {
+    "id": "zurich-2024",
+    "isActive": false,
+    "pillLabel": "🎭 Zürih: Sahne Sanatları Atölyesi",
+    "title": "Zürih Sahne Sanatları",
+    "description": "Modern tiyatro ve doğaçlama teknikleri üzerine odaklanan, İsviçre'nin kalbinde gerçekleşecek özel bir workshop.",
+    "location": "Zürih, İsviçre",
+    "date": "10 - 12 Eylül 2024",
+    "category": "Workshop"
+  }
+]
