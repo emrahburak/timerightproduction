@@ -1,11 +1,13 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Image from 'next/image';
 import { getHeroImageUrl } from '@/lib/constants';
 import { heroImage } from '@/data/hero';
+import { ArrowRight } from 'lucide-react';
+import CourseApplicationModal from '@/components/ui/CourseApplicationModal';
 
 interface HeroProps {
   title: string;
@@ -38,6 +40,8 @@ function ContentSet({ title }: { title: string }) {
 export default function Hero({ title, description }: HeroProps) {
   const container = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const descriptionChars = useMemo(
     () => description.split(''),
@@ -54,8 +58,6 @@ export default function Hero({ title, description }: HeroProps) {
       ease: 'none',
     });
 
-    // Description split text — scroll tetikli değil,
-    // sayfa yüklenince gecikmeyle başlar
     const descChars = gsap.utils.toArray<HTMLSpanElement>(
       '.hero-desc-char'
     );
@@ -71,72 +73,104 @@ export default function Hero({ title, description }: HeroProps) {
       ease: 'power3.out',
       delay: 1.2,
     });
+
+    // Pill animation
+    if (pillRef.current) {
+      gsap.fromTo(pillRef.current, 
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: 'back.out(1.7)' }
+      );
+    }
   }, { scope: container });
 
   return (
-    <section id="home" ref={container} className="h-screen bg-black flex items-center justify-start overflow-hidden relative">
-      {/* Hero Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={getHeroImageUrl(heroImage.image)}
-          alt="Hero Background"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 w-full">
-        <div ref={marqueeRef} className="flex flex-nowrap min-w-max">
-          <ContentSet title={title} />
-          <ContentSet title={title} />
+    <>
+      <section id="home" ref={container} className="h-screen bg-black flex items-center justify-start overflow-hidden relative">
+        {/* Hero Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={getHeroImageUrl(heroImage.image)}
+            alt="Hero Background"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
         </div>
-      </div>
 
-      {/* Description — Split Text */}
-      {/* Desktop: sol alt | Mobile/Tablet: orta alt */}
-      <div
-        className="
-          absolute z-20 bottom-10
-          left-0 right-0
-          flex justify-center
-          px-6
-          md:px-10
-          lg:justify-start
-          lg:left-12
-          lg:right-auto
-          lg:max-w-lg
-        "
-      >
-        <p
+        {/* Hero Pill / Badge for Course Announcement */}
+        <div className="absolute top-[20%] md:top-[25%] left-0 right-0 flex justify-center z-30 px-4">
+          <div 
+            ref={pillRef}
+            onClick={() => setIsModalOpen(true)}
+            className="group cursor-pointer flex items-center gap-3 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md px-5 py-2.5 rounded-full transition-all duration-300"
+          >
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs animate-pulse">
+              🚀
+            </span>
+            <span className="text-sm font-medium text-white tracking-wide">
+              Yeni: Londra Oyunculuk Masterclass
+            </span>
+            <ArrowRight size={16} className="text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 w-full mt-10 md:mt-0">
+          <div ref={marqueeRef} className="flex flex-nowrap min-w-max">
+            <ContentSet title={title} />
+            <ContentSet title={title} />
+          </div>
+        </div>
+
+        {/* Description — Split Text */}
+        <div
           className="
-            font-cormorant italic
-            text-white/90 leading-[1.4]
-            text-[clamp(1.25rem,2.2vw,1.85rem)]
-            text-center
-            lg:text-left
-            tracking-wide
+            absolute z-20 bottom-10
+            left-0 right-0
+            flex justify-center
+            px-6
+            md:px-10
+            lg:justify-start
+            lg:left-12
+            lg:right-auto
+            lg:max-w-lg
           "
         >
-          {descriptionChars.map((char, index) => (
-            char === '\n' ? (
-              <br key={index} />
-            ) : (
-              <span
-                key={index}
-                className="hero-desc-char inline-block"
-                style={{
-                  display: char === ' ' ? 'inline' : 'inline-block'
-                }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            )
-          ))}
-        </p>
-      </div>
-    </section>
+          <p
+            className="
+              font-cormorant italic
+              text-white/90 leading-[1.4]
+              text-[clamp(1.25rem,2.2vw,1.85rem)]
+              text-center
+              lg:text-left
+              tracking-wide
+            "
+          >
+            {descriptionChars.map((char, index) => (
+              char === '\n' ? (
+                <br key={index} />
+              ) : (
+                <span
+                  key={index}
+                  className="hero-desc-char inline-block"
+                  style={{
+                    display: char === ' ' ? 'inline' : 'inline-block'
+                  }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              )
+            ))}
+          </p>
+        </div>
+      </section>
+
+      {/* Application Modal */}
+      <CourseApplicationModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+    </>
   );
 }
