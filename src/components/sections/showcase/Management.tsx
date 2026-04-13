@@ -29,7 +29,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
 
       {/* Top Fade-out Overlay */}
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
-      
+
       {/* Bottom Fade-out Overlay */}
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent z-[2]" />
 
@@ -37,10 +37,6 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-900/10 via-black to-black opacity-50 z-[1]" />
 
       <div className="container mx-auto px-6 md:px-10 py-16 md:py-0 flex flex-col items-center text-center relative z-10">
-        {/* Subtitle */}
-        <h3 className="font-syne font-bold text-xl md:text-2xl lg:text-3xl text-white/70 mb-6 tracking-wide uppercase">
-          {subtitle}
-        </h3>
 
         {/* Title */}
         <h2 className="font-syne font-black text-[clamp(1.2rem,6vw,2.8rem)] text-white leading-tight uppercase mb-8">
@@ -64,12 +60,12 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
                   background: index === 0
                     ? '#3BAED4'
                     : index === 1
-                    ? '#7B4FBE'
-                    : index === 2
-                    ? '#E0368C'
-                    : index === 3
-                    ? '#3BAED4'
-                    : '#7B4FBE',
+                      ? '#7B4FBE'
+                      : index === 2
+                        ? '#E0368C'
+                        : index === 3
+                          ? '#3BAED4'
+                          : '#7B4FBE',
                 }}
               />
               {word}

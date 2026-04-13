@@ -26,21 +26,15 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       position: relative;
       display: block;
       width: 100%;
-      min-width: 300px;
       max-width: 420px;
       margin: 0 auto;
       color-scheme: light dark;
     }
 
-    @media (min-width: 1024px) {
-      .ec-wrap {
-        width: 420px;
-      }
-    }
-
     .card-container {
       width: 100%;
-      min-height: 480px; /* Boyut çökmesini tamamen engeller */
+      min-height: 480px;
+      height: 100%;
       border-radius: 1.5em;
       position: relative;
       --electric-light-color: oklch(from var(--electric-border-color) l c h);
@@ -53,24 +47,22 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       overflow: hidden; /* İçeriğin taşmamasını sağlar */
     }
 
+    /* MASAÜSTÜ EFEKTLERİ KALDIRILDI - TÜM CİHAZLARDA AYNI TASARIM */
     @media (min-width: 1024px) {
       .card-container {
         min-height: 600px;
-        border: none; /* Masaüstünde orijinal efekt devreye girer */
-        padding: 2px;
-        background:
-          linear-gradient(-30deg, var(--gradient-color), transparent, var(--gradient-color)),
-          linear-gradient(to bottom, oklch(0.185 0 0), oklch(0.185 0 0));
-        overflow: visible;
+        border: 2px solid var(--electric-border-color);
+        background: oklch(0.09 0 0);
+        overflow: hidden;
       }
     }
 
-    /* MOBİLDE GİZLENECEK ELEKTRİK KATMANLARI */
+    /* ELEKTRİK KATMANLARI TÜM CİHAZLARDA GİZLİ */
     .inner-container,
     .overlay-1,
     .overlay-2,
     .background-glow {
-      display: none;
+      display: none !important;
     }
 
     /* SADECE MASAÜSTÜNDE ÇALIŞACAK 3D / GLOW EFEKTLERİ */

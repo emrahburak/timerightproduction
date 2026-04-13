@@ -98,8 +98,13 @@ export default function About({ title, content }: SectionProps) {
       id="about"
       ref={sectionRef}
       data-section="about"
-      className="min-h-screen md:h-screen bg-black relative isolate flex items-center px-8 md:px-16 lg:px-24 overflow-visible md:overflow-hidden py-16 md:py-0"
+      className="min-h-screen md:h-screen bg-[#0a0a0a] relative isolate flex items-center px-8 md:px-16 lg:px-24 overflow-visible md:overflow-hidden py-16 md:py-0"
     >
+      {/* Top Fade-in Overlay for transition from Hero section */}
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#0a0a0a] to-transparent z-[5] pointer-events-none" />
+      
+      {/* Background Ambience consistent with other sections */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/5 via-transparent to-transparent opacity-30 z-[1]" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-7xl mx-auto z-10">
         {/* Sol Taraf: Title + Content */}
         <div className="flex flex-col space-y-6 order-1 md:order-1">

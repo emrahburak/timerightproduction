@@ -4,19 +4,25 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 import courses from '@/data/courses.json';
-
 interface CourseApplicationModalProps {
   isOpen: boolean;
   onClose: () => void;
+  courseMessages: any;
+  formMessages: any;
+  actingDescription: string;
+  actingTitle: string;
 }
 
-export default function CourseApplicationModal({ isOpen, onClose }: CourseApplicationModalProps) {
+export default function CourseApplicationModal({ isOpen, onClose, courseMessages, formMessages, actingDescription, actingTitle }: CourseApplicationModalProps) {
   const activeCourses = courses.filter(c => c.isActive);
   const initialCourse = activeCourses.length > 0 ? activeCourses[0] : courses[0];
 
   const [selectedCourseId, setSelectedCourseId] = useState(initialCourse?.id);
   
   const activeCourse = courses.find(c => c.id === selectedCourseId) || initialCourse;
+  const currentCourseMsg = (courseMessages && activeCourse) ? (courseMessages[activeCourse.id] || {}) : {};
+  
+  const f = formMessages || {};
 
   const [formData, setFormData] = useState({
     name: '',
@@ -40,7 +46,7 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
         body: JSON.stringify({
           ...formData,
           courseId: activeCourse.id,
-          courseTitle: activeCourse.title
+          courseTitle: currentCourseMsg.title || activeCourse.id
         }),
       });
       
@@ -86,15 +92,15 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                 
                 <div>
                   <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 mb-6">
-                    🌍 {activeCourse.category}
+                    🌍 {currentCourseMsg.category}
                   </div>
                   
                   <h3 className="text-2xl md:text-3xl font-syne text-white mb-4">
-                    {activeCourse.title}
+                    {actingTitle}
                   </h3>
                   
                   <p className="text-white/60 text-sm leading-relaxed mb-8">
-                    {activeCourse.description}
+                    {actingDescription}
                   </p>
                   
                   <div className="space-y-4">
@@ -104,7 +110,7 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                       </div>
                       <div>
                         <p className="text-xs text-white/40">Lokasyon</p>
-                        <p className="text-sm font-medium">{activeCourse.location}</p>
+                        <p className="text-sm font-medium">{currentCourseMsg.location}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/80">
@@ -113,7 +119,7 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                       </div>
                       <div>
                         <p className="text-xs text-white/40">Tarih</p>
-                        <p className="text-sm font-medium">{activeCourse.date}</p>
+                        <p className="text-sm font-medium">{currentCourseMsg.date}</p>
                       </div>
                     </div>
                   </div>
@@ -139,30 +145,30 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                     <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-6 text-green-400">
                       <CheckCircle2 size={32} />
                     </div>
-                    <h4 className="text-2xl font-syne text-white mb-2">Başvurunuz Alındı</h4>
+                    <h4 className="text-2xl font-syne text-white mb-2">{f.successTitle}</h4>
                     <p className="text-white/60 max-w-sm">
-                      Teşekkürler! En kısa sürede WhatsApp üzerinden sizinle iletişime geçeceğiz.
+                      {f.successText}
                     </p>
                     <button 
                       onClick={onClose}
                       className="mt-8 px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium"
                     >
-                      Kapat
+                      {f.close}
                     </button>
                   </motion.div>
                 ) : (
                   <>
                     <div className="mb-8 mt-2 md:mt-0">
-                      <h4 className="text-xl font-syne text-white mb-2">Ön Başvuru Formu</h4>
+                      <h4 className="text-xl font-syne text-white mb-2">{f.title}</h4>
                       <p className="text-sm text-white/50">
-                        Kontenjan dolmadan yerinizi ayırtmak için bilgilerinizi bırakın.
+                        {f.subtitle}
                       </p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                       {activeCourses.length > 1 && (
                         <div className="space-y-1.5">
-                          <label htmlFor="courseSelect" className="text-xs font-medium text-white/60 ml-1">Katılmak İstediğiniz Kurs</label>
+                          <label htmlFor="courseSelect" className="text-xs font-medium text-white/60 ml-1">{f.courseLabel}</label>
                           <select
                             id="courseSelect"
                             value={selectedCourseId}
@@ -170,17 +176,20 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                             className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm appearance-none cursor-pointer"
                             style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1rem' }}
                           >
-                            {activeCourses.map(course => (
-                              <option key={course.id} value={course.id} className="bg-[#111] text-white">
-                                {course.title} ({course.location.split(',')[0]})
-                              </option>
-                            ))}
+                            {activeCourses.map(course => {
+                              const msg = courseMessages?.[course.id];
+                              return (
+                                <option key={course.id} value={course.id} className="bg-[#111] text-white">
+                                  {msg?.title || course.id}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       )}
 
                       <div className="space-y-1.5">
-                        <label htmlFor="name" className="text-xs font-medium text-white/60 ml-1">Ad Soyad</label>
+                        <label htmlFor="name" className="text-xs font-medium text-white/60 ml-1">{f.nameLabel}</label>
                         <input
                           id="name"
                           type="text"
@@ -188,12 +197,12 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
-                          placeholder="Örn: Ahmet Yılmaz"
+                          placeholder={f.namePlaceholder}
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <label htmlFor="phone" className="text-xs font-medium text-white/60 ml-1">Telefon Numarası</label>
+                        <label htmlFor="phone" className="text-xs font-medium text-white/60 ml-1">{f.phoneLabel}</label>
                         <input
                           id="phone"
                           type="tel"
@@ -201,19 +210,19 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
-                          placeholder="+90 555 000 00 00"
+                          placeholder={f.phonePlaceholder}
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <label htmlFor="email" className="text-xs font-medium text-white/60 ml-1">E-posta (Opsiyonel)</label>
+                        <label htmlFor="email" className="text-xs font-medium text-white/60 ml-1">{f.emailLabel}</label>
                         <input
                           id="email"
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
-                          placeholder="ornek@mail.com"
+                          placeholder={f.emailPlaceholder}
                         />
                       </div>
 
@@ -232,13 +241,13 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                           )}
                         </div>
                         <label htmlFor="kvkk" className="text-xs text-white/50 leading-relaxed cursor-pointer hover:text-white/70 transition-colors">
-                          Kişisel verilerimin işlenmesine ilişkin <a href="/privacy" target="_blank" className="text-white/80 underline decoration-white/30 underline-offset-2">Aydınlatma Metni</a>'ni okudum ve kabul ediyorum.
+                          {f.kvkkText}
                         </label>
                       </div>
 
                       {status === 'error' && (
                         <p className="text-red-400 text-xs text-center">
-                          Bir hata oluştu. Lütfen daha sonra tekrar deneyin veya direkt e-posta gönderin.
+                          {f.errorText}
                         </p>
                       )}
 
@@ -250,10 +259,10 @@ export default function CourseApplicationModal({ isOpen, onClose }: CourseApplic
                         {status === 'loading' ? (
                           <>
                             <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                            <span>Gönderiliyor...</span>
+                            <span>{f.sending}</span>
                           </>
                         ) : (
-                          'Başvuruyu Tamamla'
+                          f.submitButton
                         )}
                       </button>
                     </form>

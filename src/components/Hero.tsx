@@ -13,6 +13,11 @@ import CourseApplicationModal from '@/components/ui/CourseApplicationModal';
 interface HeroProps {
   title: string;
   description: string;
+  applyButton: string;
+  courseMessages: any;
+  formMessages: any;
+  actingServiceDescription: string;
+  actingServiceTitle: string;
 }
 
 // Aktif kursları bul (isActive: true olanlar)
@@ -42,8 +47,9 @@ function ContentSet({ title }: { title: string }) {
   );
 }
 
-export default function Hero({ title, description }: HeroProps) {
+export default function Hero({ title, description, applyButton, courseMessages, formMessages, actingServiceDescription, actingServiceTitle }: HeroProps) {
   const container = useRef<HTMLDivElement>(null);
+  
   const marqueeRef = useRef<HTMLDivElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -90,18 +96,21 @@ export default function Hero({ title, description }: HeroProps) {
 
   return (
     <>
-      <section id="home" ref={container} className="h-screen bg-black flex items-center justify-start overflow-hidden relative">
+      <section id="home" ref={container} className="h-screen bg-[#0a0a0a] flex items-center justify-start overflow-hidden relative">
         {/* Hero Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src={getHeroImageUrl(heroImage.image)}
             alt="Hero Background"
             fill
-            className="object-cover"
+            className="object-cover opacity-80"
             priority
             sizes="100vw"
           />
         </div>
+
+        {/* Bottom Fade-out Overlay for transition to About section */}
+        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent z-[5]" />
 
         {/* Hero Pill / Badge for Course Announcement */}
         {activeCourses.length > 0 && (
@@ -116,8 +125,8 @@ export default function Hero({ title, description }: HeroProps) {
               </span>
               <span className="text-sm font-medium text-white tracking-wide">
                 {activeCourses.length > 1 
-                  ? `Yeni Kayıtlar: ${activeCourses.map(c => c.location.split(',')[0]).join(' & ')}`
-                  : activeCourses[0].pillLabel}
+                  ? applyButton
+                  : (courseMessages[activeCourses[0].id]?.pillLabel || applyButton)}
               </span>
               <ArrowRight size={16} className="text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </div>
@@ -179,6 +188,10 @@ export default function Hero({ title, description }: HeroProps) {
       <CourseApplicationModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
+        courseMessages={courseMessages}
+        formMessages={formMessages}
+        actingDescription={actingServiceDescription}
+        actingTitle={actingServiceTitle}
       />
     </>
   );

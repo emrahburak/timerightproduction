@@ -33,42 +33,55 @@
 	},
 	"hero": {
 		"title": "Time Right Production",
-		"description": "Doğru zamanda,\nDoğru yerde,\nDoğru iletişim,\nSizin için buradayız..."
+		"description": "Doğru zamanda,\nDoğru yerde,\nDoğru iletişim,\nSizin için buradayız...",
+		"applyButton": "Yeni Dönem Kayıtları Başladı"
 	},
 	"statement": {
 		"text": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
 	},
 	"about": {
-		"title": "Unutulmaz heyecan verici olayların zamanı geldi.",
-		"content": "Hayat iletişim aracılığıyla şekillenir; ancak iletişim sadece sözcüklerle sınırlı değildir. Uzman iş ortaklarımızla geliştirdiğimiz projeler, şirketinizin iç ve dış iletişim kanallarına güçlü destek sağlayan özel hizmet tasarımlarını içermektedir."
+		"title": "HAKKIMIZDA",
+		"content": "Time Right Production sahne sanatları ve görsel anlatımı buluşturan yaratıcı bir yapım şirketidir. Tiyatrodan belgesellere, tanıtım filmlerinden prestijli organizasyonlara uzanan üretim gücüyle, her projede kendine özgü bir dil kurar. Aynı zamanda eğitimler vererek etkili ve kalıcı hikayeler yaratmayı hedefler. Sanatın evrensel dilini çağdaş bir vizyonla yeniden tanımlar."
 	},
 	"services": {
 		"title": "Hizmetlerimiz",
 		"scrollToExplore": "Keşfetmek için Kaydır",
 		"items": [
 			{
-				"title": "Firma Tanıtım Filmleri",
-				"description": "Markanızın hikayesini sinematik bir dille dünyaya anlatın."
+				"title": "OYUNCULUK EĞİTİMİ",
+				"description": "Oyunculuk eğitimlerimiz Tiyatro ve Kamera Önü Oyunculuk olmak üzere iki ayrı alanda verilmektedir. Her program kendi disiplinine özgü teknikler ve çalışma yöntemleri ile katılımcıların oyunculuk becerilerini geliştirmeyi hedefler. Amaç her oyuncu adayının kendi ifadesini güçlendirmesi sahne veya kamera karşısında etkili bir duruş kazanmasıdır."
 			},
 			{
-				"title": "Belgesel Filmleri",
-				"description": "Gerçekliği sanatsal bir derinlikle ölümsüzleştirin."
+				"title": "DİKSİYON VE ETKİLİ KONUŞMA EĞİTİMİ",
+				"description": "Hayat iletişim ile şekillenir, ancak iletişim sadece kelimelerden ibaret değildir. Diksiyon, etkili konuşma ve beden dilini ustaca kullanmak, güçlü iletişimin anahtarıdır. Bu eğitim sesinizin, sözcüklerinizin ve beden dilinizin gücünü keşfetmenize rehberlik ediyor. Kendinizi ifade etme sanatında ustalaşın. Etkileyici ve başarılı iletişim ile zirveye çıkın."
 			},
 			{
-				"title": "Menajerlik Hizmetleri",
-				"description": "Yeteneklerin kariyer yolculuğunu profesyonelce yönetiyoruz."
+				"title": "TİYATRO PRODÜKSİYONLARI",
+				"description": "Yurt içi ve yurt dışındaki Tiyatro ve Müzikal prodüksiyonları gerçekleştiririz. Yeni Metinler üretir sahne ve performans arasındaki ilişkiyi dramaturjik bir bütünlük içinde ele alır, alanında yetkin yönetmenler ile birlikte, kendine özgü sahne dili ve estetiği olan projeler üretiriz."
 			},
 			{
-				"title": "Festival Şenlik Organizasyon",
-				"description": "Unutulmaz anlar yaratan büyük ölçekli etkinlik tasarımları."
+				"title": "FİRMA TANITIM FİLMLERİ",
+				"description": "Kurum ve markalar için tanıtım filmleri üretir, her projede markanın kimliğini özgün bir görsel dile dönüştürürüz. Görsel estetik ve güçlü kurgu ile ikna edici ve kalıcı etki yaratırız."
 			},
 			{
-				"title": "Şirket İçi Motivasyon Etkinlikleri",
-				"description": "Takım ruhunu güçlendiren, enerji dolu kurumsal buluşmalar."
+				"title": "BELGESEL FİLMLERİ",
+				"description": "Belgesel üretiminde gerçeği kaydetmekle yetinmez, hikayeyi yeniden kurar dönüştürürüz. Zamanın izini, insanın hafızasını ve mekanın ruhunu bir araya getirerek, yalnızca izlenen değil, hissedilen bir anlatı inşa ederiz."
 			},
 			{
-				"title": "Ritm Atölyesi",
-				"description": "Birlikte üretmenin ve uyumun ritmini keşfedin."
+				"title": "FESTİVAL ORGANİZASYON",
+				"description": "Time Right Production organizasyon alanında yurt içi ve yurt dışında prestijli festival açılışları, şenlikler ve yüksek ölçekli projeler hayata geçirir. Güçlü planlama ve yaratıcı yaklaşımı ile iz bırakan etkinlikler üretir."
+			},
+			{
+				"title": "MENAJERLİK HİZMETLERİ",
+				"description": "Menajerlik hizmetlerimiz oyuncu yönetmen ve yapımcı arasında doğru ve güçlü bir bağ kurmalarını sağlar. Cv, marketing ve kariyer yönetimi desteğinin yanı sıra audition teknikleri eğitimleri ile oyuncuların seçilme süreçlerinde en etkili şekilde kendilerini ifade etmelerini destekler."
+			},
+			{
+				"title": "ŞİRKET İÇİ RİTMİK MOTİVASYON ÇALIŞMALARI",
+				"description": "Yurt içi ve yurt dışında gerçekleştirdiğimiz projelerin ışığında, sürekli yenilenerek, öğrenerek deneyimlenerek, ilerlemeye devam ediyoruz. Henri Lefebvre Ritimanaliz kitabında şöyle der: “Bir yer, bir zaman ve bir enerji tüketimi arasında, etkileşim olan her yerde ritim vardır.” Ritimi yok saymayın, kendi ritminizi keşfedin."
+			},
+			{
+				"title": "FİLM VE TİYATRO MÜZİKLERİ",
+				"description": "Kompozitör Cem ALTUN imzası ile üretilen özgün besteler Film, Tiyatro, Belgesel ve reklam projelerinde anlatının dramatik omurgasını inşa eder. Her projeye özgü geliştirilen ses evreni, sahne ve görüntü ile organik bir bağ kurarak sinematik bir derinlik ve zamansız bir etki yaratır."
 			}
 		]
 	},
@@ -118,7 +131,25 @@
 		"copyright": "© 2026 TIME RIGHT PRODUCTION. TÜM HAKLARI SAKLIDIR."
 	},
 	"showcaseStack": {
-		"academy": {
+		"courses": {
+		"switzerland": {
+			"pillLabel": "🎭 İSVİÇRE: Kamera Önü Oyunculuk",
+			"title": "İSVİÇRE",
+			"description": "Kamera önü oyunculuk eğitimlerimiz, Türkiye’nin önde gelen oyuncularıyla aynı ortamda çalışma fırsatı sunar. İlker AKSUM, Cemal HÜNAL, Zafer ALTUN ve Türk sinemasının köklü ve saygın isimlerinden Halil ERGÜN’ün deneyimiyle şekillenen bu süreç, Zürich’te dinamik ve ilham veren bir çalışma ortamında gerçekleşecek. Katılımcılar, kamera karşısında kendilerini keşfederken, oyunculuğa dair güçlü ve gerçekçi bir bakış açısı kazacaklar.",
+			"location": "Zürich, İsviçre",
+			"date": "4 & 25 Ekim - 8 & 22 Kasım",
+			"category": "Kamera Önü Oyunculuk"
+		},
+		"rotterdam": {
+			"pillLabel": "🎬 ROTTERDAM: Kamera Önü Oyunculuk",
+			"title": "ROTTERDAM",
+			"description": "Kamera önü oyunculuk eğitimlerimiz, Türkiye’nin önde gelen oyuncularıyla aynı ortamda çalışma fırsatı sunar. İlker AKSUM, Cemal HÜNAL, Zafer ALTUN ve Türk sinemasının köklü ve saygın isimlerinden Halil ERGÜN’ün deneyimiyle şekillenen bu süreç, Rotterdam’da dinamik ve ilham veren bir çalışma ortamında gerçekleşecek. Katılımcılar, kamera karşısında kendilerini keşfederken, oyunculuğa dair güçlü ve gerçekçi bir bakış açısı kazacaklar.",
+			"location": "Rotterdam, Hollanda",
+			"date": "11 & 31 Ekim - 15 & 29 Kasım",
+			"category": "Kamera Önü Oyunculuk"
+		}
+	},
+	"academy": {
 			"title": "Eğitimlerimiz",
 			"subtitle": "Geleceği Şekillendirin",
 			"description": "Profesyonel eğitim programlarımızla yeteneklerinizi bir üst seviyeye taşıyın.",
@@ -201,8 +232,27 @@
 			}
 		]
 	},
-	"rhythmAtelier": {
-		"title": "Ritim Atölyesi",
-		"description": "Ritim yalnızca müzikte değil, bir ekibin nefesinde, bir toplantının temposunda, birlikte üretmenin sessiz enerjisinde de vardır. Atölyelerimizde bedenin ve sesin rehberliğiyle o enerjiyi keşfediyoruz"
+		"rhythmAtelier": {
+			"title": "Ritim Atölyesi",
+			"description": "Ritim yalnızca müzikte değil, bir ekibin nefesinde, bir toplantının temposunda, birlikte üretmenin sessiz enerjisinde de vardır. Atölyelerimizde bedenin ve sesin rehberliğiyle o enerjiyi keşfediyoruz"
+		},
+		"applicationForm": {
+			"title": "Ön Başvuru Formu",
+			"subtitle": "Kontenjan dolmadan yerinizi ayırtmak için bilgilerinizi bırakın.",
+			"courseLabel": "Katılmak İstediğiniz Kurs",
+			"nameLabel": "Ad Soyad",
+			"namePlaceholder": "Örn: Ahmet Yılmaz",
+			"phoneLabel": "Telefon Numarası",
+			"phonePlaceholder": "+90 555 000 00 00",
+			"emailLabel": "E-posta (Opsiyonel)",
+			"emailPlaceholder": "ornek@mail.com",
+			"kvkkText": "Kişisel verilerimin işlenmesine ilişkin Aydınlatma Metni'ni okudum ve kabul ediyorum.",
+			"submitButton": "Başvuruyu Tamamla",
+			"sending": "Gönderiliyor...",
+			"successTitle": "Başvurunuz Alındı",
+			"successText": "Teşekkürler! En kısa sürede WhatsApp üzerinden sizinle iletişime geçeceğiz.",
+			"errorText": "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+			"close": "Kapat"
+		}
 	}
 }
