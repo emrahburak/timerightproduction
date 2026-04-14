@@ -252,6 +252,8 @@
     "successTitle": "Application Received",
     "successText": "Thank you! We will contact you via WhatsApp as soon as possible.",
     "errorText": "An error occurred. Please try again later.",
-    "close": "Close"
+    "close": "Close",
+    "locationLabel": "Location",
+    "dateLabel": "Date"
   }
 }

@@ -252,7 +252,9 @@
 			"successTitle": "Başvurunuz Alındı",
 			"successText": "Teşekkürler! En kısa sürede WhatsApp üzerinden sizinle iletişime geçeceğiz.",
 			"errorText": "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
-			"close": "Kapat"
+			"close": "Kapat",
+			"locationLabel": "Lokasyon",
+			"dateLabel": "Tarih"
 		}
 	}
 }

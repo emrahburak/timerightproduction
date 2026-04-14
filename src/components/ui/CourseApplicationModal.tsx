@@ -109,8 +109,8 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                         <MapPin size={18} className="text-white/60" />
                       </div>
                       <div>
-                        <p className="text-xs text-white/40">Lokasyon</p>
-                        <p className="text-sm font-medium">{currentCourseMsg.location}</p>
+                        <p className="text-xs text-white/40">{f.locationLabel || 'Lokasyon'}</p>
+                        <p className="text-sm font-medium">{currentCourseMsg.location || '-'}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/80">
@@ -118,8 +118,8 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                         <Calendar size={18} className="text-white/60" />
                       </div>
                       <div>
-                        <p className="text-xs text-white/40">Tarih</p>
-                        <p className="text-sm font-medium">{currentCourseMsg.date}</p>
+                        <p className="text-xs text-white/40">{f.dateLabel || 'Tarih'}</p>
+                        <p className="text-sm font-medium">{currentCourseMsg.date || '-'}</p>
                       </div>
                     </div>
                   </div>
