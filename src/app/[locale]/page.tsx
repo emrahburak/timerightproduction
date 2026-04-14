@@ -16,6 +16,7 @@ interface Messages {
     home: { label: string; path: string };
     about: { label: string; path: string };
     services: { label: string; path: string };
+    projects: { label: string; path: string };
     team: { label: string; path: string };
     contact: { label: string; path: string };
     privacy: string;
@@ -28,6 +29,7 @@ interface Messages {
   hero: {
     title: string;
     description: string;
+    applyButton: string;
   };
   statement: { // Added statement object type
     text: string;
@@ -43,6 +45,34 @@ interface Messages {
       description: string;
     }[];
     scrollToExplore: string;
+  };
+  courses?: Record<string, {
+    pillLabel: string;
+    title: string;
+    description: string;
+    location: string;
+    date: string;
+    category: string;
+  }>;
+  applicationForm?: {
+    title: string;
+    subtitle: string;
+    courseLabel: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    phoneLabel: string;
+    phonePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    kvkkText: string;
+    submitButton: string;
+    sending: string;
+    successTitle: string;
+    successText: string;
+    errorText: string;
+    close: string;
+    locationLabel: string;
+    dateLabel: string;
   };
   reelShowcase: {
     title: string;
@@ -97,11 +127,11 @@ async function getAllMessages(locale: string): Promise<Messages> {
   const targetLocale = supportedLocales.includes(locale) ? locale : 'en';
   
   try {
-    const messages = (await import(`@/messages/${targetLocale}.json`)).default as Messages;
+    const messages = (await import(`@/messages/${targetLocale}.json`)).default as unknown as Messages;
     return messages;
   } catch (error) {
     console.error(`Could not load messages for locale ${targetLocale}:`, error);
-    return (await import(`@/messages/en.json`)).default as Messages;
+    return (await import(`@/messages/en.json`)).default as unknown as Messages;
   }
 }
 
