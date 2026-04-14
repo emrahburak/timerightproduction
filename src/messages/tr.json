@@ -244,7 +244,7 @@
 			"namePlaceholder": "Örn: Ahmet Yılmaz",
 			"phoneLabel": "Telefon Numarası",
 			"phonePlaceholder": "+90 555 000 00 00",
-			"emailLabel": "E-posta (Opsiyonel)",
+			"emailLabel": "E-posta",
 			"emailPlaceholder": "ornek@mail.com",
 			"kvkkText": "Kişisel verilerimin işlenmesine ilişkin Aydınlatma Metni'ni okudum ve kabul ediyorum.",
 			"submitButton": "Başvuruyu Tamamla",

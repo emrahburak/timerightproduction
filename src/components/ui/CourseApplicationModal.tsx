@@ -110,7 +110,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                       </div>
                       <div>
                         <p className="text-xs text-white/40">{f.locationLabel || 'Lokasyon'}</p>
-                        <p className="text-sm font-medium">{currentCourseMsg.location || '-'}</p>
+                        <p className="text-sm font-medium">{currentCourseMsg.location || (activeCourse.id === 'switzerland' ? 'İSVİÇRE' : activeCourse.id === 'rotterdam' ? 'ROTTERDAM' : 'Lokasyon Belirleniyor')}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/80">
@@ -119,7 +119,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                       </div>
                       <div>
                         <p className="text-xs text-white/40">{f.dateLabel || 'Tarih'}</p>
-                        <p className="text-sm font-medium">{currentCourseMsg.date || '-'}</p>
+                        <p className="text-sm font-medium">{currentCourseMsg.date || (activeCourse.id === 'switzerland' ? '4 ve 25 Ekim - 8 ve 22 Kasım' : activeCourse.id === 'rotterdam' ? '11 ve 31 Ekim - 15 ve 29 Kasım' : 'Tarih Yakında Güncellenecektir')}</p>
                       </div>
                     </div>
                   </div>
@@ -219,10 +219,12 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                         <input
                           id="email"
                           type="email"
+                          required
+                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
-                          placeholder={f.emailPlaceholder}
+                          placeholder={f.emailPlaceholder || 'ornek@alanadi.com'}
                         />
                       </div>
 
