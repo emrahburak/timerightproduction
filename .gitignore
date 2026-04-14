@@ -51,3 +51,5 @@ skills-lock.json
 *.md
 !README.md
 !readme.md
+*.md
+*.jsonc
