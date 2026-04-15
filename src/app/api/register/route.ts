@@ -22,8 +22,8 @@ export async function POST(request: Request) {
     const timestamp = new Date().toLocaleString("tr-TR");
     const sheetId = process.env.GOOGLE_SHEET_ID;
 
-    // 1. Google Sheets Hazırlık
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n').replace(/"/g, '').trim() || "";
+    // 1. Google Sheets Hazırlık (Base64 decode)
+    const privateKey = Buffer.from(process.env.GOOGLE_PRIVATE_KEY || '', 'base64').toString('utf8');
 
     const jwtClient = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
