@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
-import { JWT } from "google-auth-library";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -23,15 +22,15 @@ export async function POST(request: Request) {
     const sheetId = process.env.GOOGLE_SHEET_ID;
 
     // 1. Google Sheets Hazırlık (Base64 decode)
-    const privateKey = Buffer.from(process.env.GOOGLE_PRIVATE_KEY || '', 'base64').toString('utf8');
-
-    const jwtClient = new JWT({
-      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      key: privateKey,
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+        private_key: Buffer.from(process.env.GOOGLE_PRIVATE_KEY || '', 'base64').toString('utf8').replace(/\\n/g, '\n'),
+      },
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
-    const sheets = google.sheets({ version: "v4", auth: jwtClient });
+    const sheets = google.sheets({ version: "v4", auth: auth });
 
     // 2. SABİT DİZİ: Google Sheet'e Yazma (8 SÜTUN: A:H)
     // Sıra: Kayıt Tarihi, Kurs Başlangıç, Program Detayı, Kurs ID, Kurs Adı, Ad Soyad, E-posta, Telefon
