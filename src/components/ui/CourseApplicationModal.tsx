@@ -40,7 +40,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
     setStatus('loading');
     
     try {
-      const res = await fetch('/api/apply', {
+      const res = await fetch('/api/register', { // API rotasını /api/register olarak güncelledik
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -50,8 +50,14 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
         }),
       });
       
+      const data = await res.json(); // Yanıtı al
+
       if (res.ok) {
         setStatus('success');
+        // Sheet Linkini sakla ve başarı mesajına ekle
+        if (data.sheetLink) {
+            sessionStorage.setItem('sheetLink', data.sheetLink);
+        }
       } else {
         setStatus('error');
       }
@@ -148,6 +154,13 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                     <h4 className="text-2xl font-syne text-white mb-2">{f.successTitle}</h4>
                     <p className="text-white/60 max-w-sm">
                       {f.successText}
+                      {sessionStorage.getItem('sheetLink') && (
+                        <span className='block mt-3 text-white/80'>
+                            <a href={sessionStorage.getItem('sheetLink')!} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline font-medium">
+                                Önceki Kayıtları Görüntüle
+                            </a>
+                        </span>
+                      )}
                     </p>
                     <button 
                       onClick={onClose}
