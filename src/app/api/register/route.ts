@@ -1,95 +1,107 @@
-import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
-import { GoogleAuth } from 'google-auth-library';
-import { getSheetEnv } from '@/lib/googleSheets'; 
+import { NextResponse } from "next/server";
+import { google } from "googleapis";
+import { JWT } from "google-auth-library";
+import { Resend } from "resend";
 
-// Beklenen veri yapısı
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 interface RegistrationData {
-    name: string;
-    phone: string;
-    email: string;
-    courseId: string;
-    courseTitle: string;
+  userName: string;
+  userPhone: string;
+  userEmail: string;
+  courseId: string;
+  courseName: string;
+  location: string;
+  startDate: string;
+  fullSchedule: string;
 }
 
-// Ortam değişkeni arayüzü
-interface SheetEnv {
-  GOOGLE_SERVICE_ACCOUNT_EMAIL: string;
-  GOOGLE_PRIVATE_KEY: string;
-  GOOGLE_SHEET_ID: string;
-}
-
-// API Rotası İşleyicisi (Sunucu Tarafı)
 export async function POST(request: Request) {
-  
   try {
     const body: RegistrationData = await request.json();
-    
-    // 1. Veri Toplama (timestamp ekleniyor)
-    const timestamp = new Date().toISOString();
-    const valuesToAppend: string[] = [
-      timestamp,
-      body.courseId,
-      body.courseTitle,
-      body.name,
-      body.email,
-      body.phone,
+    const timestamp = new Date().toLocaleString("tr-TR");
+    const sheetId = process.env.GOOGLE_SHEET_ID;
+
+    // 1. Google Sheets Hazırlık
+    const rawKey = process.env.GOOGLE_PRIVATE_KEY || "";
+    const privateKey = rawKey.replace(/\\n/g, "\n").replace(/"/g, "").trim();
+
+    const jwtClient = new JWT({
+      email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      key: privateKey,
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
+    const sheets = google.sheets({ version: "v4", auth: jwtClient });
+
+    // 2. SABİT DİZİ: Google Sheet'e Yazma (8 SÜTUN: A:H)
+    // Sıra: Kayıt Tarihi, Kurs Başlangıç, Program Detayı, Kurs ID, Kurs Adı, Ad Soyad, E-posta, Telefon
+    const valuesToAppend = [
+      timestamp,                    // A: Kayıt Tarihi
+      body.startDate || '',        // B: Kurs Başlangıç
+      body.fullSchedule || '',     // C: Program Detayı
+      body.courseId,               // D: Kurs ID
+      body.courseName,            // E: Kurs Adı
+      body.userName,              // F: Ad Soyad
+      body.userEmail || '',       // G: E-posta
+      body.userPhone,             // H: Telefon
     ];
-    
-    // *** GOOGLE SHEETS LOGIC MOVED ENTIRELY INSIDE THE RUNTIME BLOCK ***
-    // Bu sayede build sırasında process.env'den bu hassas değerlerin okunması engellenir.
-    let sheetsInstance: ReturnType<typeof google.sheets> | null = null;
-  
-    const getSheetsInstance = () => {
-        if (!sheetsInstance) {
-            const env = getSheetEnv();
-            
-            const privateKey = env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'); 
 
-            const auth = new GoogleAuth({
-                clientOptions: {
-                    credentials: {
-                        client_email: env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-                        private_key: privateKey,
-                    },
-                    keyId: '',
-                },
-                scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-            });
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: sheetId,
+      range: "'timeright-01'!A:H",
+      valueInputOption: "RAW", // RAW kullanarak Sheet'in veriyi yorumlamasını engelle
+      insertDataOption: "INSERT_ROWS",
+      requestBody: { values: [valuesToAppend] },
+    });
 
-            sheetsInstance = google.sheets({ version: 'v4', auth: auth });
-        }
-        return sheetsInstance;
+    const sheetLink = `https://docs.google.com/spreadsheets/d/${sheetId}/edit#gid=0`;
+
+    // 3. AYNI OBJEDEN Mail Gönderme (SADECE SHEET BAŞARILIYSA ÇALIŞIR)
+    const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
+    if (!adminEmail) {
+      throw new Error("ADMIN_NOTIFICATION_EMAIL environment variable is not set");
     }
     
-    const sheets = getSheetsInstance();
-    const env = getSheetEnv(); 
-      
-    // 2. Google Sheet'e Yazma
-    await sheets.spreadsheets.values.append({
-        spreadsheetId: env.GOOGLE_SHEET_ID,
-        range: 'Sheet1!A:Z', 
-        valueInputOption: 'USER_ENTERED',
-        insertDataOption: 'INSERT_ROWS',
-        resource: {
-            values: [valuesToAppend],
-        },
-    });
-    
-    // 3. Sheet Linkini Oluşturma
-    const sheetLink = "https://docs.google.com/spreadsheets/d/" + env.GOOGLE_SHEET_ID + "/edit#gid=0";
-    console.log("Successfully appended to Sheet ID: " + env.GOOGLE_SHEET_ID);
-    
-    // 3. Başarılı Yanıt + Sheet Linki
-    return NextResponse.json({ 
-        message: 'Kayıt başarıyla Google Sheets\'e eklendi.',
-        sheetLink: sheetLink
-    }, { status: 200 });
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await resend.emails.send({
+          from: "Başvuru Sistemi <onboarding@resend.dev>",
+          to: adminEmail,
+          subject: `Yeni Başvuru: ${body.courseName} - ${body.location} - ${body.userName}`,
+          html: `
+            <h2>Yeni Kurs Başvurusu Kaydı Alındı</h2>
+            <p><strong>Kurs:</strong> ${body.courseName}</p>
+            <p><strong>Yer:</strong> ${body.location}</p>
+            <p><strong>Kurs ID:</strong> ${body.courseId}</p>
+            <p><strong>Başlangıç Tarihi:</strong> ${body.startDate}</p>
+            <p><strong>Program Detayı:</strong> ${body.fullSchedule}</p>
+            <p><strong>Kayıt Tarihi:</strong> ${timestamp}</p>
+            <p><strong>Ad Soyad:</strong> ${body.userName}</p>
+            <p><strong>E-posta:</strong> ${body.userEmail}</p>
+            <p><strong>Telefon:</strong> ${body.userPhone}</p>
+            <hr/>
+            <p><strong>Google Sheet Kaydı:</strong> <a href="${sheetLink}">Buraya Tıklayarak Sayfayı Aç</a></p>
+          `,
+        });
+        console.log("Bildirim maili gönderildi.");
+      } catch (mailError) {
+        console.error("Mail gönderilemedi ama kayıt yapıldı:", mailError);
+      }
+    }
 
-  } catch (error) {
-    console.error("Registration API Error:", error);
-    
-    const errorMessage = error instanceof Error ? error.message : 'Bilinmeyen bir sunucu hatası oluştu.';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: "Kayıt başarıyla tamamlandı.",
+        sheetLink: sheetLink,
+      },
+      { status: 200 },
+    );
+  } catch (error: any) {
+    console.error("İşlem Hatası:", error);
+    return NextResponse.json(
+      { error: "Sistem şu an meşgul, lütfen sonra deneyiniz." },
+      { status: 500 },
+    );
   }
 }

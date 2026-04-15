@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 import courses from '@/data/courses.json';
+
 interface CourseApplicationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,14 +14,21 @@ interface CourseApplicationModalProps {
   actingTitle: string;
 }
 
-export default function CourseApplicationModal({ isOpen, onClose, courseMessages, formMessages, actingDescription, actingTitle }: CourseApplicationModalProps) {
+export default function CourseApplicationModal({ 
+  isOpen, 
+  onClose, 
+  courseMessages, 
+  formMessages, 
+  actingDescription, 
+  actingTitle 
+}: CourseApplicationModalProps) {
   const activeCourses = courses.filter(c => c.isActive);
   const initialCourse = activeCourses.length > 0 ? activeCourses[0] : courses[0];
 
   const [selectedCourseId, setSelectedCourseId] = useState(initialCourse?.id);
   
   const activeCourse = courses.find(c => c.id === selectedCourseId) || initialCourse;
-  const currentCourseMsg = (courseMessages && activeCourse) ? (courseMessages[activeCourse.id] || {}) : {};
+  const t = activeCourse?.translations || {};
   
   const f = formMessages || {};
 
@@ -33,30 +41,51 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
+  // Modal kapandığında formu sıfırla
+  useEffect(() => {
+    if (!isOpen) {
+      setStatus('idle');
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        kvkk: false,
+      });
+      setSelectedCourseId(initialCourse?.id);
+    }
+  }, [isOpen, initialCourse?.id]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.kvkk) return;
     
     setStatus('loading');
     
+    // Backend'e gönderilecek veri - tek kaynak
+    const backendData = {
+      userName: formData.name,
+      userPhone: formData.phone,
+      userEmail: formData.email,
+      courseId: activeCourse.id,
+      courseName: t.courseName || '',
+      location: t.location || '',
+      startDate: t.startDate || '',
+      fullSchedule: t.fullSchedule || ''
+    };
+    
     try {
-      const res = await fetch('/api/register', { // API rotasını /api/register olarak güncelledik
+      const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          courseId: activeCourse.id,
-          courseTitle: currentCourseMsg.title || activeCourse.id
-        }),
+        body: JSON.stringify(backendData),
       });
       
-      const data = await res.json(); // Yanıtı al
+      const data = await res.json();
 
       if (res.ok) {
         setStatus('success');
-        // Sheet Linkini sakla ve başarı mesajına ekle
         if (data.sheetLink) {
-            sessionStorage.setItem('sheetLink', data.sheetLink);
+          sessionStorage.setItem('sheetLink', data.sheetLink);
         }
       } else {
         setStatus('error');
@@ -65,6 +94,11 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
       setStatus('error');
     }
   };
+
+  // translations objesinden değerler
+  const displayLocation = t.location || '';
+  const displayDate = t.fullSchedule || '';
+  const displayCourseName = t.courseName || '';
 
   return (
     <AnimatePresence>
@@ -86,6 +120,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
             >
               {/* Close Button Mobile */}
               <button 
+                type="button"
                 onClick={onClose}
                 className="md:hidden absolute top-4 right-4 p-2 text-white/50 hover:text-white bg-black/50 rounded-full z-10"
               >
@@ -97,9 +132,11 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
                 
                 <div>
-                  <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 mb-6">
-                    🌍 {currentCourseMsg.category}
-                  </div>
+                  {displayCourseName && (
+                    <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 mb-6">
+                      🎭 {displayCourseName}
+                    </div>
+                  )}
                   
                   <h3 className="text-2xl md:text-3xl font-syne text-white mb-4">
                     {actingTitle}
@@ -116,7 +153,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                       </div>
                       <div>
                         <p className="text-xs text-white/40">{f.locationLabel || 'Lokasyon'}</p>
-                        <p className="text-sm font-medium">{currentCourseMsg.location || (activeCourse.id === 'switzerland' ? 'İSVİÇRE' : activeCourse.id === 'rotterdam' ? 'ROTTERDAM' : 'Lokasyon Belirleniyor')}</p>
+                        <p className="text-sm font-medium">{displayLocation}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 text-white/80">
@@ -125,7 +162,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                       </div>
                       <div>
                         <p className="text-xs text-white/40">{f.dateLabel || 'Tarih'}</p>
-                        <p className="text-sm font-medium">{currentCourseMsg.date || (activeCourse.id === 'switzerland' ? '4 ve 25 Ekim - 8 ve 22 Kasım' : activeCourse.id === 'rotterdam' ? '11 ve 31 Ekim - 15 ve 29 Kasım' : 'Tarih Yakında Güncellenecektir')}</p>
+                        <p className="text-sm font-medium">{displayDate}</p>
                       </div>
                     </div>
                   </div>
@@ -136,6 +173,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
               <div className="md:w-7/12 p-8 relative">
                 {/* Close Button Desktop */}
                 <button 
+                  type="button"
                   onClick={onClose}
                   className="hidden md:flex absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors"
                 >
@@ -154,15 +192,9 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                     <h4 className="text-2xl font-syne text-white mb-2">{f.successTitle}</h4>
                     <p className="text-white/60 max-w-sm">
                       {f.successText}
-                      {sessionStorage.getItem('sheetLink') && (
-                        <span className='block mt-3 text-white/80'>
-                            <a href={sessionStorage.getItem('sheetLink')!} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline font-medium">
-                                Önceki Kayıtları Görüntüle
-                            </a>
-                        </span>
-                      )}
                     </p>
                     <button 
+                      type="button"
                       onClick={onClose}
                       className="mt-8 px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium"
                     >
@@ -190,10 +222,10 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                             style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1rem' }}
                           >
                             {activeCourses.map(course => {
-                              const msg = courseMessages?.[course.id];
+                              const courseT = course.translations || {};
                               return (
                                 <option key={course.id} value={course.id} className="bg-[#111] text-white">
-                                  {msg?.title || course.id}
+                                  {courseT.location || course.id}
                                 </option>
                               );
                             })}
@@ -237,7 +269,7 @@ export default function CourseApplicationModal({ isOpen, onClose, courseMessages
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
-                          placeholder={f.emailPlaceholder || 'ornek@alanadi.com'}
+                          placeholder={f.emailPlaceholder}
                         />
                       </div>
 

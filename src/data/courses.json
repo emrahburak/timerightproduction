@@ -1,18 +1,22 @@
 [
   {
-    "id": "switzerland",
+    "id": "SWI-2026-10",
     "isActive": true,
-    "i18nKey": "courses.switzerland",
-    "locationKey": "courses.switzerland.location",
-    "dateKey": "courses.switzerland.date",
-    "categoryKey": "courses.switzerland.category"
+    "translations": {
+      "courseName": "Kamera Önü Oyunculuk",
+      "location": "Zürich, İsviçre",
+      "startDate": "4 Ekim 2026",
+      "fullSchedule": "4 ve 25 Ekim - 8 ve 22 Kasım"
+    }
   },
   {
-    "id": "rotterdam",
+    "id": "ROT-2026-10",
     "isActive": true,
-    "i18nKey": "courses.rotterdam",
-    "locationKey": "courses.rotterdam.location",
-    "dateKey": "courses.rotterdam.date",
-    "categoryKey": "courses.rotterdam.category"
+    "translations": {
+      "courseName": "Kamera Önü Oyunculuk",
+      "location": "Rotterdam, Hollanda",
+      "startDate": "11 Ekim 2026",
+      "fullSchedule": "11 ve 31 Ekim - 15 ve 29 Kasım"
+    }
   }
 ]

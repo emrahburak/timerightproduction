@@ -130,6 +130,20 @@
 		"socialHandle": "@timerightproduction",
 		"copyright": "© 2026 TIME RIGHT PRODUCTION. TÜM HAKLARI SAKLIDIR."
 	},
+	"courses": {
+		"switzerland": {
+			"title": "İSVİÇRE",
+			"location": "Zürich, İsviçre",
+			"date": "4 & 25 Ekim - 8 & 22 Kasım",
+			"category": "Kamera Önü Oyunculuk"
+		},
+		"rotterdam": {
+			"title": "ROTTERDAM",
+			"location": "Rotterdam, Hollanda",
+			"date": "11 & 31 Ekim - 15 & 29 Kasım",
+			"category": "Kamera Önü Oyunculuk"
+		}
+	},
 	"showcaseStack": {
 		"courses": {
 		"switzerland": {
