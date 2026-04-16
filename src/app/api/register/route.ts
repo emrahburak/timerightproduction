@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 import { Resend } from "resend";
+import dns from 'node:dns';
+
+// Force IPv4 priority to prevent ETIMEDOUT in Docker/Coolify environments
+dns.setDefaultResultOrder('ipv4first');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
