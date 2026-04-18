@@ -37,6 +37,7 @@ export default function CourseApplicationModal({
     phone: '',
     email: '',
     kvkk: false,
+    website: '',
   });
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -50,6 +51,7 @@ export default function CourseApplicationModal({
         phone: '',
         email: '',
         kvkk: false,
+        website: '',
       });
       setSelectedCourseId(initialCourse?.id);
     }
@@ -70,7 +72,8 @@ export default function CourseApplicationModal({
       courseName: t.courseName || '',
       location: t.location || '',
       startDate: t.startDate || '',
-      fullSchedule: t.fullSchedule || ''
+      fullSchedule: t.fullSchedule || '',
+      website: formData.website || '',
     };
     
     try {
@@ -291,6 +294,16 @@ export default function CourseApplicationModal({
                           {f.kvkkText}
                         </label>
                       </div>
+
+                      <input
+                        type="text"
+                        name="website"
+                        value={formData.website || ''}
+                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                        className="hidden"
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
 
                       {status === 'error' && (
                         <p className="text-red-400 text-xs text-center">

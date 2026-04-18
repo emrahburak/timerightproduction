@@ -2,8 +2,11 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
+
+const RATE_LIMIT_WINDOW = 60 * 1000;
+const RATE_LIMIT_MAX = 3;
+const rateLimitMap = new Map<string, number[]>();
 
 interface RegistrationData {
   userName: string;
@@ -14,11 +17,44 @@ interface RegistrationData {
   location: string;
   startDate: string;
   fullSchedule: string;
+  website?: string;
+}
+
+function getClientIP(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  return forwarded ? forwarded.split(",")[0].trim() : "unknown";
+}
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = rateLimitMap.get(ip) || [];
+  const validTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
+  
+  if (validTimestamps.length >= RATE_LIMIT_MAX) {
+    return false;
+  }
+  
+  validTimestamps.push(now);
+  rateLimitMap.set(ip, validTimestamps);
+  return true;
 }
 
 export async function POST(request: Request) {
   try {
     const body: RegistrationData = await request.json();
+    const clientIP = getClientIP(request);
+
+    if (!checkRateLimit(clientIP)) {
+      return NextResponse.json(
+        { error: "Çok fazla istek, lütfen 1 dakika bekleyiniz." },
+        { status: 429 }
+      );
+    }
+
+    if (body.website && body.website.length > 0) {
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
     const timestamp = new Date().toLocaleString("tr-TR");
 
     const webhookData = {
@@ -33,10 +69,7 @@ export async function POST(request: Request) {
       telefon: body.userPhone
     };
 
-    // KONTROL 1: n8n Webhook'a veri gönder
     console.log("=== N8N WEBHOOK START ===");
-    console.log("Sending to:", N8N_WEBHOOK_URL);
-
     const fetchOptions: RequestInit = {
       method: "POST",
       cache: "no-store",
@@ -57,7 +90,6 @@ export async function POST(request: Request) {
 
     console.log("N8N OK:", n8nResult);
 
-    // KONTROL 2: Resend ile mail gönder
     const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
     if (!adminEmail || !process.env.RESEND_API_KEY) {
       console.warn("Email config missing, skipping notification");
@@ -82,7 +114,6 @@ export async function POST(request: Request) {
       console.log("Email sent OK");
     }
 
-    // FİNAL: Her iki adım da başarılı
     return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error: any) {
