@@ -3,7 +3,7 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const N8N_WEBHOOK_URL = "http://n8n.aurensoft.me/webhook-test/timeright-kayit";
+const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
 
 interface RegistrationData {
   userName: string;
@@ -36,15 +36,20 @@ export async function POST(request: Request) {
 
     console.log("=== N8N WEBHOOK START ===");
     console.log("Sending data to:", N8N_WEBHOOK_URL);
+    console.log("Webhook data:", JSON.stringify(webhookData));
 
-    // Send to n8n Webhook
-    const n8nResponse = await fetch(N8N_WEBHOOK_URL, {
+    // Send to n8n Webhook - Force POST with cache disabled
+    const fetchOptions: RequestInit = {
       method: "POST",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json"
       },
       body: JSON.stringify(webhookData),
-    });
+    };
+
+    const n8nResponse = await fetch(N8N_WEBHOOK_URL, fetchOptions);
 
     const n8nResult = await n8nResponse.json();
     console.log("N8N Response:", n8nResult);
@@ -53,14 +58,17 @@ export async function POST(request: Request) {
     // Handle n8n response
     if (!n8nResponse.ok) {
       console.error("N8N Webhook failed with status:", n8nResponse.status);
-      throw new Error("N8N webhook request failed");
+      return NextResponse.json(
+        { error: "Kayıt işlemi şu an başarısız, lütfen sonra deneyiniz." },
+        { status: 502 }
+      );
     }
 
-    // Send email notification (independent of n8n result)
+    // n8n başarılı → Şimdi mail gönder
     const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
-    if (!adminEmail) {
-      console.warn("ADMIN_NOTIFICATION_EMAIL not set, skipping email");
-    } else if (process.env.RESEND_API_KEY) {
+    let emailSent = false;
+
+    if (adminEmail && process.env.RESEND_API_KEY) {
       try {
         await resend.emails.send({
           from: "Başvuru Sistemi <onboarding@resend.dev>",
@@ -79,16 +87,22 @@ export async function POST(request: Request) {
             <p><strong>Telefon:</strong> ${body.userPhone}</p>
           `,
         });
+        emailSent = true;
         console.log("Bildirim maili gönderildi.");
       } catch (mailError) {
         console.error("Mail gönderilemedi:", mailError);
+        return NextResponse.json(
+          { error: "Kayıt alındı ancak bildirim gönderilemedi." },
+          { status: 500 }
+        );
       }
     }
 
+    // Her şey başarılı
     return NextResponse.json(
       {
         message: "Kayıt başarıyla tamamlandı.",
-        n8nResult: n8nResult
+        emailSent: emailSent
       },
       { status: 200 }
     );
