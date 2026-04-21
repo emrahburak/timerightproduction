@@ -43,6 +43,25 @@ export default function CourseApplicationModal({
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      document.body.style.overflow = '';
+      (document.body.style as any).touchAction = '';
+      
+      document.querySelectorAll('[data-section]').forEach(el => {
+        (el as HTMLElement).style.pointerEvents = '';
+      });
+    };
+  }, []);
 
   // Modal kapandığında formu sıfırla
   useEffect(() => {
@@ -353,6 +372,8 @@ export default function CourseApplicationModal({
       )}
     </AnimatePresence>
   );
+
+  if (!mounted) return null;
 
   return createPortal(modalContent, document.body);
 }
