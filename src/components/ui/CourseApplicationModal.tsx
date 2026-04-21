@@ -59,6 +59,18 @@ export default function CourseApplicationModal({
     }
   }, [isOpen, initialCourse?.id]);
 
+  // Scroll lock - modal açıkken body kaymasını engelle
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.kvkk) return;
@@ -119,18 +131,18 @@ export default function CourseApplicationModal({
             onClick={onClose}
             className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md"
           />
-          <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-none">
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 md:p-4 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="w-full max-w-4xl bg-[#111] border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black pointer-events-auto flex flex-col md:flex-row"
+              className="w-full max-w-4xl max-h-[90vh] md:max-h-[80vh] bg-[#111] border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black pointer-events-auto flex flex-col md:flex-row overflow-y-auto"
             >
-              {/* Close Button Mobile */}
+              {/* Close Button */}
               <button 
                 type="button"
                 onClick={onClose}
-                className="md:hidden absolute top-4 right-4 p-2 text-white/50 hover:text-white bg-black/50 rounded-full z-10"
+                className="absolute top-3 right-3 md:top-4 md:right-4 p-2 text-white/50 hover:text-white bg-black/60 hover:bg-black/80 rounded-full z-20 transition-colors"
               >
                 <X size={20} />
               </button>
@@ -178,7 +190,7 @@ export default function CourseApplicationModal({
               </div>
 
               {/* Right Side: Form */}
-              <div className="md:w-7/12 p-8 relative">
+              <div className="md:w-7/12 p-4 md:p-8 pb-24 md:pb-8 relative flex flex-col min-h-0">
                 {/* Close Button Desktop */}
                 <button 
                   type="button"
@@ -218,7 +230,7 @@ export default function CourseApplicationModal({
                       </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form onSubmit={handleSubmit} className="space-y-5 flex flex-col flex-grow">
                       {activeCourses.length > 1 && (
                         <div className="space-y-1.5">
                           <label htmlFor="courseSelect" className="text-xs font-medium text-white/60 ml-1">{f.courseLabel}</label>
@@ -319,7 +331,7 @@ export default function CourseApplicationModal({
                       <button
                         type="submit"
                         disabled={status === 'loading' || !formData.kvkk}
-                        className="w-full py-4 bg-white text-black hover:bg-neutral-200 disabled:bg-white/50 disabled:cursor-not-allowed rounded-lg font-semibold text-sm transition-colors mt-4 flex items-center justify-center gap-2"
+                        className="w-full py-4 bg-white text-black hover:bg-neutral-200 disabled:bg-white/50 disabled:cursor-not-allowed rounded-lg font-semibold text-sm transition-colors mt-auto pt-4 flex items-center justify-center gap-2 sticky bottom-0 bg-[#111]"
                       >
                         {status === 'loading' ? (
                           <>
