@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo, useState } from 'react';
+import { useRef, useMemo } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Image from 'next/image';
@@ -9,6 +9,7 @@ import { heroImage } from '@/data/hero';
 import courses from '@/data/courses.json';
 import { ArrowRight } from 'lucide-react';
 import CourseApplicationModal from '@/components/ui/CourseApplicationModal';
+import { useModal } from '@/contexts/ModalContext';
 
 interface HeroProps {
   title: string;
@@ -52,7 +53,7 @@ export default function Hero({ title, description, applyButton, courseMessages, 
   
   const marqueeRef = useRef<HTMLDivElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isModalOpen, setIsModalOpen } = useModal();
 
   const descriptionChars = useMemo(
     () => description.split(''),

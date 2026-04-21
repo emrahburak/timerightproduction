@@ -8,6 +8,7 @@ import ShowcaseStack from '@/components/sections/showcase/ShowcaseStack';
 import Instructors, { type Instructor } from '@/components/sections/Instructors';
 import Contact from '@/components/sections/Contact';
 import ScrollManager from '@/components/ScrollManager';
+import { ModalProvider, useModal } from '@/contexts/ModalContext';
 import { INSTRUCTORS_DATA } from '@/data/instructors';
 
 // Define a type for the messages object to ensure type safety
@@ -153,7 +154,17 @@ export default async function HomePage({ params }: HomePageProps) {
   };
 
   return (
-    <ScrollManager>
+    <ModalProvider>
+      <PageContent mergedInstructorsData={mergedInstructorsData} messages={messages} />
+    </ModalProvider>
+  );
+}
+
+function PageContent({ mergedInstructorsData, messages }: { mergedInstructorsData: any; messages: any }) {
+  const { isModalOpen } = useModal();
+
+  return (
+    <ScrollManager isModalOpen={isModalOpen}>
       <main className="w-full bg-black">
         {/* Hero Section - Native scroll (z-10) */}
         <div data-section="hero" className="relative w-full h-screen overflow-hidden z-10">
