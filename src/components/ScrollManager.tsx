@@ -21,25 +21,8 @@ export default function ScrollManager({ children, isModalOpen = false }: ScrollM
 
   // ============================================
   // Modal State: Disable ScrollTrigger when modal is open
+  // (Now handled by ModalContext globally)
   // ============================================
-  useEffect(() => {
-    const allTriggers = ScrollTrigger.getAll();
-    scrollTriggersRef.current = allTriggers;
-
-    if (isModalOpen) {
-      console.log('Modal opened - disabling ScrollTriggers');
-      allTriggers.forEach(st => { st.disable(); });
-    } else {
-      console.log('Modal closed - enabling ScrollTriggers');
-      allTriggers.forEach(st => { st.enable(); });
-    }
-
-    return () => {
-      if (isModalOpen) {
-        allTriggers.forEach(st => { st.enable(); });
-      }
-    };
-  }, [isModalOpen]);
 
   // ============================================
   // Initial Setup: z-index hierarchy for all sections

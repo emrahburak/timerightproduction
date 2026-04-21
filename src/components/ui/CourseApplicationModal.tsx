@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 import courses from '@/data/courses.json';
@@ -120,7 +121,7 @@ export default function CourseApplicationModal({
   const displayDate = t.fullSchedule || '';
   const displayCourseName = t.courseName || '';
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <>
@@ -129,9 +130,9 @@ export default function CourseApplicationModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-md"
           />
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 md:p-4 pointer-events-none">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -352,4 +353,6 @@ export default function CourseApplicationModal({
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 }
