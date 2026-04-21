@@ -85,7 +85,11 @@ export async function POST(request: Request) {
 
     if (!n8nResponse.ok) {
       console.error("N8N failed:", n8nResponse.status, n8nResult);
-      throw new Error(`N8N webhook failed: ${n8nResponse.status}`);
+      const errorMessage = n8nResult?.message || "Kayıt işlemi başarısız.";
+      return NextResponse.json(
+        { error: errorMessage },
+        { status: n8nResponse.status }
+      );
     }
 
     console.log("N8N OK:", n8nResult);

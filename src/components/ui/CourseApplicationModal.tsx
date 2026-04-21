@@ -41,11 +41,13 @@ export default function CourseApplicationModal({
   });
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Modal kapandığında formu sıfırla
   useEffect(() => {
     if (!isOpen) {
       setStatus('idle');
+      setErrorMessage('');
       setFormData({
         name: '',
         phone: '',
@@ -87,14 +89,17 @@ export default function CourseApplicationModal({
 
       if (res.ok) {
         setStatus('success');
+        setErrorMessage('');
         if (data.sheetLink) {
           sessionStorage.setItem('sheetLink', data.sheetLink);
         }
       } else {
         setStatus('error');
+        setErrorMessage(data.error || 'Bir hata oluştu.');
       }
     } catch (error) {
       setStatus('error');
+      setErrorMessage('Bağlantı hatası oluştu.');
     }
   };
 
@@ -307,7 +312,7 @@ export default function CourseApplicationModal({
 
                       {status === 'error' && (
                         <p className="text-red-400 text-xs text-center">
-                          {f.errorText}
+                          {errorMessage || f.errorText}
                         </p>
                       )}
 
