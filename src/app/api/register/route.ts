@@ -95,6 +95,8 @@ export async function POST(request: Request) {
     console.log("N8N OK:", n8nResult);
 
     const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
+    const sheetUrl = process.env.GOOGLE_SHEET_URL;
+
     if (!adminEmail || !process.env.RESEND_API_KEY) {
       console.warn("Email config missing, skipping notification");
     } else {
@@ -113,6 +115,10 @@ export async function POST(request: Request) {
           <p><strong>Ad Soyad:</strong> ${body.userName}</p>
           <p><strong>E-posta:</strong> ${body.userEmail}</p>
           <p><strong>Telefon:</strong> ${body.userPhone}</p>
+          ${sheetUrl ? `<hr style="border: 1px solid #e5e7eb; margin: 20px 0;" />
+          <p style="margin-top: 16px;">
+            📋 Yeni kayıt detaylarını <a href="${sheetUrl}" style="color: #2563eb; text-decoration: underline;">buradaki tablodan</a> inceleyebilirsiniz.
+          </p>` : ''}
         `,
       });
       console.log("Email sent OK");
