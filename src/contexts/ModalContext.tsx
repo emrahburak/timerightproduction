@@ -17,6 +17,7 @@ function lockBody() {
   document.body.style.top = `-${scrollY}px`;
   document.body.style.overflow = 'hidden';
   (document.body.style as any).touchAction = 'none';
+  (document.body.style as any).overscrollBehavior = 'none';
 }
 
 function unlockBody() {
@@ -26,6 +27,7 @@ function unlockBody() {
   document.body.style.top = '';
   document.body.style.overflow = '';
   (document.body.style as any).touchAction = '';
+  (document.body.style as any).overscrollBehavior = '';
   window.scrollTo(0, scrollY);
 }
 
