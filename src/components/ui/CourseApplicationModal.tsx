@@ -151,27 +151,27 @@ export default function CourseApplicationModal({
             onClick={onClose}
             className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-md"
           />
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 md:p-4 pointer-events-none">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-0 md:p-4 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="w-full max-w-4xl max-h-[85dvh] md:max-h-[80vh] bg-[#111] border border-white/10 rounded-2xl shadow-2xl shadow-black pointer-events-auto flex flex-col md:flex-row"
+              className="w-full max-w-4xl max-h-[90dvh] md:max-h-[80vh] bg-[#111] border border-white/10 rounded-2xl shadow-2xl shadow-black pointer-events-auto overflow-y-auto flex flex-col md:flex-row"
             >
-              {/* Fixed Close Button - avoids hamburger menu conflict */}
+              {/* Absolute Close Button - stays with content, not fixed */}
               <button 
                 type="button"
                 onClick={onClose}
-                className="fixed top-4 right-4 z-[10000] p-3 text-white/70 hover:text-white bg-black/70 hover:bg-black/90 rounded-full transition-colors shadow-lg"
+                className="absolute top-3 right-3 z-10 p-2 text-white/50 hover:text-white bg-black/50 hover:bg-black/70 rounded-full transition-colors"
               >
-                <X size={24} />
+                <X size={20} />
               </button>
 
               {/* Left Side: Course Info */}
-              <div className="md:w-5/12 bg-neutral-900 p-6 md:p-8 overflow-y-auto border-b md:border-b-0 md:border-r border-white/10">
+              <div className="md:w-5/12 bg-neutral-900 p-6 md:p-8 border-b md:border-b-0 md:border-r border-white/10">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
                 
-                <div className="mb-6">
+                <div>
                   {displayCourseName && (
                     <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 mb-4">
                       🎭 {displayCourseName}
@@ -186,7 +186,7 @@ export default function CourseApplicationModal({
                     {actingDescription}
                   </p>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div className="flex items-center gap-3 text-white/80">
                       <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
                         <MapPin size={16} className="text-white/60" />
@@ -210,7 +210,7 @@ export default function CourseApplicationModal({
               </div>
 
               {/* Right Side: Form */}
-              <div className="md:w-7/12 p-4 md:p-8 pb-32 md:pb-8 relative flex flex-col overflow-y-auto">
+              <div className="md:w-7/12 p-5 md:p-8 pb-36 md:pb-8 flex flex-col min-h-0">
 
                 {status === 'success' ? (
                   <motion.div 
@@ -242,9 +242,9 @@ export default function CourseApplicationModal({
                       </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-5 flex flex-col flex-grow">
+                    <form onSubmit={handleSubmit} className="space-y-6 flex flex-col flex-grow">
                       {activeCourses.length > 1 && (
-                        <div className="space-y-1.5">
+                        <div className="space-y-2">
                           <label htmlFor="courseSelect" className="text-xs font-medium text-white/60 ml-1">{f.courseLabel}</label>
                           <select
                             id="courseSelect"
@@ -265,7 +265,7 @@ export default function CourseApplicationModal({
                         </div>
                       )}
 
-                      <div className="space-y-1.5">
+                      <div className="space-y-2">
                         <label htmlFor="name" className="text-xs font-medium text-white/60 ml-1">{f.nameLabel}</label>
                         <input
                           id="name"
@@ -278,7 +278,7 @@ export default function CourseApplicationModal({
                         />
                       </div>
 
-                      <div className="space-y-1.5">
+                      <div className="space-y-2">
                         <label htmlFor="phone" className="text-xs font-medium text-white/60 ml-1">{f.phoneLabel}</label>
                         <input
                           id="phone"
@@ -291,7 +291,7 @@ export default function CourseApplicationModal({
                         />
                       </div>
 
-                      <div className="space-y-1.5">
+                      <div className="space-y-2">
                         <label htmlFor="email" className="text-xs font-medium text-white/60 ml-1">{f.emailLabel}</label>
                         <input
                           id="email"
@@ -343,7 +343,7 @@ export default function CourseApplicationModal({
                       <button
                         type="submit"
                         disabled={status === 'loading' || !formData.kvkk}
-                        className="w-full py-4 bg-white text-black hover:bg-neutral-200 disabled:bg-white/50 disabled:cursor-not-allowed rounded-lg font-semibold text-sm transition-colors mt-auto pt-4 flex items-center justify-center gap-2 sticky bottom-0 bg-[#111]"
+                        className="w-full py-4 mt-4 bg-white text-black hover:bg-neutral-200 disabled:bg-white/50 disabled:cursor-not-allowed rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                       >
                         {status === 'loading' ? (
                           <>
