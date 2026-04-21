@@ -156,61 +156,63 @@ export default function CourseApplicationModal({
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="w-full max-w-4xl max-h-[90dvh] md:max-h-[80vh] bg-[#111] border border-white/10 rounded-2xl shadow-2xl shadow-black pointer-events-auto overflow-y-auto flex flex-col md:flex-row"
+              className="w-full max-w-4xl max-h-[90dvh] bg-[#111] border border-white/10 rounded-2xl shadow-2xl shadow-black pointer-events-auto overflow-y-auto flex flex-col"
             >
-              {/* Absolute Close Button - stays with content, not fixed */}
+              {/* Absolute Close Button - modalın en üst sağ köşesine sabit */}
               <button 
                 type="button"
                 onClick={onClose}
-                className="absolute top-3 right-3 z-10 p-2 text-white/50 hover:text-white bg-black/50 hover:bg-black/70 rounded-full transition-colors"
+                className="absolute top-3 right-3 z-50 p-2 text-white/50 hover:text-white bg-black/50 hover:bg-black/70 rounded-full transition-colors"
               >
                 <X size={20} />
               </button>
 
-              {/* Left Side: Course Info */}
-              <div className="md:w-5/12 bg-neutral-900 p-6 md:p-8 border-b md:border-b-0 md:border-r border-white/10">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
-                
-                <div>
-                  {displayCourseName && (
-                    <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 mb-4">
-                      🎭 {displayCourseName}
-                    </div>
-                  )}
+              {/* Mobilde: tek dikey yapı | Desktop: iki panel yan yana */}
+              <div className="flex flex-col md:flex-row">
+                {/* Sol Panel: Bilgi */}
+                <div className="md:w-5/12 bg-neutral-900 p-6 md:p-8 border-b md:border-b-0 md:border-r border-white/10">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
                   
-                  <h3 className="text-xl md:text-3xl font-syne text-white mb-3">
-                    {actingTitle}
-                  </h3>
-                  
-                  <p className="text-white/60 text-sm leading-relaxed mb-6">
-                    {actingDescription}
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3 text-white/80">
-                      <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                        <MapPin size={16} className="text-white/60" />
+                  <div>
+                    {displayCourseName && (
+                      <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/70 mb-4">
+                        🎭 {displayCourseName}
                       </div>
-                      <div>
-                        <p className="text-xs text-white/40">{f.locationLabel || 'Lokasyon'}</p>
-                        <p className="text-sm font-medium">{displayLocation}</p>
+                    )}
+                    
+                    <h3 className="text-xl md:text-3xl font-syne text-white mb-3">
+                      {actingTitle}
+                    </h3>
+                    
+                    <p className="text-white/60 text-sm leading-relaxed mb-6">
+                      {actingDescription}
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3 text-white/80">
+                        <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                          <MapPin size={16} className="text-white/60" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-white/40">{f.locationLabel || 'Lokasyon'}</p>
+                          <p className="text-sm font-medium">{displayLocation}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3 text-white/80">
-                      <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                        <Calendar size={16} className="text-white/60" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-white/40">{f.dateLabel || 'Tarih'}</p>
-                        <p className="text-sm font-medium">{displayDate}</p>
+                      <div className="flex items-center gap-3 text-white/80">
+                        <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                          <Calendar size={16} className="text-white/60" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-white/40">{f.dateLabel || 'Tarih'}</p>
+                          <p className="text-sm font-medium">{displayDate}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Right Side: Form */}
-              <div className="md:w-7/12 p-5 md:p-8 pb-36 md:pb-8 flex flex-col min-h-0">
+                {/* Sağ Panel: Form */}
+                <div className="md:w-7/12 p-5 md:p-8 pb-32 flex flex-col">
 
                 {status === 'success' ? (
                   <motion.div 
@@ -357,6 +359,7 @@ export default function CourseApplicationModal({
                     </form>
                   </>
                 )}
+                </div>
               </div>
             </motion.div>
           </div>
