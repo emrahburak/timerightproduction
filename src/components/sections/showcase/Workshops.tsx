@@ -10,11 +10,6 @@ import { Thumbnails, Fullscreen, Zoom } from 'yet-another-react-lightbox/plugins
 import { getShowcaseStackUrl, getWorkshopImageUrl } from '@/lib/constants';
 import { workshops, type WorkshopItem } from '@/data/workshops';
 
-// Split text helper
-const splitTextToChars = (text: string): string[] => {
-  return text.split('');
-};
-
 function MasonryItem({
   item,
   index,
@@ -289,15 +284,11 @@ export default function Workshops({ messages }: WorkshopsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const contentRef = useRef<HTMLParagraphElement>(null);
-  const content2Ref = useRef<HTMLParagraphElement>(null);
 
   // Split title by comma for two-line display
   const titleParts = useMemo(() => messages.title.split(','), [messages.title]);
-  const titleLine1 = useMemo(() => splitTextToChars(titleParts[0] + ','), [titleParts]);
-  const titleLine2 = useMemo(() => splitTextToChars(titleParts[1] || ''), [titleParts]);
-  const contentChars1 = useMemo(() => splitTextToChars(messages.paragraph1), [messages.paragraph1]);
-  const contentChars2 = useMemo(() => splitTextToChars(messages.paragraph2), [messages.paragraph2]);
+  const titleLine1 = useMemo(() => titleParts[0] + ',', [titleParts]);
+  const titleLine2 = useMemo(() => titleParts[1] || '', [titleParts]);
 
   const rowData = [
     workshops.slice(0, 8),
@@ -317,7 +308,6 @@ export default function Workshops({ messages }: WorkshopsProps) {
   };
 
   useGSAP(() => {
-    // Title split text animasyonu - Karakterler sırayla gelir
     if (titleRef.current) {
       const chars = titleRef.current.querySelectorAll('.char');
       gsap.fromTo(
@@ -337,49 +327,6 @@ export default function Workshops({ messages }: WorkshopsProps) {
           },
         }
       );
-    }
-
-    // Content split text animasyonu - İlk paragraf
-    if (contentRef.current) {
-      const chars1 = contentRef.current.querySelectorAll('.char');
-      gsap.fromTo(
-        chars1,
-        { opacity: 0, y: 10 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.4,
-          stagger: 0.008,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 55%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-
-      // İkinci paragraf animasyonu - İlk paragraf ile neredeyse eş zamanlı ama hafif gecikmeli
-      if (content2Ref.current) {
-        const chars2 = content2Ref.current.querySelectorAll('.char');
-        gsap.fromTo(
-          chars2,
-          { opacity: 0, y: 10 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            stagger: 0.008,
-            ease: 'power3.out',
-            delay: 0.2, // Sabit kısa bir gecikme
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 55%',
-              toggleActions: 'play none none reverse',
-            },
-          }
-        );
-      }
     }
   }, { scope: sectionRef });
 
@@ -448,7 +395,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
           >
             {/* Line 1 */}
             <span className="block whitespace-nowrap">
-              {titleLine1.map((char, index) => (
+              {titleLine1.split('').map((char, index) => (
                 <span
                   key={`line1-${index}-${char}`}
                   className="char inline-block"
@@ -460,7 +407,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
             </span>
             {/* Line 2 */}
             <span className="block whitespace-nowrap">
-              {titleLine2.map((char, index) => (
+              {titleLine2.split('').map((char, index) => (
                 <span
                   key={`line2-${index}-${char}`}
                   className="char inline-block"
@@ -472,32 +419,14 @@ export default function Workshops({ messages }: WorkshopsProps) {
             </span>
           </h2>
           <p
-            ref={contentRef}
             className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl"
           >
-            {contentChars1.map((char, index) => (
-              <span
-                key={`${index}-${char}`}
-                className="char inline-block"
-                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            ))}
+            {messages.paragraph1}
           </p>
           <p 
-            ref={content2Ref}
             className="hidden md:block font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl mt-4"
           >
-            {contentChars2.map((char, index) => (
-              <span
-                key={`${index}-${char}`}
-                className="char inline-block"
-                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            ))}
+            {messages.paragraph2}
           </p>
         </div>
       </div>

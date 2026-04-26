@@ -15,21 +15,14 @@ interface SectionProps {
   content: string;
 }
 
-const splitTextToChars = (text: string): string[] => {
-  return text.split('');
-};
-
 export default function About({ title, content }: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const contentRef = useRef<HTMLParagraphElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   const titleWords = useMemo(() => title.split(' '), [title]);
-  const contentChars = useMemo(() => splitTextToChars(content), [content]);
 
   useGSAP(() => {
-    // Title split text animasyonu - Karakterler sırayla gelir
     if (titleRef.current) {
       const chars = titleRef.current.querySelectorAll('.char');
       gsap.fromTo(
@@ -51,28 +44,6 @@ export default function About({ title, content }: SectionProps) {
       );
     }
 
-    // Content split text animasyonu
-    if (contentRef.current) {
-      const chars = contentRef.current.querySelectorAll('.char');
-      gsap.fromTo(
-        chars,
-        { opacity: 0, y: 10 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.02,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    }
-
-    // Görsel animasyonu - Hafif parallax
     if (imageRef.current) {
       gsap.fromTo(
         imageRef.current,
@@ -126,18 +97,9 @@ export default function About({ title, content }: SectionProps) {
             ))}
           </h2>
           <p
-            ref={contentRef}
             className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl"
           >
-            {contentChars.map((char, index) => (
-              <span
-                key={`${index}-${char}`}
-                className="char inline-block"
-                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            ))}
+            {content}
           </p>
         </div>
 
