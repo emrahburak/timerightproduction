@@ -238,6 +238,16 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
             </div>
           </button>
 
+          {/* Company Name - Desktop */}
+          <span className="hidden md:block font-syne text-white/80 text-sm tracking-[0.2em] uppercase font-bold">
+            Timeright Production
+          </span>
+
+          {/* Company Name - Mobile (centered) */}
+          <span className="md:hidden font-syne text-white/80 text-[0.6rem] tracking-[0.15em] uppercase font-bold absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 whitespace-nowrap">
+            Timeright Production
+          </span>
+
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             <ul className="flex gap-8 items-center">
