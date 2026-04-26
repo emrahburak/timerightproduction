@@ -67,13 +67,6 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
     e.preventDefault();
     if (isMenuOpen) setIsMenuOpen(false);
     if (path.startsWith('#')) {
-      // Special handling for Instructors section (hidden until ShowcaseStack completes)
-      if (path === '#instructors') {
-        const instructorsSection = document.querySelector('[data-section="instructors"]') as HTMLElement;
-        if (instructorsSection) {
-          gsap.set(instructorsSection, { opacity: 1, y: 0, clearProps: 'all' });
-        }
-      }
       gsap.to(window, { duration: 1.5, scrollTo: { y: path, offsetY: 0 }, ease: "power4.inOut" });
     } else {
       router.push(path);
