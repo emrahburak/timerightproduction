@@ -67,7 +67,19 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
     e.preventDefault();
     if (isMenuOpen) setIsMenuOpen(false);
     if (path.startsWith('#')) {
-      gsap.to(window, { duration: 1.5, scrollTo: { y: path, offsetY: 0 }, ease: "power4.inOut" });
+      if (path === '#instructors') {
+        const wrapper = document.querySelector('[data-section="instructors"]') as HTMLElement;
+        if (wrapper) {
+          gsap.set(wrapper, { opacity: 1, y: 0, clearProps: 'all' });
+        }
+        const showcaseStack = document.querySelector('[data-section="showcase-stack"]') as HTMLElement;
+        if (showcaseStack) {
+          const scrollTarget = showcaseStack.offsetTop + showcaseStack.offsetHeight;
+          gsap.to(window, { duration: 1.5, scrollTo: { y: scrollTarget }, ease: "power4.inOut" });
+        }
+      } else {
+        gsap.to(window, { duration: 1.5, scrollTo: { y: path, offsetY: 0 }, ease: "power4.inOut" });
+      }
     } else {
       router.push(path);
     }
