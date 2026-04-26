@@ -133,21 +133,6 @@ export default function ScrollManager({ children, isModalOpen = false }: ScrollM
   }, { scope: containerRef });
 
   // ============================================
-  // Scroll-triggered Instructors reveal
-  // When user scrolls to Instructors section, auto-set showcaseCompleted
-  // ============================================
-  useGSAP(() => {
-    const instructorsEl = document.querySelector('[data-section="instructors"]');
-    if (instructorsEl) {
-      ScrollTrigger.create({
-        trigger: instructorsEl,
-        start: 'top bottom',
-        onEnter: () => setShowcaseCompleted(true),
-      });
-    }
-  }, []);
-
-  // ============================================
   // ShowcaseStack Completion Handler
   // Shows Instructors section after ShowcaseStack animation completes
   // ============================================
