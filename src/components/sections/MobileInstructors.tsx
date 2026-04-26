@@ -39,6 +39,7 @@ export default function MobileInstructors({ instructors }: MobileInstructorsProp
 
   return (
     <section
+      id="instructors"
       className="w-full min-h-screen bg-black flex flex-col items-center justify-center px-6 py-16 relative"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
