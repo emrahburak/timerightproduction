@@ -309,7 +309,7 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
           <nav className="flex flex-col items-start gap-3 w-full">
             {navItems.map((item, index) => (
               <a key={item.key} href={item.path} onClick={(e) => handleSmoothScroll(e, item.path)} className="font-syne font-black text-[clamp(1.1rem,3.5vw,1.5rem)] uppercase text-white hover:text-[#EAB308] transition-colors flex items-center gap-3 w-full">
-                <span className="font-syne text-xs text-white/50 min-w-[1.5rem]">{String(index + 1).padStart(2, '0')}</span>
+                <span className="font-syne text-xs text-white/50 min-w-[1.5rem] flex-shrink-0 whitespace-nowrap">{String(index + 1).padStart(2, '0')}</span>
                 <span className="flex-1 leading-tight break-words">{item.label}</span>
               </a>
             ))}
