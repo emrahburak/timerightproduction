@@ -98,10 +98,37 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Time Right Production',
+    url: `https://timerightproduction.org/${locale}`,
+    email: 'info@timerightproduction.org',
+    telephone: ['+905053743810', '+41764271776'],
+    sameAs: ['https://instagram.com/timerightproduction'],
+    description: locale === 'tr'
+      ? 'Sahne sanatları ve görsel anlatımı buluşturan yaratıcı bir yapım şirketi. Oyunculuk eğitimi, tiyatro prodüksiyonları, belgesel ve tanıtım filmleri, festival organizasyonları.'
+      : 'A creative production company bringing together performing arts and visual storytelling. Acting education, theatre productions, documentary and promotional films, festival organization.',
+    knowsAbout: [
+      'Acting Education',
+      'Theatre Production',
+      'Documentary Film',
+      'Promotional Film',
+      'Festival Organization',
+      'Diction Training',
+      'On-Camera Acting',
+      'Management Services',
+    ],
+  };
+
   return (
     <ModalProvider>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div
-        className={`${syne.variable} ${cormorantGaramond.variable} ${archivo.variable}`} // Apply font variables including Archivo
+        className={`${syne.variable} ${cormorantGaramond.variable} ${archivo.variable}`}
       >
         <IntroOverlay />
         <Header locale={locale} />
