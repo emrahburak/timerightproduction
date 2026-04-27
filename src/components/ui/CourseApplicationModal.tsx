@@ -188,6 +188,12 @@ export default function CourseApplicationModal({
                       {actingDescription}
                     </p>
                     
+                    {activeCourses.length > 1 && (
+                      <p className="text-white/50 text-xs leading-relaxed mb-4 italic">
+                        {activeCourses.map(c => c.translations.location).join(' ve ')} kursları için ayrı ayrı ön kayıt oluşturabilirsiniz!
+                      </p>
+                    )}
+                    
                     <div className="space-y-4">
                       <div className="flex items-center gap-3 text-white/80">
                         <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
