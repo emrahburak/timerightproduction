@@ -137,7 +137,7 @@ export default function RhythmAtelier({ messages }: RhythmAtelierProps) {
            <h2 className="font-syne font-black uppercase text-[clamp(1.5rem,3vw,3rem)] text-white tracking-widest leading-tight mb-4">
             {messages.title}
           </h2>
-          <p className="font-cormorant text-2xl md:text-3xl italic text-white/80 leading-relaxed mb-8">
+          <p className="font-cormorant text-2xl md:text-3xl text-white/80 leading-relaxed mb-8">
             {messages.description}
           </p>
           

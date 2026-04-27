@@ -158,7 +158,7 @@ export default function Hero({ title, description, applyButton, courseMessages, 
         >
           <p
             className="
-              font-cormorant italic
+              font-cormorant
               text-white/90 leading-[1.4]
               text-[clamp(1.25rem,2.2vw,1.85rem)]
               text-center
