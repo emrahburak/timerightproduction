@@ -33,3 +33,17 @@ body {
   background-size: 200px; /* Adjust size as needed */
   background-repeat: repeat;
 }
+
+/* Hyphenation & text wrapping for proper word breaks in all languages */
+p, span, h1, h2, h3, h4, h5, h6, li, label, td, th, blockquote, figcaption {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Balance text lines in paragraphs for better visual appearance */
+p {
+  text-wrap: balance;
+}

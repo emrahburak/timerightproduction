@@ -1,0 +1,22 @@
+[
+  {
+    "id": "SWI-2026-10",
+    "isActive": true,
+    "translations": {
+      "courseName": "Kamera Önü Oyunculuk",
+      "location": "Zürich, İsviçre",
+      "startDate": "Ekim 2026",
+      "fullSchedule": "Ekim - Kasım 2026"
+    }
+  },
+  {
+    "id": "ROT-2026-10",
+    "isActive": true,
+    "translations": {
+      "courseName": "Kamera Önü Oyunculuk",
+      "location": "Rotterdam, Hollanda",
+      "startDate": "Ekim 2026",
+      "fullSchedule": "Ekim - Kasım 2026"
+    }
+  }
+]

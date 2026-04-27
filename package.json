@@ -1,14 +1,16 @@
 {
   "name": "timerightproduction.org",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "start": "next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/react-fontawesome": "^3.3.1",
     "@gsap/react": "^2.1.2",
     "framer-motion": "^12.35.2",
     "gsap": "^3.14.2",
@@ -17,6 +19,7 @@
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "resend": "^6.10.0",
     "yet-another-react-lightbox": "^3.29.1"
   },
   "devDependencies": {

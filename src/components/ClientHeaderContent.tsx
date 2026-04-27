@@ -67,7 +67,19 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
     e.preventDefault();
     if (isMenuOpen) setIsMenuOpen(false);
     if (path.startsWith('#')) {
-      gsap.to(window, { duration: 1.5, scrollTo: { y: path, offsetY: 0 }, ease: "power4.inOut" });
+      if (path === '#instructors') {
+        const wrapper = document.querySelector('[data-section="instructors"]') as HTMLElement;
+        if (wrapper) {
+          gsap.set(wrapper, { opacity: 1, y: 0, clearProps: 'all' });
+        }
+        const showcaseStack = document.querySelector('[data-section="showcase-stack"]') as HTMLElement;
+        if (showcaseStack) {
+          const scrollTarget = showcaseStack.offsetTop + showcaseStack.offsetHeight;
+          gsap.to(window, { duration: 1.5, scrollTo: { y: scrollTarget }, ease: "power4.inOut" });
+        }
+      } else {
+        gsap.to(window, { duration: 1.5, scrollTo: { y: path, offsetY: 0 }, ease: "power4.inOut" });
+      }
     } else {
       router.push(path);
     }
@@ -238,6 +250,16 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
             </div>
           </button>
 
+          {/* Company Name - Desktop */}
+          <span className="hidden md:block font-syne text-white/80 text-sm tracking-[0.2em] uppercase font-bold">
+            Timeright Production
+          </span>
+
+          {/* Company Name - Mobile (centered) */}
+          <span className="md:hidden font-syne text-white/80 text-[0.6rem] tracking-[0.15em] uppercase font-bold absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 whitespace-nowrap">
+            Timeright Production
+          </span>
+
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             <ul className="flex gap-8 items-center">
@@ -287,7 +309,7 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
           <nav className="flex flex-col items-start gap-3 w-full">
             {navItems.map((item, index) => (
               <a key={item.key} href={item.path} onClick={(e) => handleSmoothScroll(e, item.path)} className="font-syne font-black text-[clamp(1.1rem,3.5vw,1.5rem)] uppercase text-white hover:text-[#EAB308] transition-colors flex items-center gap-3 w-full">
-                <span className="font-syne text-xs text-white/50 min-w-[1.5rem]">{String(index + 1).padStart(2, '0')}</span>
+                <span className="font-syne text-xs text-white/50 min-w-[1.5rem] flex-shrink-0 whitespace-nowrap">{String(index + 1).padStart(2, '0')}</span>
                 <span className="flex-1 leading-tight break-words">{item.label}</span>
               </a>
             ))}

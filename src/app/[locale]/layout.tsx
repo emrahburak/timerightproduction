@@ -3,6 +3,8 @@ import { Syne, Cormorant_Garamond, Archivo } from "next/font/google"; // Import 
 import Header from '@/components/Header'; // Import Header component
 import SmoothScroll from '@/components/SmoothScroll'; // Import SmoothScroll component
 import IntroOverlay from '@/components/IntroOverlay'; // Import IntroOverlay
+import ChatField from '@/components/ui/ChatField'; // Import WhatsApp button
+import { ModalProvider } from '@/contexts/ModalContext';
 
 const syne = Syne({
   subsets: ["latin"],
@@ -58,14 +60,17 @@ export default async function LocaleLayout({
   const { locale } = await params;
 
   return (
-    <div
-      className={`${syne.variable} ${cormorantGaramond.variable} ${archivo.variable}`} // Apply font variables including Archivo
-    >
-      <IntroOverlay />
-      <Header locale={locale} />
-      <SmoothScroll>
-        {children}
-      </SmoothScroll>
-    </div>
+    <ModalProvider>
+      <div
+        className={`${syne.variable} ${cormorantGaramond.variable} ${archivo.variable}`} // Apply font variables including Archivo
+      >
+        <IntroOverlay />
+        <Header locale={locale} />
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
+        <ChatField />
+      </div>
+    </ModalProvider>
   );
 }

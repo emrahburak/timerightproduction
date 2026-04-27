@@ -96,20 +96,19 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black opacity-50 z-[1]" />
 
-      {/* Cards Grid - Centered horizontal layout */}
-      <div className="container mx-auto px-4 sm:px-8 md:px-12 lg:px-10 relative z-10">
-
-        {/* MOBILE/TABLET — 3D Carousel (< lg) */}
+      {/* Cards Grid - Responsive layout */}
+      <div className="container mx-auto px-4 relative z-10 max-w-[1400px]">
+        
+        {/* MOBILE/TABLET — Swipe Carousel (< lg) */}
         <div className="lg:hidden relative w-full flex flex-col items-center overflow-hidden">
           {/* Perspective wrapper */}
           <div
-            className="relative w-full h-[560px] flex items-center justify-center"
+            className="relative w-full h-[640px] flex items-center justify-center"
             style={{ perspective: '1000px' }}
           >
             {cards.map((card, index) => {
               const total = cards.length;
               let offset = index - activeIndex;
-              // Wrap around
               if (offset > Math.floor(total / 2)) offset -= total;
               if (offset < -Math.floor(total / 2)) offset += total;
 
@@ -123,17 +122,17 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
                   className="absolute transition-all duration-500 ease-in-out"
                   style={{
                     transform: `
-                      translateX(${offset * 55}%)
-                      scale(${isCenter ? 1 : isAdjacent ? 0.82 : 0.65})
-                      rotateY(${offset * -12}deg)
+                      translateX(${offset * 65}%)
+                      scale(${isCenter ? 1 : isAdjacent ? 0.85 : 0.7})
+                      rotateY(${offset * -15}deg)
                     `,
                     zIndex: isCenter ? 10 : isAdjacent ? 5 : 1,
-                    opacity: isCenter ? 1 : isAdjacent ? 0.35 : 0,
-                    filter: isCenter ? 'blur(0px)' : 'blur(3px)',
+                    opacity: isCenter ? 1 : isAdjacent ? 0.4 : 0,
+                    filter: isCenter ? 'blur(0px)' : 'blur(2px)',
                     visibility: isHidden ? 'hidden' : 'visible',
                     pointerEvents: isCenter ? 'auto' : 'none',
-                    width: '75vw',
-                    maxWidth: '320px',
+                    width: '85vw',
+                    maxWidth: '360px',
                   }}
                 >
                   <AcademyCard
@@ -147,17 +146,16 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
             })}
           </div>
 
-          {/* Navigation Buttons */}
+          {/* Navigation & Pagination */}
           <div className="flex items-center gap-6 mt-4">
             <button
               onClick={handlePrev}
-              className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-colors duration-200 focus:outline-none"
+              className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-colors duration-200"
               aria-label="Previous card"
             >
               <ChevronLeft className="w-6 h-6 text-white" />
             </button>
 
-            {/* Dot Indicator */}
             <div className="flex gap-2">
               {cards.map((_, i) => (
                 <button
@@ -173,7 +171,7 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
 
             <button
               onClick={handleNext}
-              className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-colors duration-200 focus:outline-none"
+              className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-colors duration-200"
               aria-label="Next card"
             >
               <ChevronRight className="w-6 h-6 text-white" />
@@ -181,39 +179,19 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
           </div>
         </div>
 
-        {/* DESKTOP — mevcut layout (lg+) */}
-        <div className="hidden lg:flex flex-row flex-wrap items-center justify-center gap-8 lg:gap-12 w-full">
-          {/* Card 1: Acting */}
-          <div className="academy-card-wrapper w-full sm:w-auto lg:w-auto flex justify-center">
-            <AcademyCard
-              title={cards[0].title}
-              icon={cards[0].icon}
-              courses={cards[0].courses}
-              themeColor={cards[0].themeColor}
-            />
-          </div>
-
-          {/* Card 2: Writing */}
-          <div className="academy-card-wrapper w-full sm:w-auto lg:w-auto flex justify-center">
-            <AcademyCard
-              title={cards[1].title}
-              icon={cards[1].icon}
-              courses={cards[1].courses}
-              themeColor={cards[1].themeColor}
-            />
-          </div>
-
-          {/* Card 3: Rhythm */}
-          <div className="academy-card-wrapper w-full sm:w-auto lg:w-auto flex justify-center">
-            <AcademyCard
-              title={cards[2].title}
-              icon={cards[2].icon}
-              courses={cards[2].courses}
-              themeColor={cards[2].themeColor}
-            />
-          </div>
+        {/* DESKTOP — 3 Column Layout (lg+) */}
+        <div className="hidden lg:grid grid-cols-3 gap-8 lg:gap-10 items-stretch justify-items-center">
+          {cards.map((card, index) => (
+            <div key={index} className="academy-card-wrapper w-full flex justify-center h-full">
+              <AcademyCard
+                title={card.title}
+                icon={card.icon}
+                courses={card.courses}
+                themeColor={card.themeColor}
+              />
+            </div>
+          ))}
         </div>
-
       </div>
 
       {/* Background large text for texture */}

@@ -15,21 +15,14 @@ interface SectionProps {
   content: string;
 }
 
-const splitTextToChars = (text: string): string[] => {
-  return text.split('');
-};
-
 export default function About({ title, content }: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const contentRef = useRef<HTMLParagraphElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   const titleWords = useMemo(() => title.split(' '), [title]);
-  const contentChars = useMemo(() => splitTextToChars(content), [content]);
 
   useGSAP(() => {
-    // Title split text animasyonu - Karakterler sırayla gelir
     if (titleRef.current) {
       const chars = titleRef.current.querySelectorAll('.char');
       gsap.fromTo(
@@ -51,28 +44,6 @@ export default function About({ title, content }: SectionProps) {
       );
     }
 
-    // Content split text animasyonu
-    if (contentRef.current) {
-      const chars = contentRef.current.querySelectorAll('.char');
-      gsap.fromTo(
-        chars,
-        { opacity: 0, y: 10 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.02,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    }
-
-    // Görsel animasyonu - Hafif parallax
     if (imageRef.current) {
       gsap.fromTo(
         imageRef.current,
@@ -98,8 +69,13 @@ export default function About({ title, content }: SectionProps) {
       id="about"
       ref={sectionRef}
       data-section="about"
-      className="min-h-screen md:h-screen bg-black relative isolate flex items-center px-8 md:px-16 lg:px-24 overflow-visible md:overflow-hidden py-16 md:py-0"
+      className="min-h-screen md:h-screen bg-[#0a0a0a] relative isolate flex items-center px-8 md:px-16 lg:px-24 overflow-visible md:overflow-hidden py-16 md:py-0"
     >
+      {/* Top Fade-in Overlay for transition from Hero section */}
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#0a0a0a] to-transparent z-[5] pointer-events-none" />
+      
+      {/* Background Ambience consistent with other sections */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/5 via-transparent to-transparent opacity-30 z-[1]" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-7xl mx-auto z-10">
         {/* Sol Taraf: Title + Content */}
         <div className="flex flex-col space-y-6 order-1 md:order-1">
@@ -121,18 +97,9 @@ export default function About({ title, content }: SectionProps) {
             ))}
           </h2>
           <p
-            ref={contentRef}
             className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl"
           >
-            {contentChars.map((char, index) => (
-              <span
-                key={`${index}-${char}`}
-                className="char inline-block"
-                style={{ display: char === ' ' ? 'inline' : 'inline-block' }}
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </span>
-            ))}
+            {content}
           </p>
         </div>
 

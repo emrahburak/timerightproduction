@@ -26,21 +26,15 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       position: relative;
       display: block;
       width: 100%;
-      min-width: 300px;
       max-width: 420px;
       margin: 0 auto;
       color-scheme: light dark;
     }
 
-    @media (min-width: 1024px) {
-      .ec-wrap {
-        width: 420px;
-      }
-    }
-
     .card-container {
       width: 100%;
-      min-height: 480px; /* Boyut çökmesini tamamen engeller */
+      min-height: 480px;
+      height: 100%;
       border-radius: 1.5em;
       position: relative;
       --electric-light-color: oklch(from var(--electric-border-color) l c h);
@@ -53,24 +47,22 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       overflow: hidden; /* İçeriğin taşmamasını sağlar */
     }
 
+    /* MASAÜSTÜ EFEKTLERİ KALDIRILDI - TÜM CİHAZLARDA AYNI TASARIM */
     @media (min-width: 1024px) {
       .card-container {
         min-height: 600px;
-        border: none; /* Masaüstünde orijinal efekt devreye girer */
-        padding: 2px;
-        background:
-          linear-gradient(-30deg, var(--gradient-color), transparent, var(--gradient-color)),
-          linear-gradient(to bottom, oklch(0.185 0 0), oklch(0.185 0 0));
-        overflow: visible;
+        border: 2px solid var(--electric-border-color);
+        background: oklch(0.09 0 0);
+        overflow: hidden;
       }
     }
 
-    /* MOBİLDE GİZLENECEK ELEKTRİK KATMANLARI */
+    /* ELEKTRİK KATMANLARI TÜM CİHAZLARDA GİZLİ */
     .inner-container,
     .overlay-1,
     .overlay-2,
     .background-glow {
-      display: none;
+      display: none !important;
     }
 
     /* SADECE MASAÜSTÜNDE ÇALIŞACAK 3D / GLOW EFEKTLERİ */
@@ -160,8 +152,8 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 40%;
-      min-height: 140px;
+      height: 30%;
+      min-height: 100px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       background: rgba(0, 0, 0, 0.2);
     }
@@ -169,7 +161,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
     .text-section {
       flex: 1;
       overflow: hidden;
-      padding: 1.5rem;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -179,11 +171,11 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
     .card-title {
       font-family: var(--font-syne, sans-serif);
       font-weight: 700;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: white;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     @media (min-width: 1024px) {
@@ -199,7 +191,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.375rem;
     }
 
     .course-item {
@@ -213,15 +205,15 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      margin-top: 8px;
+      margin-top: 6px;
       flex-shrink: 0;
     }
 
     .course-text {
       font-family: var(--font-cormorant, serif);
-      font-size: 1rem;
+      font-size: 0.875rem;
       color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
+      line-height: 1.5;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -234,9 +226,21 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       }
       .course-text {
         font-size: 1.125rem;
+        line-height: 1.6;
       }
       .card-title {
-        font-size: 2rem;
+        font-size: 1.875rem;
+        margin-bottom: 1rem;
+      }
+      .icon-section {
+        height: 40%;
+        min-height: 140px;
+      }
+      .course-list {
+        gap: 0.5rem;
+      }
+      .course-dot {
+        margin-top: 8px;
       }
     }
   `;

@@ -10,12 +10,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface ScrollManagerProps {
   children: ReactNode;
+  isModalOpen?: boolean;
 }
 
-export default function ScrollManager({ children }: ScrollManagerProps) {
+export default function ScrollManager({ children, isModalOpen = false }: ScrollManagerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showcaseCompleted, setShowcaseCompleted] = useState(false);
   const prevShowcaseCompletedRef = useRef(false);
+  const scrollTriggersRef = useRef<ScrollTrigger[]>([]);
+
+  // ============================================
+  // Modal State: Disable ScrollTrigger when modal is open
+  // (Now handled by ModalContext globally)
+  // ============================================
 
   // ============================================
   // Initial Setup: z-index hierarchy for all sections
@@ -34,6 +41,7 @@ export default function ScrollManager({ children }: ScrollManagerProps) {
       'showcase-stack': 70,
       'instructors': 80,
       'contact': 90,
+      'modal': 9999,
     };
 
     Object.entries(sectionZIndexes).forEach(([section, zIndex]) => {

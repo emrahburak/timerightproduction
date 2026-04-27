@@ -29,46 +29,59 @@
   "privacy": {
     "title": "PRIVACY POLICY",
     "back": "GO BACK",
-    "content": "At Time Right Production ('Company'), we attach maximum importance to the security of your personal data. Your personal data is processed and stored in accordance with the relevant Data Protection Laws.<br/><br/><strong>1. Data Controller</strong><br/>Your personal data may be processed by Time Right Production in the capacity of data controller within the scope explained below.<br/><br/><strong>2. Purpose of Processing Personal Data</strong><br/>Your collected personal data is processed for the purposes of carrying out the necessary work by our business units to benefit you from the products and services offered by our Company, and ensuring the legal and commercial security of persons who are in a business relationship with our Company.<br/><br/><strong>3. Data Security</strong><br/>Your data is protected against unauthorized access, loss, or disclosure using industry-standard security measures."
+    "content": "At Time Right Production ('Company'), we attach maximum importance to the security of your personal data. Your personal data is processed and stored in accordance with the relevant Data Protection Laws.<br/><br/><strong>1. Data Controller</strong><br/>Your personal data may be processed by Time Right Production in the capacity of data controller within the scope explained below.<br/><br/><strong>2. Purpose of Processing Personal Data</strong><br/>Your collected personal data is processed for the purposes of carrying out the necessary work by our business units to benefit you from the products and services offered by our Company, and ensuring the legal and commercial security of persons who are in a business relationship with our Company.<br/><br/><strong>3. Data Security</strong><br/>Your data is protected against unauthorized access, loss, or disclosure using industry-standard security measures.<br/><br/><strong>4. Course Pre-Application Data</strong><br/>Through the course pre-application form, your full name, phone number, and email address are collected. This data is processed for the purposes of recording your pre-application, contacting you via WhatsApp or email, and managing registration processes. Your data is processed based on your explicit consent and retained until the registration process is completed."
   },
   "hero": {
     "title": "Time Right Production",
-    "description": "At the right time,\nin the right place,\nfor the right communication,\nwe are here for you..."
+    "description": "At the right time,\nin the right place,\nfor the right communication,\nwe are here for you...",
+    "applyButton": "New Term Enrollments Started"
   },
   "statement": {
     "text": "When the time comes for everything to be exactly as it should be, and exactly on time."
   },
   "about": {
-    "title": "The time for unforgettable, exciting events has come.",
-    "content": "Life is shaped through communication; however, communication is not limited to words. The projects we develop with our expert partners include special service designs that provide strong support to your company’s internal and external communication channels."
+    "title": "ABOUT US",
+    "content": "Time Right Production is a creative production company that brings together performing arts and visual storytelling. With a production power ranging from theater to documentaries, promotional films to prestigious organizations, it establishes a unique language in every project. It also aims to create effective and lasting stories by providing training. It redefines the universal language of art with a contemporary vision."
   },
   "services": {
     "title": "Our Services",
     "scrollToExplore": "Scroll to Explore",
     "items": [
       {
-        "title": "Corporate Brand Films",
-        "description": "Tell your brand's story to the world with a cinematic language."
+        "title": "ACTING EDUCATION",
+        "description": "Our acting trainings are provided in two separate fields: Theatre and On-Camera Acting. Each program aims to develop participants' acting skills with techniques and working methods specific to its own discipline. The goal is for every aspiring actor to strengthen their expression and gain an effective presence on stage or in front of the camera."
       },
       {
-        "title": "Documentary Productions",
-        "description": "Immortalize reality with artistic depth and perspective."
+        "title": "DICTION AND EFFECTIVE SPEECH TRAINING",
+        "description": "Life is shaped by communication, but communication is more than just words. Mastering diction, effective speech, and body language is the key to powerful communication. This training guides you to discover the power of your voice, words, and body language. Master the art of self-expression and reach the top with impressive and successful communication."
       },
       {
-        "title": "Talent Management",
-        "description": "Professionally managing the career journeys of extraordinary talents."
+        "title": "THEATRE PRODUCTIONS",
+        "description": "We realize Theatre and Musical productions both domestically and internationally. We produce new texts, approach the relationship between stage and performance with dramaturgical integrity, and together with expert directors, we create projects with a unique stage language and aesthetics."
       },
       {
-        "title": "Festival & Event Organization",
-        "description": "Designing large-scale events that create unforgettable moments."
+        "title": "CORPORATE PROMOTIONAL FILMS",
+        "description": "We produce promotional films for institutions and brands, transforming the brand identity into a unique visual language in every project. We create a persuasive and lasting impact through visual aesthetics and powerful editing."
       },
       {
-        "title": "Corporate Motivation Events",
-        "description": "Energy-filled corporate gatherings that strengthen team spirit."
+        "title": "DOCUMENTARY FILMS",
+        "description": "In documentary production, we don't just record reality; we reconstruct and transform the story. By bringing together the trace of time, human memory, and the spirit of the space, we build a narrative that is not just watched but felt."
       },
       {
-        "title": "Rhythm Workshops",
-        "description": "Discover the rhythm of harmony and collective production."
+        "title": "FESTIVAL ORGANIZATION",
+        "description": "Time Right Production brings prestigious festival openings, festivities, and large-scale projects to life both at home and abroad. It produces memorable events through strong planning and a creative approach."
+      },
+      {
+        "title": "MANAGEMENT SERVICES",
+        "description": "Our management services provide a direct and strong link between the actor, director, and producer. In addition to CV, marketing, and career management support, we support actors in expressing themselves most effectively during audition processes through audition technique trainings."
+      },
+      {
+        "title": "IN-COMPANY RHYTHMIC MOTIVATION WORKSHOPS",
+        "description": "Guided by our experiences in domestic and international projects, we continue to progress by constantly renewing, learning, and experiencing. As Henri Lefebvre states in Rhythmanalysis: 'Wherever there is an interaction between a place, a time, and an expenditure of energy, there is rhythm.' Do not ignore the rhythm; discover your own."
+      },
+      {
+        "title": "FILM AND THEATRE SCORES",
+        "description": "Original compositions produced by Composer Cem ALTUN build the dramatic backbone of the narrative in Film, Theatre, Documentary, and advertising projects. The sound universe developed specifically for each project creates cinematic depth and a timeless impact by establishing an organic bond with the stage and visuals."
       }
     ]
   },
@@ -82,6 +95,10 @@
       },
       "4": {
         "title": "Director-Academician",
+        "bio": ""
+      },
+      "9": {
+        "title": "Musician & Composer",
         "bio": ""
       },
       "5": {
@@ -118,6 +135,24 @@
     "copyright": "© 2026 TIME RIGHT PRODUCTION. ALL RIGHTS RESERVED."
   },
   "showcaseStack": {
+    "courses": {
+      "switzerland": {
+        "pillLabel": "🎭 SWITZERLAND: On-Camera Acting",
+        "title": "SWITZERLAND",
+        "description": "Our on-camera acting trainings offer the opportunity to work in the same environment with Turkey's leading actors. This process, shaped by the experience of İlker AKSUM, Cemal HÜNAL, Zafer ALTUN and Halil ERGÜN, one of the deep-rooted and respected names of Turkish cinema, will take place in a dynamic and inspiring working environment in Zurich. Participants will discover themselves in front of the camera while gaining a strong and realistic perspective on acting.",
+        "location": "Zurich, Switzerland",
+        "date": "4 & 25 Oct - 8 & 22 Nov",
+        "category": "On-Camera Acting"
+      },
+      "rotterdam": {
+        "pillLabel": "🎬 ROTTERDAM: On-Camera Acting",
+        "title": "ROTTERDAM",
+        "description": "Our on-camera acting trainings offer the opportunity to work in the same environment with Turkey's leading actors. This process, shaped by the experience of İlker AKSUM, Cemal HÜNAL, Zafer ALTUN and Halil ERGÜN, will take place in a dynamic and inspiring working environment in Rotterdam. Participants will discover themselves in front of the camera while gaining a strong and realistic perspective on acting.",
+        "location": "Rotterdam, Netherlands",
+        "date": "11 & 31 Oct - 15 & 29 Nov",
+        "category": "On-Camera Acting"
+      }
+    },
     "academy": {
       "title": "Academy",
       "subtitle": "Shape the Future",
@@ -204,5 +239,25 @@
   "rhythmAtelier": {
     "title": "Rhythm Atelier",
     "description": "Rhythm exists not only in music but also in the breath of a team, the tempo of a meeting, and the silent energy of collective creation. In our workshops, we explore that energy through the guidance of body and voice."
+  },
+  "applicationForm": {
+    "title": "Application Form",
+    "subtitle": "Leave your information to reserve your spot before the quota is full.",
+    "courseLabel": "Course You Want to Attend",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Ex: John Doe",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "+44 777 000 00 00",
+    "emailLabel": "Email (Optional)",
+    "emailPlaceholder": "example@mail.com",
+    "kvkkText": "I have read and agree to the Disclosure Text regarding the processing of my personal data.",
+    "submitButton": "Complete Application",
+    "sending": "Sending...",
+    "successTitle": "Application Received",
+    "successText": "Thank you! We will contact you via WhatsApp as soon as possible.",
+    "errorText": "An error occurred. Please try again later.",
+    "close": "Close",
+    "locationLabel": "Location",
+    "dateLabel": "Date"
   }
 }

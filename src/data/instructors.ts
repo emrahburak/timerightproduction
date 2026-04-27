@@ -16,6 +16,11 @@ export const INSTRUCTORS_DATA: Instructor[] = [
     image: "timeright-instructor-haci-mehmet-duranoglu.webp",
   },
   {
+    id: "9",
+    fullname: "Cem Altun",
+    image: "timeright-instuructor-cem-altun.webp",
+  },
+  {
     id: "5",
     fullname: "Soydan SOYDAŞ",
     image: "timeright-instructor-soydan-soydas.webp",
