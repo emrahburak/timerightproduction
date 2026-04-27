@@ -101,7 +101,7 @@ export async function POST(request: Request) {
       console.warn("Email config missing, skipping notification");
     } else {
       await resend.emails.send({
-        from: "Başvuru Sistemi <onboarding@resend.dev>",
+        from: "Başvuru Sistemi <info@timerightproduction.org>",
         to: adminEmail,
         subject: `Yeni Başvuru: ${body.courseName} - ${body.location} - ${body.userName}`,
         html: `
