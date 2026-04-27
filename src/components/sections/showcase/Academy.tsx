@@ -103,7 +103,7 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
         <div className="lg:hidden relative w-full flex flex-col items-center overflow-hidden">
           {/* Perspective wrapper */}
           <div
-            className="relative w-full h-[560px] flex items-center justify-center"
+            className="relative w-full h-[640px] flex items-center justify-center"
             style={{ perspective: '1000px' }}
           >
             {cards.map((card, index) => {
@@ -131,8 +131,8 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
                     filter: isCenter ? 'blur(0px)' : 'blur(2px)',
                     visibility: isHidden ? 'hidden' : 'visible',
                     pointerEvents: isCenter ? 'auto' : 'none',
-                    width: '80vw',
-                    maxWidth: '340px',
+                    width: '85vw',
+                    maxWidth: '360px',
                   }}
                 >
                   <AcademyCard

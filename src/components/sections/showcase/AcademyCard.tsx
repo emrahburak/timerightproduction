@@ -152,8 +152,8 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 40%;
-      min-height: 140px;
+      height: 30%;
+      min-height: 100px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       background: rgba(0, 0, 0, 0.2);
     }
@@ -161,7 +161,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
     .text-section {
       flex: 1;
       overflow: hidden;
-      padding: 1.5rem;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -171,11 +171,11 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
     .card-title {
       font-family: var(--font-syne, sans-serif);
       font-weight: 700;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: white;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     @media (min-width: 1024px) {
@@ -191,7 +191,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.375rem;
     }
 
     .course-item {
@@ -205,15 +205,15 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      margin-top: 8px;
+      margin-top: 6px;
       flex-shrink: 0;
     }
 
     .course-text {
       font-family: var(--font-cormorant, serif);
-      font-size: 1rem;
+      font-size: 0.875rem;
       color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
+      line-height: 1.5;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -226,9 +226,21 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       }
       .course-text {
         font-size: 1.125rem;
+        line-height: 1.6;
       }
       .card-title {
-        font-size: 2rem;
+        font-size: 1.875rem;
+        margin-bottom: 1rem;
+      }
+      .icon-section {
+        height: 40%;
+        min-height: 140px;
+      }
+      .course-list {
+        gap: 0.5rem;
+      }
+      .course-dot {
+        margin-top: 8px;
       }
     }
   `;
