@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: 'Time Right Production',
       images: [
         {
-          url: '/timerightproduction-og.png',
+          url: '/timerightproduction-og-image.png',
           width: 1200,
           height: 630,
           alt: 'Time Right Production',
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title: seo.title,
       description: seo.description,
-      images: ['/timerightproduction-og.png'],
+      images: ['/timerightproduction-og-image.png'],
     },
     robots: { index: true, follow: true },
     alternates: {
