@@ -82,7 +82,7 @@ export default function MobileInstructors({ instructors }: MobileInstructorsProp
               </span>
 
               {/* Bio */}
-              <p className="font-cormorant italic text-xl text-white/70 leading-relaxed max-w-sm">
+              <p className="font-cormorant text-xl text-white/70 leading-relaxed max-w-sm">
                 {member.bio}
               </p>
             </div>

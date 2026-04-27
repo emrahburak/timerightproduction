@@ -83,7 +83,7 @@ export default function ServiceListItem({
       >
         <div className="overflow-hidden">
           <p
-            className="font-cormorant italic text-base md:text-xl lg:text-2xl
+            className="font-cormorant text-base md:text-xl lg:text-2xl
                        text-white/70 leading-relaxed border-t border-white/5 pt-6 md:pt-8"
           >
             {service.title}

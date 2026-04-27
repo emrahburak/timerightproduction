@@ -31,7 +31,7 @@ const ShowcaseItem: React.FC<ShowcaseItemProps> = ({ title, subtitle, descriptio
       )}
 
       <div className="container mx-auto px-10 flex flex-col items-center text-center relative z-10">
-        <h3 className="font-cormorant italic text-2xl md:text-3xl text-white/60 mb-4 tracking-widest uppercase">
+        <h3 className="font-cormorant text-2xl md:text-3xl text-white/60 mb-4 tracking-widest uppercase">
           {subtitle}
         </h3>
         <h2 className="font-syne font-bold text-6xl md:text-[8rem] lg:text-[10rem] text-white leading-none uppercase mb-8">
@@ -41,7 +41,7 @@ const ShowcaseItem: React.FC<ShowcaseItemProps> = ({ title, subtitle, descriptio
           {description}
         </p>
         <div className="font-syne font-bold text-4xl md:text-6xl text-white">
-          <span className="font-cormorant italic font-light text-white/40 block text-xl mb-2">RESULT</span>
+          <span className="font-cormorant font-light text-white/40 block text-xl mb-2">RESULT</span>
           {stat}
         </div>
       </div>

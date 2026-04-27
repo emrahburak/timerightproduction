@@ -188,6 +188,12 @@ export default function CourseApplicationModal({
                       {actingDescription}
                     </p>
                     
+                    {activeCourses.length > 1 && (
+                      <p className="text-white/50 text-xs leading-relaxed mb-4 italic">
+                        {activeCourses.map(c => c.translations.location).join(' ve ')} kursları için ayrı ayrı ön kayıt oluşturabilirsiniz!
+                      </p>
+                    )}
+                    
                     <div className="space-y-4">
                       <div className="flex items-center gap-3 text-white/80">
                         <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
@@ -230,7 +236,7 @@ export default function CourseApplicationModal({
                     <button 
                       type="button"
                       onClick={onClose}
-                      className="mt-8 px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium"
+                      className="mt-8 px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-base md:text-sm font-medium"
                     >
                       {f.close}
                     </button>
@@ -239,7 +245,7 @@ export default function CourseApplicationModal({
                   <>
                     <div className="mb-8 mt-2 md:mt-0">
                       <h4 className="text-xl font-syne text-white mb-2">{f.title}</h4>
-                      <p className="text-sm text-white/50">
+                      <p className="text-base md:text-sm text-white/50">
                         {f.subtitle}
                       </p>
                     </div>
@@ -247,12 +253,12 @@ export default function CourseApplicationModal({
                     <form onSubmit={handleSubmit} className="space-y-6 flex flex-col flex-grow">
                       {activeCourses.length > 1 && (
                         <div className="space-y-2">
-                          <label htmlFor="courseSelect" className="text-xs font-medium text-white/60 ml-1">{f.courseLabel}</label>
+                          <label htmlFor="courseSelect" className="text-sm md:text-xs font-medium text-white/60 ml-1">{f.courseLabel}</label>
                           <select
                             id="courseSelect"
                             value={selectedCourseId}
                             onChange={(e) => setSelectedCourseId(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm appearance-none cursor-pointer"
+                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-base md:text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/30 transition-all appearance-none cursor-pointer"
                             style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1rem' }}
                           >
                             {activeCourses.map(course => {
@@ -268,33 +274,33 @@ export default function CourseApplicationModal({
                       )}
 
                       <div className="space-y-2">
-                        <label htmlFor="name" className="text-xs font-medium text-white/60 ml-1">{f.nameLabel}</label>
+                        <label htmlFor="name" className="text-sm md:text-xs font-medium text-white/60 ml-1">{f.nameLabel}</label>
                         <input
                           id="name"
                           type="text"
                           required
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-base md:text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
                           placeholder={f.namePlaceholder}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <label htmlFor="phone" className="text-xs font-medium text-white/60 ml-1">{f.phoneLabel}</label>
+                        <label htmlFor="phone" className="text-sm md:text-xs font-medium text-white/60 ml-1">{f.phoneLabel}</label>
                         <input
                           id="phone"
                           type="tel"
                           required
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-base md:text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
                           placeholder={f.phonePlaceholder}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <label htmlFor="email" className="text-xs font-medium text-white/60 ml-1">{f.emailLabel}</label>
+                        <label htmlFor="email" className="text-sm md:text-xs font-medium text-white/60 ml-1">{f.emailLabel}</label>
                         <input
                           id="email"
                           type="email"
@@ -302,7 +308,7 @@ export default function CourseApplicationModal({
                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
+                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-base md:text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
                           placeholder={f.emailPlaceholder}
                         />
                       </div>
@@ -321,7 +327,7 @@ export default function CourseApplicationModal({
                             <CheckCircle2 size={14} className="absolute text-black pointer-events-none translate-x-[1px]" />
                           )}
                         </div>
-                        <label htmlFor="kvkk" className="text-xs text-white/50 leading-relaxed cursor-pointer hover:text-white/70 transition-colors">
+                        <label htmlFor="kvkk" className="text-sm md:text-xs text-white/50 leading-relaxed cursor-pointer hover:text-white/70 transition-colors">
                           {f.kvkkText}
                         </label>
                       </div>
@@ -337,7 +343,7 @@ export default function CourseApplicationModal({
                       />
 
                       {status === 'error' && (
-                        <p className="text-red-400 text-xs text-center">
+                        <p className="text-red-400 text-sm md:text-xs text-center">
                           {errorMessage || f.errorText}
                         </p>
                       )}
@@ -345,7 +351,7 @@ export default function CourseApplicationModal({
                       <button
                         type="submit"
                         disabled={status === 'loading' || !formData.kvkk}
-                        className="w-full py-4 mt-4 bg-white text-black hover:bg-neutral-200 disabled:bg-white/50 disabled:cursor-not-allowed rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                        className="w-full py-4 mt-4 bg-white text-black hover:bg-neutral-200 disabled:bg-white/50 disabled:cursor-not-allowed rounded-lg font-semibold text-base md:text-sm transition-colors flex items-center justify-center gap-2"
                       >
                         {status === 'loading' ? (
                           <>

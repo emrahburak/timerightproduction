@@ -204,7 +204,7 @@ export default function BrandGallery({ messages }: BrandGalleryProps) {
             {messages.title}
           </h2>
           <p
-            className="font-cormorant italic font-semibold text-white max-w-3xl text-center leading-relaxed text-[clamp(1.1rem,2.5vw,1.8rem)] px-6 md:px-0"
+            className="font-cormorant font-semibold text-white max-w-3xl text-center leading-relaxed text-[clamp(1.1rem,2.5vw,1.8rem)] px-6 md:px-0"
             style={{
               textShadow: '0 2px 12px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)'
             }}

@@ -97,7 +97,7 @@ export default function About({ title, content }: SectionProps) {
             ))}
           </h2>
           <p
-            className="font-cormorant text-xl md:text-2xl italic text-white/80 leading-relaxed max-w-xl"
+            className="font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl"
           >
             {content}
           </p>
