@@ -150,7 +150,13 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
           {/* 1. SOL ÜST KÖŞE (The Signature) */}
           <div className="absolute top-10 left-10 z-20 hidden md:block">
             <p className="text-[10px] uppercase tracking-widest text-white/40 font-archivo">
-              Design Inspired by Michael Aust | Developed with AI by elkasar
+              <a href="https://michael-aust.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAB308] transition-colors">
+                Design Inspired by Michael Aust
+              </a>
+              {' | '}
+              <a href="https://github.com/emrahburak" target="_blank" rel="noopener noreferrer" className="hover:text-[#EAB308] transition-colors">
+                Developed with AI by emrahburak
+              </a>
             </p>
           </div>
 
