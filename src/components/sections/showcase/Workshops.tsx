@@ -391,7 +391,7 @@ export default function Workshops({ messages }: WorkshopsProps) {
         <div className="relative z-10">
           <h2
             ref={titleRef}
-            className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight mb-6"
+            className="font-syne uppercase font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-tight mb-6 text-center lg:text-left"
           >
             {/* Line 1 */}
             <span className="block whitespace-nowrap">
