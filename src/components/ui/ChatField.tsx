@@ -19,7 +19,8 @@ export default function ChatField() {
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
-  if (isModalOpen || !whatsappPhone) return null;
+  if (!whatsappPhone) return null;
+  if (!isMobile && isModalOpen) return null;
 
   const whatsappUrl = isMobile
     ? `https://wa.me/${whatsappPhone}`
@@ -30,7 +31,7 @@ export default function ChatField() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-[9990] flex items-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#20BD5A] rounded-full text-white font-medium text-sm transition-transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+      className={`fixed bottom-6 right-6 flex items-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#20BD5A] rounded-full text-white font-medium text-sm transition-transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl ${isMobile ? 'z-[10000]' : 'z-[9990]'}`}
       style={{ boxShadow: '0 4px 20px rgba(37, 211, 102, 0.4)' }}
     >
       <FontAwesomeIcon icon={faWhatsapp} className="w-6 h-6" />
