@@ -419,12 +419,12 @@ export default function Workshops({ messages }: WorkshopsProps) {
             </span>
           </h2>
           <p
-            className="font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl"
+            className="font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl text-justify"
           >
             {messages.paragraph1}
           </p>
           <p 
-            className="hidden md:block font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl mt-4"
+            className="hidden md:block font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl mt-4 text-justify"
           >
             {messages.paragraph2}
           </p>

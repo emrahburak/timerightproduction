@@ -252,24 +252,35 @@ export default function CourseApplicationModal({
 
                     <form onSubmit={handleSubmit} className="space-y-6 flex flex-col flex-grow">
                       {activeCourses.length > 1 && (
-                        <div className="space-y-2">
-                          <label htmlFor="courseSelect" className="text-sm md:text-xs font-medium text-white/60 ml-1">{f.courseLabel}</label>
-                          <select
-                            id="courseSelect"
-                            value={selectedCourseId}
-                            onChange={(e) => setSelectedCourseId(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-base md:text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/30 transition-all appearance-none cursor-pointer"
-                            style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1rem' }}
-                          >
+                        <div className="space-y-3">
+                          <label className="text-sm md:text-xs font-medium text-white/60 ml-1">{f.courseLabel}</label>
+                          <div className="flex flex-col gap-2">
                             {activeCourses.map(course => {
                               const courseT = course.translations || {};
                               return (
-                                <option key={course.id} value={course.id} className="bg-[#111] text-white">
-                                  {courseT.location || course.id}
-                                </option>
+                                <label
+                                  key={course.id}
+                                  className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
+                                    selectedCourseId === course.id
+                                      ? 'border-white/30 bg-white/10'
+                                      : 'border-white/10 bg-white/5 hover:bg-white/10'
+                                  }`}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="course"
+                                    value={course.id}
+                                    checked={selectedCourseId === course.id}
+                                    onChange={() => setSelectedCourseId(course.id)}
+                                    className="w-4 h-4 accent-white"
+                                  />
+                                  <span className="text-sm text-white">
+                                    {courseT.location || course.id}
+                                  </span>
+                                </label>
                               );
                             })}
-                          </select>
+                          </div>
                         </div>
                       )}
 
