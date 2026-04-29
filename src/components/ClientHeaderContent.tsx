@@ -246,7 +246,7 @@ export default function ClientHeaderContent({ navLinks, locale }: ClientHeaderCo
         <div className="flex justify-between items-center px-6 md:px-12 py-6">
           <button onClick={scrollToTop} className="z-[102] relative group cursor-pointer transition-opacity duration-300 hover:opacity-80">
             <div className="relative h-10 w-24 md:h-14 md:w-40">
-              <Image src="/timeright.png" alt="Time Right Production" fill className="object-contain" priority />
+              <Image src="/timeright.png" alt="Time Right Production" fill sizes="(max-width: 768px) 96px, 160px" className="object-contain" priority />
             </div>
           </button>
 

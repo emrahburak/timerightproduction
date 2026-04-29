@@ -51,7 +51,7 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
         filter: 'blur(0px)',
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: 'body',
+          trigger: containerRef.current,
           start: 'bottom 150%',
           end: 'bottom bottom',
           scrub: 1,
@@ -64,7 +64,7 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
       y: -50,
       ease: 'none',
       scrollTrigger: {
-        trigger: 'body',
+        trigger: containerRef.current,
         start: 'bottom 120%',
         end: 'bottom bottom',
         scrub: 1,
@@ -133,12 +133,15 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
         className="sticky top-0 h-screen bg-black overflow-hidden flex flex-col items-center justify-center relative"
       >
         {/* Background Image Layer */}
-        <Image
-          src={imageUrl}
-          alt="Footer Background"
-          fill
-          className="absolute inset-0 z-0 opacity-20 object-cover"
-        />
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={imageUrl}
+            alt="Footer Background"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-20"
+          />
+        </div>
 
         {/* Top Fade-out Overlay */}
         <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
@@ -178,7 +181,7 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
               {/* B) EMAIL */}
               <a 
                 href={`mailto:${contact.email}`}
-                className="font-cormorant text-4xl md:text-6xl text-white/90 hover:text-[#EAB308] transition-colors mb-10 block"
+                className="font-cormorant text-3xl md:text-6xl text-white/90 hover:text-[#EAB308] transition-colors mb-10 block"
               >
                 {contact.email}
               </a>

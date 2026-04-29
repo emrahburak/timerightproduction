@@ -59,8 +59,8 @@ export default function ServiceListItem({
         {/* Orta: Başlık */}
         <div className="flex-grow min-w-0">
           <h3
-            className={`font-syne font-bold text-lg md:text-2xl lg:text-3xl
-                       text-white transition-colors duration-300
+            className={`font-syne font-bold text-base md:text-2xl lg:text-3xl
+                       text-white transition-colors duration-300 hyphens-none
                        ${isOpen ? 'text-white' : 'text-white/80 group-hover:text-white'}`}
           >
             {service.titleEn}

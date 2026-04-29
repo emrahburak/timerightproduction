@@ -192,12 +192,14 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       display: flex;
       flex-direction: column;
       gap: 0.375rem;
+      align-items: center;
     }
 
     .course-item {
       display: flex;
       align-items: flex-start;
       gap: 0.5rem;
+      width: fit-content;
       text-align: left;
     }
 
@@ -214,6 +216,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       font-size: 0.875rem;
       color: rgba(255, 255, 255, 0.8);
       line-height: 1.5;
+      text-align: left;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;

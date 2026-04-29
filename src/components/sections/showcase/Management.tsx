@@ -39,7 +39,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
       <div className="container mx-auto px-6 md:px-10 py-16 md:py-0 flex flex-col items-center text-center relative z-10">
 
         {/* Title */}
-        <h2 className="font-syne font-black text-[clamp(1.2rem,6vw,2.8rem)] text-white leading-tight uppercase mb-8">
+        <h2 className="font-syne font-black text-[clamp(1.2rem,6vw,2.8rem)] text-white leading-tight uppercase mb-8 hyphens-none">
           {title}
         </h2>
 
@@ -48,7 +48,7 @@ const Management: React.FC<ManagementProps> = ({ title, subtitle, text }) => {
           {text.map((word, index) => (
             <span
               key={index}
-              className="inline-flex items-center font-syne font-bold text-base md:text-xl lg:text-2xl text-white px-5 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm w-full md:w-auto transition-all duration-300 hover:bg-white/10 hover:border-white/40 max-md:!ml-0"
+              className="inline-flex items-center font-syne font-bold text-base md:text-xl lg:text-2xl text-white px-5 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm w-full md:w-auto transition-all duration-300 hover:bg-white/10 hover:border-white/40 max-md:!ml-0 hyphens-none"
               style={{
                 marginLeft: `${index * 1.5}rem`,
               }}

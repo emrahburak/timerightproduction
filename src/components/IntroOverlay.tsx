@@ -12,6 +12,8 @@ export default function IntroOverlay() {
   const beamRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    if (!logoRef.current || !beamRef.current) return;
+
     const tl = gsap.timeline({
       onComplete: () => setIsComplete(true),
     });
@@ -77,6 +79,7 @@ export default function IntroOverlay() {
           src="/timeright.png"
           alt="Time Right Production"
           fill
+          sizes="(max-width: 640px) 200px, (max-width: 768px) 280px, 350px"
           className="object-contain object-center opacity-0"
           priority
         />

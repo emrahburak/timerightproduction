@@ -25,7 +25,7 @@ const Academy: React.FC<AcademyProps> = ({ programs }) => {
     if (!containerRef.current) return;
 
     // Stagger animation for cards
-    gsap.fromTo('.academy-card',
+    gsap.fromTo('.academy-card-wrapper',
       {
         opacity: 0,
         y: 60,

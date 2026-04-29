@@ -28,6 +28,7 @@ function MasonryItem({
                  cursor-pointer group"
       style={{
         height: index % 2 === 0 ? '180px' : '140px',
+        position: 'relative',
       }}
       onClick={() => onImageClick(item, globalIndex)}
     >
@@ -249,7 +250,7 @@ function ScrollRow({
                 }
               }}
             >
-              <div className={isValidIndex ? 'cursor-pointer' : 'cursor-default'}>
+              <div className={`${isValidIndex ? 'cursor-pointer' : 'cursor-default'} absolute inset-0`}>
                 <Image
                   src={getWorkshopImageUrl(item.image)}
                   alt={item.title}
@@ -419,12 +420,12 @@ export default function Workshops({ messages }: WorkshopsProps) {
             </span>
           </h2>
           <p
-            className="font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl"
+            className="font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl text-justify"
           >
             {messages.paragraph1}
           </p>
           <p 
-            className="hidden md:block font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl mt-4"
+            className="hidden md:block font-cormorant text-xl md:text-2xl text-white/80 leading-relaxed max-w-xl mt-4 text-justify"
           >
             {messages.paragraph2}
           </p>
