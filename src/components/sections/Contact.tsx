@@ -181,7 +181,7 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
               {/* B) EMAIL */}
               <a 
                 href={`mailto:${contact.email}`}
-                className="font-cormorant text-4xl md:text-6xl text-white/90 hover:text-[#EAB308] transition-colors mb-10 block"
+                className="font-cormorant text-3xl md:text-6xl text-white/90 hover:text-[#EAB308] transition-colors mb-10 block"
               >
                 {contact.email}
               </a>
