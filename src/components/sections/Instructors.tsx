@@ -278,22 +278,22 @@ export default function Instructors({ instructors }: SectionProps) {
 
                 {/* NEXT BUFFER */}
                 <div ref={nextBufferRef} className="absolute left-[5%] bottom-[10%] w-[30%] h-[50%] overflow-hidden z-0 opacity-0">
-                  <Image src={getInstructorImageUrl(members[nextBufferIndex].image)} alt="Next Buffer" fill className="object-cover grayscale" />
+                  <Image src={getInstructorImageUrl(members[nextBufferIndex].image)} alt="Next Buffer" fill sizes="30vw" className="object-cover grayscale" />
                 </div>
 
                 {/* PREV BUFFER */}
                 <div ref={prevBufferRef} className="absolute left-[35%] bottom-[10%] w-[60%] h-[70%] overflow-hidden z-0 opacity-0 shadow-2xl">
-                  <Image src={getInstructorImageUrl(members[prevBufferIndex].image)} alt="Prev Buffer" fill className="object-cover" />
+                  <Image src={getInstructorImageUrl(members[prevBufferIndex].image)} alt="Prev Buffer" fill sizes="60vw" className="object-cover" />
                 </div>
 
                 {/* SLOT A: Side Slot (Small) */}
                 <div ref={slotARef} className="absolute left-[5%] bottom-[10%] w-[30%] h-[50%] overflow-hidden z-10">
-                  <Image src={getInstructorImageUrl(members[secondaryIndex].image)} alt="Secondary" fill className="object-cover grayscale" />
+                  <Image src={getInstructorImageUrl(members[secondaryIndex].image)} alt="Secondary" fill sizes="30vw" className="object-cover grayscale" />
                 </div>
 
                 {/* SLOT B: Main Slot (Large) */}
                 <div ref={slotBRef} className="absolute left-[35%] bottom-[10%] w-[60%] h-[70%] overflow-hidden z-20 shadow-2xl">
-                  <Image src={getInstructorImageUrl(members[currentIndex].image)} alt={members[currentIndex].name} fill className="object-cover" priority />
+                  <Image src={getInstructorImageUrl(members[currentIndex].image)} alt={members[currentIndex].name} fill sizes="60vw" className="object-cover" priority />
                 </div>
               </div>
 

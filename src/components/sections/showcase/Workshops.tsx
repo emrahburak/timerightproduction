@@ -28,6 +28,7 @@ function MasonryItem({
                  cursor-pointer group"
       style={{
         height: index % 2 === 0 ? '180px' : '140px',
+        position: 'relative',
       }}
       onClick={() => onImageClick(item, globalIndex)}
     >

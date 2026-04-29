@@ -133,12 +133,15 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
         className="sticky top-0 h-screen bg-black overflow-hidden flex flex-col items-center justify-center relative"
       >
         {/* Background Image Layer */}
-        <Image
-          src={imageUrl}
-          alt="Footer Background"
-          fill
-          className="absolute inset-0 z-0 opacity-20 object-cover"
-        />
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={imageUrl}
+            alt="Footer Background"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-20"
+          />
+        </div>
 
         {/* Top Fade-out Overlay */}
         <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-black to-transparent z-[2]" />
