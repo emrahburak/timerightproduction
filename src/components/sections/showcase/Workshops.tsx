@@ -250,7 +250,7 @@ function ScrollRow({
                 }
               }}
             >
-              <div className={`${isValidIndex ? 'cursor-pointer' : 'cursor-default'} relative`}>
+              <div className={`${isValidIndex ? 'cursor-pointer' : 'cursor-default'} absolute inset-0`}>
                 <Image
                   src={getWorkshopImageUrl(item.image)}
                   alt={item.title}
