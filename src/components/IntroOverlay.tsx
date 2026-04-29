@@ -12,6 +12,8 @@ export default function IntroOverlay() {
   const beamRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    if (!logoRef.current || !beamRef.current) return;
+
     const tl = gsap.timeline({
       onComplete: () => setIsComplete(true),
     });

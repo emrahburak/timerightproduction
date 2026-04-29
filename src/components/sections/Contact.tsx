@@ -51,7 +51,7 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
         filter: 'blur(0px)',
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: 'body',
+          trigger: containerRef.current,
           start: 'bottom 150%',
           end: 'bottom bottom',
           scrub: 1,
@@ -64,7 +64,7 @@ export default function Contact({ contact, privacy, privacyLabel }: ContactProps
       y: -50,
       ease: 'none',
       scrollTrigger: {
-        trigger: 'body',
+        trigger: containerRef.current,
         start: 'bottom 120%',
         end: 'bottom bottom',
         scrub: 1,
