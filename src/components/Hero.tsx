@@ -115,7 +115,7 @@ export default function Hero({ title, description, applyButton, courseMessages, 
 
         {/* Hero Pill / Badge for Course Announcement */}
         {activeCourses.length > 0 && (
-          <div className="absolute top-[20%] md:top-[25%] left-0 right-0 flex justify-center z-30 px-4">
+          <div className="hidden absolute top-[20%] md:top-[25%] left-0 right-0 flex justify-center z-30 px-4">
             <div 
               ref={pillRef}
               onClick={() => setIsModalOpen(true)}
