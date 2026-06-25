@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { getExistingRecords, appendRow } from "@/lib/google-sheets";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || '';
+const resendConfigured = !!(process.env.RESEND_API_KEY && process.env.ADMIN_NOTIFICATION_EMAIL);
 
 const RATE_LIMIT_WINDOW = 60 * 1000;
 const RATE_LIMIT_MAX = 3;
@@ -29,11 +30,11 @@ function checkRateLimit(ip: string): boolean {
   const now = Date.now();
   const timestamps = rateLimitMap.get(ip) || [];
   const validTimestamps = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
-  
+
   if (validTimestamps.length >= RATE_LIMIT_MAX) {
     return false;
   }
-  
+
   validTimestamps.push(now);
   rateLimitMap.set(ip, validTimestamps);
   return true;
@@ -44,20 +45,42 @@ export async function POST(request: Request) {
     const body: RegistrationData = await request.json();
     const clientIP = getClientIP(request);
 
+    // Rate limit
     if (!checkRateLimit(clientIP)) {
       return NextResponse.json(
         { error: "Çok fazla istek, lütfen 1 dakika bekleyiniz." },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
+    // Honeypot: website doluysa bot, sessizce başarılı dön
     if (body.website && body.website.length > 0) {
-      return NextResponse.json({ success: true }, { status: 200 });
+      return NextResponse.json({ success: true });
     }
 
     const timestamp = new Date().toLocaleString("tr-TR");
 
-    const webhookData = {
+    // Google Sheets'te mükerrer kayıt kontrolü (aynı email + aynı kurs)
+    try {
+      const existing = await getExistingRecords();
+      const isDuplicate = existing.some(
+        (row) => row.email === body.userEmail && row.kursId === body.courseId,
+      );
+
+      if (isDuplicate) {
+        console.log("Mükerrer kayıt engellendi:", body.userEmail, body.courseId);
+        return NextResponse.json(
+          { error: "Bu kurs için zaten kaydınız bulunmaktadır." },
+          { status: 409 },
+        );
+      }
+    } catch (sheetErr) {
+      console.error("Sheet okuma hatası (mükerrer kontrol):", sheetErr);
+      // Sheet okunamazsa bile kayda devam et (sadece logla)
+    }
+
+    // Yeni kaydı Google Sheets'e ekle
+    const sheetRow = {
       kayitTarihi: timestamp,
       kursId: body.courseId,
       kursAdi: body.courseName,
@@ -66,71 +89,56 @@ export async function POST(request: Request) {
       programDetay: body.fullSchedule,
       adSoyad: body.userName,
       email: body.userEmail,
-      telefon: body.userPhone
+      telefon: body.userPhone,
     };
 
-    console.log("=== N8N WEBHOOK START ===");
-    const fetchOptions: RequestInit = {
-      method: "POST",
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(webhookData),
-    };
-
-    const n8nResponse = await fetch(N8N_WEBHOOK_URL, fetchOptions);
-    const n8nResult = await n8nResponse.json();
-
-    if (!n8nResponse.ok) {
-      console.error("N8N failed:", n8nResponse.status, n8nResult);
-      const errorMessage = n8nResult?.message || "Kayıt işlemi başarısız.";
+    try {
+      await appendRow(sheetRow);
+      console.log("Google Sheets'e kayıt başarılı");
+    } catch (sheetErr) {
+      console.error("Google Sheets append hatası:", sheetErr);
       return NextResponse.json(
-        { error: errorMessage },
-        { status: n8nResponse.status }
+        { error: "Kayıt işlemi başarısız, lütfen sonra deneyiniz." },
+        { status: 500 },
       );
     }
 
-    console.log("N8N OK:", n8nResult);
-
-    const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL;
-    const sheetUrl = process.env.GOOGLE_SHEET_URL;
-
-    if (!adminEmail || !process.env.RESEND_API_KEY) {
-      console.warn("Email config missing, skipping notification");
+    // Admin email bildirimi (Resend)
+    if (resendConfigured) {
+      try {
+        await resend.emails.send({
+          from: "Başvuru Sistemi <info@timerightproduction.org>",
+          to: process.env.ADMIN_NOTIFICATION_EMAIL!,
+          subject: `Yeni Başvuru: ${body.courseName} - ${body.location} - ${body.userName}`,
+          html: `
+            <h2>Yeni Kurs Başvurusu Kaydı Alındı</h2>
+            <p><strong>Kurs:</strong> ${body.courseName}</p>
+            <p><strong>Yer:</strong> ${body.location}</p>
+            <p><strong>Kurs ID:</strong> ${body.courseId}</p>
+            <p><strong>Başlangıç Tarihi:</strong> ${body.startDate}</p>
+            <p><strong>Program Detayı:</strong> ${body.fullSchedule}</p>
+            <p><strong>Kayıt Tarihi:</strong> ${timestamp}</p>
+            <p><strong>Ad Soyad:</strong> ${body.userName}</p>
+            <p><strong>E-posta:</strong> ${body.userEmail}</p>
+            <p><strong>Telefon:</strong> ${body.userPhone}</p>
+          `,
+        });
+        console.log("Email sent OK");
+      } catch (emailErr) {
+        console.error("Email gönderme hatası:", emailErr);
+        // Email hatası kaydı etkilemesin
+      }
     } else {
-      await resend.emails.send({
-        from: "Başvuru Sistemi <info@timerightproduction.org>",
-        to: adminEmail,
-        subject: `Yeni Başvuru: ${body.courseName} - ${body.location} - ${body.userName}`,
-        html: `
-          <h2>Yeni Kurs Başvurusu Kaydı Alındı</h2>
-          <p><strong>Kurs:</strong> ${body.courseName}</p>
-          <p><strong>Yer:</strong> ${body.location}</p>
-          <p><strong>Kurs ID:</strong> ${body.courseId}</p>
-          <p><strong>Başlangıç Tarihi:</strong> ${body.startDate}</p>
-          <p><strong>Program Detayı:</strong> ${body.fullSchedule}</p>
-          <p><strong>Kayıt Tarihi:</strong> ${timestamp}</p>
-          <p><strong>Ad Soyad:</strong> ${body.userName}</p>
-          <p><strong>E-posta:</strong> ${body.userEmail}</p>
-          <p><strong>Telefon:</strong> ${body.userPhone}</p>
-          ${sheetUrl ? `<hr style="border: 1px solid #e5e7eb; margin: 20px 0;" />
-          <p style="margin-top: 16px;">
-            📋 Yeni kayıt detaylarını <a href="${sheetUrl}" style="color: #2563eb; text-decoration: underline;">buradaki tablodan</a> inceleyebilirsiniz.
-          </p>` : ''}
-        `,
-      });
-      console.log("Email sent OK");
+      console.warn("Resend config missing, skipping admin email");
     }
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true });
 
   } catch (error: any) {
     console.error("İşlem Hatası:", error.message);
     return NextResponse.json(
       { error: "Kayıt işlemi başarısız, lütfen sonra deneyiniz." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
