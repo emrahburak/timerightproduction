@@ -60,15 +60,18 @@ export async function POST(request: Request) {
 
     const timestamp = new Date().toLocaleString("tr-TR");
 
-    // Google Sheets'te mükerrer kayıt kontrolü (aynı email + aynı kurs)
+    // Google Sheets'te mükerrer kayıt kontrolü (aynı email + aynı kurs + aynı isim)
     try {
       const existing = await getExistingRecords();
-      const isDuplicate = existing.some(
+      const sameEmailAndCourse = existing.filter(
         (row) => row.email === body.userEmail && row.kursId === body.courseId,
       );
 
+      const isDuplicate = sameEmailAndCourse.length > 0
+        && sameEmailAndCourse.some((row) => row.adSoyad === body.userName);
+
       if (isDuplicate) {
-        console.log("Mükerrer kayıt engellendi:", body.userEmail, body.courseId);
+        console.log("Mükerrer kayıt engellendi:", body.userName, body.userEmail, body.courseId);
         return NextResponse.json(
           { error: "Bu kurs için zaten kaydınız bulunmaktadır." },
           { status: 409 },
