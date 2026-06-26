@@ -106,6 +106,10 @@ export async function POST(request: Request) {
     // Admin email bildirimi (Resend)
     if (resendConfigured) {
       try {
+        const sheetUrl = process.env.GOOGLE_SHEET_ID
+          ? `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SHEET_ID}`
+          : null;
+
         await resend.emails.send({
           from: "Başvuru Sistemi <info@timerightproduction.org>",
           to: process.env.ADMIN_NOTIFICATION_EMAIL!,
@@ -121,6 +125,11 @@ export async function POST(request: Request) {
             <p><strong>Ad Soyad:</strong> ${body.userName}</p>
             <p><strong>E-posta:</strong> ${body.userEmail}</p>
             <p><strong>Telefon:</strong> ${body.userPhone}</p>
+            ${sheetUrl ? `
+            <hr style="border: 1px solid #e5e7eb; margin: 20px 0;" />
+            <p style="margin-top: 16px;">
+              📋 Kayıt detaylarını <a href="${sheetUrl}" style="color: #2563eb; text-decoration: underline;">Google Sheet</a> üzerinden görüntüleyebilirsiniz.
+            </p>` : ''}
           `,
         });
         console.log("Email sent OK");
