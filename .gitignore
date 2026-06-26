@@ -56,3 +56,7 @@ skills-lock.json
 !readme.md
 *.md
 *.jsonc
+
+# service account keys
+*-*.json
+!src/data/courses.json
