@@ -60,3 +60,18 @@ skills-lock.json
 # service account keys
 *-*.json
 !src/data/courses.json
+
+# Keep OpenAgents project context and configuration versioned
+!.opencode/
+!.opencode/**
+!.opencode/.gitignore
+
+# Keep local/generated OpenAgents dependencies and package artifacts ignored
+.opencode/node_modules/
+.opencode/package.json
+.opencode/package-lock.json
+.opencode/bun.lock
+
+# Temporary agent sessions
+.tmp/
+.opencode/tmp/
