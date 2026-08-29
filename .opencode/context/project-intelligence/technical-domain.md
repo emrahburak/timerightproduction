@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: critical | Version: 2.0 | Updated: 2026-08-28 -->
+<!-- Context: project-intelligence/technical | Priority: critical | Version: 2.1 | Updated: 2026-08-28 -->
 
 # Technical Domain
 
@@ -65,30 +65,50 @@ src/
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key");
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
+    const body = await request.json();
     const { name, phone, email, kvkk, courseTitle } = body;
 
-    if (!name || !phone || !kvkk) {
+    if (
+      typeof name !== "string" ||
+      typeof phone !== "string" ||
+      typeof email !== "string" ||
+      typeof courseTitle !== "string" ||
+      kvkk !== true
+    ) {
       return NextResponse.json(
-        { error: "Ad, Telefon ve KVKK onayı zorunludur." },
+        { error: "Geçersiz veya eksik form verisi." },
         { status: 400 }
       );
     }
 
-    if (process.env.RESEND_API_KEY) {
-      const { data, error } = await resend.emails.send({ /* ... */ });
+    if (resend) {
+      const { error } = await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL!,
+        to: process.env.ADMIN_NOTIFICATION_EMAIL!,
+        subject: `Yeni başvuru: ${courseTitle}`,
+        html: `<p>Ad: ${name}</p><p>E-posta: ${email}</p>`,
+      });
+
       if (error) {
-        return NextResponse.json({ error: "Mail gönderim hatası" }, { status: 500 });
+        return NextResponse.json(
+          { error: "Bildirim gönderilemedi." },
+          { status: 502 }
+        );
       }
     }
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Form gönderilemedi." }, { status: 500 });
+  } catch {
+    return NextResponse.json(
+      { error: "Form gönderilemedi." },
+      { status: 500 }
+    );
   }
 }
 ```
@@ -142,14 +162,19 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
 ## Security Requirements
 
 - Validate and normalize all user-controlled input server-side before processing
+- Reject malformed JSON, unexpected content types, invalid field types, oversized payloads, and unknown or excessively long input values
 - Never expose API keys, credentials, or secrets to client-side code
 - Read secrets only from server-side env vars (RESEND_API_KEY, GOOGLE_SHEET_ID, etc.)
-- Protect form endpoints with rate limiting and honeypot bot detection
-- Prevent duplicate registrations before writing to Google Sheets
+- Rotate and revoke any credential accidentally stored in repository files; secrets must exist only in environment variables or an approved secret manager
+- Protect all public form endpoints with trusted distributed rate limiting, server-side honeypot validation, and abuse monitoring; do not trust spoofable client IP headers blindly
+- Make duplicate registration checks fail-closed and idempotent before writing to Google Sheets; document the duplicate key
+- Prevent Google Sheets formula injection by sanitizing values before writing with USER_ENTERED mode, or use a safer raw-value insertion strategy
 - Respect KVKK consent — treat application/registration data as personal data
+- Document KVKK data retention, access, deletion, and operational handling policies for registration data
 - Do not collect personal information beyond what is necessary for the service
-- Return generic error messages to users; log diagnostics server-side only
-- Escape user-provided values in email HTML to prevent injection
+- Treat external integration failures explicitly: do not report a successful operation when persistence or required notification has failed
+- Return generic error messages to users; log diagnostics server-side only and never log names, emails, phone numbers, credentials, or full request bodies
+- Escape every user-controlled value before interpolating it into email HTML
 - Keep Google Sheets and Resend integrations server-only
 - Use HTTPS in production; never commit secrets to the repository
 
