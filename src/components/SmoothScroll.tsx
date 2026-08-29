@@ -17,7 +17,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    
+
     window.scrollTo(0, 0);
     ScrollTrigger.refresh();
 
@@ -29,6 +29,9 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       gestureOrientation: 'vertical',
       smoothWheel: true,
     });
+
+    // Expose Lenis instance globally for scroll lock coordination
+    (window as any).__lenis = lenis;
 
     // Synchronize Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
@@ -45,6 +48,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     return () => {
       gsap.ticker.remove(lenis.raf);
       lenis.destroy();
+      delete (window as any).__lenis;
       if ('scrollRestoration' in window.history) {
         window.history.scrollRestoration = 'auto';
       }
