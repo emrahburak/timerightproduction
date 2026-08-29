@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/nav | Priority: high | Version: 2.0 | Updated: 2026-08-28 -->
+<!-- Context: project-intelligence/nav | Priority: high | Version: 2.1 | Updated: 2026-08-28 -->
 
 # Project Intelligence
 
@@ -11,6 +11,7 @@
 ├── navigation.md              # This file - quick overview
 ├── business-domain.md         # Business context and problem statement
 ├── technical-domain.md        # Stack, architecture, technical decisions
+├── visual-design.md           # Colors, typography, layout, glassmorphism, motion
 ├── business-tech-bridge.md    # How business needs map to solutions
 ├── decisions-log.md           # Major decisions with rationale
 └── living-notes.md            # Active issues, debt, open questions
@@ -22,6 +23,7 @@
 |---------------|------|-------------|
 | Understand the "why" | `business-domain.md` | Problem, users, value proposition |
 | Understand the "how" | `technical-domain.md` | Stack, architecture, integrations |
+| Build UI | `visual-design.md` | Colors, typography, glassmorphism, motion |
 | See the connection | `business-tech-bridge.md` | Business → technical mapping |
 | Know the context | `decisions-log.md` | Why decisions were made |
 | Current state | `living-notes.md` | Active issues and open questions |
@@ -37,6 +39,7 @@
 **Quick Reference**:
 - Business focus → `business-domain.md`
 - Technical focus → `technical-domain.md`
+- Visual design → `visual-design.md`
 - Decision context → `decisions-log.md`
 
 ## Integration
