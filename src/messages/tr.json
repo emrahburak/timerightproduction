@@ -227,7 +227,31 @@
 	},
 	"brandGallery": {
 		"title": "Produksiyon Sanatı",
-		"statement": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde."
+		"statement": "Ve her şeyin tam vaktinde, tam olması gerektiği gibi olma zamanı geldiğinde.",
+		"featuredLabel": "Seçilmiş İşler",
+		"viewAllLabel": "Haberleri Görüntüle",
+		"archiveLabel": "Görsel Arşiv"
+	},
+	"news": {
+		"categories": {
+			"theatre": "Tiyatro",
+			"film": "Film",
+			"academy": "Akademi",
+			"event": "Etkinlik"
+		},
+		"items": {
+			"askin-ozanlari-rotterdam": {
+				"title": "Aşkın Ozanları",
+				"excerpt": "Rotterdam LantarenVenster'de prömiyerini yapan müzikal tiyatro oyunu, biletleri günler öncesinden tükenen bir performans olarak seyirciden tam not aldı.",
+				"location": "Rotterdam · LantarenVenster"
+			}
+		}
+	},
+	"newsDetail": {
+		"back": "GERİ DÖN",
+		"sources": "Basın Kaynakları",
+		"sourcesHint": "Etkinlik ve prodüksiyona dair basında çıkan haberleri okuyabilirsiniz.",
+		"gallery": "Görsel Arşiv"
 	},
 	"reelShowcase": {
 		"title": "Videolarımız",

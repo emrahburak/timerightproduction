@@ -35,7 +35,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       width: 100%;
       min-height: 480px;
       height: 100%;
-      border-radius: 1.5em;
+      border-radius: 1rem;
       position: relative;
       --electric-light-color: oklch(from var(--electric-border-color) l c h);
       --gradient-color: oklch(from var(--electric-border-color) 0.3 calc(c / 2) h / 0.4);
@@ -44,7 +44,13 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       border: 2px solid var(--electric-border-color);
       background: oklch(0.09 0 0);
       color: oklch(0.985 0 0);
-      overflow: hidden; /* İçeriğin taşmamasını sağlar */
+      overflow: hidden;
+      transition: border-color 0.5s ease, transform 0.5s ease;
+    }
+
+    .card-container:hover {
+      border-color: oklch(from var(--electric-border-color) l c h / 0.8);
+      transform: translateY(-2px);
     }
 
     /* MASAÜSTÜ EFEKTLERİ KALDIRILDI - TÜM CİHAZLARDA AYNI TASARIM */
@@ -74,13 +80,13 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
 
       .border-outer {
         border: 2px solid oklch(from var(--electric-border-color) l c h / 0.5);
-        border-radius: 1.5em;
+        border-radius: 1rem;
         padding-right: 0.15em;
         padding-bottom: 0.15em;
       }
 
       .main-card {
-        border-radius: 1.5em;
+        border-radius: 1rem;
         border: 2px solid var(--electric-border-color);
         background: oklch(0.09 0 0);
         width: 100%;
@@ -145,7 +151,7 @@ const AcademyCard: React.FC<AcademyCardProps> = ({ title, icon, courses, themeCo
       display: flex;
       flex-direction: column;
       z-index: 10;
-      border-radius: 1.5em;
+      border-radius: 1rem;
     }
 
     .icon-section {

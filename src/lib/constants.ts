@@ -141,3 +141,15 @@ export const getFooterImageUrl = (filename: string): string => {
 
   return `${CDN_BASE_URL}/${normalizedPath}`;
 };
+
+export const getNewsImageUrl = (filename: string): string => {
+  if (!filename || typeof filename !== "string") {
+    return "/placeholder-thumbnail.webp";
+  }
+
+  const normalizedFilename = filename.replace(/^\/+/, "");
+  const path = `/images/news/askin-ozanlari/${normalizedFilename}`;
+  const normalizedPath = path.replace(/^\/+/, "");
+
+  return `${CDN_BASE_URL}/${normalizedPath}`;
+};

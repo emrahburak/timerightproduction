@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/nav | Priority: high | Version: 2.1 | Updated: 2026-08-28 -->
+<!-- Context: project-intelligence/nav | Priority: high | Version: 2.2 | Updated: 2026-09-01 -->
 
 # Project Intelligence
 
@@ -24,6 +24,7 @@
 | Understand the "why" | `business-domain.md` | Problem, users, value proposition |
 | Understand the "how" | `technical-domain.md` | Stack, architecture, integrations |
 | Build UI | `visual-design.md` | Colors, typography, glassmorphism, motion |
+| News / Press content | `news-pattern.md` | News data, translations, routing, CDN |
 | See the connection | `business-tech-bridge.md` | Business → technical mapping |
 | Know the context | `decisions-log.md` | Why decisions were made |
 | Current state | `living-notes.md` | Active issues and open questions |
