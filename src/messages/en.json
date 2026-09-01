@@ -213,7 +213,31 @@
   },
   "brandGallery": {
     "title": "The Art of Production",
-    "statement": "When everything comes together at exactly the right time, exactly as it should be."
+    "statement": "When everything comes together at exactly the right time, exactly as it should be.",
+    "featuredLabel": "Selected Work",
+    "viewAllLabel": "View Coverage",
+    "archiveLabel": "Visual Archive"
+  },
+  "news": {
+    "categories": {
+      "theatre": "Theatre",
+      "film": "Film",
+      "academy": "Academy",
+      "event": "Event"
+    },
+    "items": {
+      "askin-ozanlari-rotterdam": {
+        "title": "Aşkın Ozanları",
+        "excerpt": "The musical theatre premiere at Rotterdam's LantarenVenster received standing ovations, with tickets sold out days in advance.",
+        "location": "Rotterdam · LantarenVenster"
+      }
+    }
+  },
+  "newsDetail": {
+    "back": "GO BACK",
+    "sources": "Press Sources",
+    "sourcesHint": "Read the press coverage about the event and production.",
+    "gallery": "Visual Archive"
   },
   "reelShowcase": {
     "title": "Our Videos",

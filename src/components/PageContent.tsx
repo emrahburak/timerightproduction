@@ -36,8 +36,15 @@ export default function PageContent({ mergedInstructorsData, messages }: { merge
         </div>
 
         {/* BrandGallery Section - Slide-Over transition (z-40) */}
-        <div data-section="brandgallery" className="relative w-full h-screen overflow-hidden z-40">
-          <BrandGallery messages={messages.brandGallery} />
+        <div data-section="brandgallery" className="relative w-full min-h-screen overflow-hidden z-40">
+          <BrandGallery
+            locale={messages._locale}
+            messages={{
+              ...messages.brandGallery,
+              categories: messages.news.categories,
+              items: messages.news.items,
+            }}
+          />
         </div>
 
         {/* Services Section - Horizontal scroll (internal pinning) */}

@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: critical | Version: 2.1 | Updated: 2026-08-28 -->
+<!-- Context: project-intelligence/technical | Priority: critical | Version: 2.2 | Updated: 2026-09-01 -->
 
 # Technical Domain
 
@@ -60,78 +60,10 @@ src/
 ## Code Patterns
 
 ### API Endpoint
-
-```typescript
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
-
-const resend = process.env.RESEND_API_KEY
-  ? new Resend(process.env.RESEND_API_KEY)
-  : null;
-
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { name, phone, email, kvkk, courseTitle } = body;
-
-    if (
-      typeof name !== "string" ||
-      typeof phone !== "string" ||
-      typeof email !== "string" ||
-      typeof courseTitle !== "string" ||
-      kvkk !== true
-    ) {
-      return NextResponse.json(
-        { error: "Geçersiz veya eksik form verisi." },
-        { status: 400 }
-      );
-    }
-
-    if (resend) {
-      const { error } = await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL!,
-        to: process.env.ADMIN_NOTIFICATION_EMAIL!,
-        subject: `Yeni başvuru: ${courseTitle}`,
-        html: `<p>Ad: ${name}</p><p>E-posta: ${email}</p>`,
-      });
-
-      if (error) {
-        return NextResponse.json(
-          { error: "Bildirim gönderilemedi." },
-          { status: 502 }
-        );
-      }
-    }
-
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json(
-      { error: "Form gönderilemedi." },
-      { status: 500 }
-    );
-  }
-}
-```
+Server-side validation, generic errors, Resend/Google Sheets integrations. Full pattern in `src/app/api/apply/route.ts`.
 
 ### Component
-
-```typescript
-"use client";
-import React, { useState } from "react";
-
-interface ServiceListItemProps {
-  service: { id: number; title: string; titleEn: string; icon: string };
-}
-
-export default function ServiceListItem({ service }: ServiceListItemProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div onClick={() => setIsOpen(!isOpen)} className="...">
-      {/* Tailwind utility classes, responsive, glassmorphism */}
-    </div>
-  );
-}
-```
+TypeScript props, focused client components (`"use client"`), Tailwind utility classes, responsive glassmorphism styling. Full pattern in `src/components/sections/`.
 
 ## Naming Conventions
 
@@ -158,6 +90,14 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
 - Preserve existing GSAP, Framer Motion, Lenis animation patterns
 - Keep components focused, reusable, responsive, semantic, accessible
 - Run `npm run lint` and `npm run build` after changes (no test framework configured)
+
+## Content Patterns
+
+### News / Press
+
+Technical data (`src/data/news.ts`) separated from translated text (`src/messages/{tr,en}.json`). Detail pages at `/[locale]/news/[slug]`. CDN via `getNewsImageUrl()` from constants.
+
+→ Full pattern: `news-pattern.md`
 
 ## Security Requirements
 

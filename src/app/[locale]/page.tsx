@@ -146,7 +146,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <ModalProvider>
-      <PageContent mergedInstructorsData={mergedInstructorsData} messages={messages} />
+      <PageContent mergedInstructorsData={mergedInstructorsData} messages={{ ...messages, _locale: locale }} />
     </ModalProvider>
   );
 }
